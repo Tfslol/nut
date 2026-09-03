@@ -22,11 +22,11 @@ uv run pytest    # run the test suite
 
 ### Tooling
 
-| Command                    | Purpose                                    |
-| -------------------------- | ------------------------------------------ |
-| `uv run pytest`            | Run tests (`tests/`)                       |
-| `uv run ruff check .`      | Lint                                         |
-| `uv run ruff format .`     | Auto-format code                            |
+| Command                        | Purpose                                 |
+| ------------------------------ | --------------------------------------- |
+| `uv run pytest`                | Run tests (`tests/`)                    |
+| `uv run ruff check .`          | Lint                                    |
+| `uv run ruff format .`         | Auto-format code                        |
 | `uv run ruff format --check .` | Check formatting without changing files |
 
 ### Managing dependencies
@@ -45,9 +45,12 @@ When dependencies change, commit both `pyproject.toml` and `uv.lock`.
 src/singhacks26/   # package source (src layout)
 tests/             # pytest tests
 docs/challenge.md  # challenge requirements (source of truth)
+docs/roles.md      # role -> label routing for collaborators/harnesses
 ```
 
 ### Contribution rules
 
-Collaboration conventions (branching, PR scope, decisions) are defined in
-[`AGENTS.md`](AGENTS.md) — please read them before making changes.
+Collaboration conventions (branching, PR scope, decisions, and issue
+self-selection for LLM collaborators) are defined in
+[`AGENTS.md`](AGENTS.md) and [`docs/roles.md`](docs/roles.md) — please read
+them before making changes.

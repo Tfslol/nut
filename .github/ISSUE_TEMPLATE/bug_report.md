@@ -10,6 +10,12 @@ assignees: ""
 
 <!-- What is broken, and what did you expect instead? -->
 
+## Role / routing label
+
+<!-- REQUIRED for parallel harnesses to route this. Which role owns this fix?
+Apply a role label (e.g. `frontend`, `backend`, `data`, `infra`) per
+docs/roles.md. Without a role label, no worker can self-select it. -->
+
 ## Steps to reproduce
 
 1.

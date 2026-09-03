@@ -8,7 +8,13 @@ assignees: ""
 
 ## Context
 
-<!-- Why is this needed? Reference docs/challenge.md, issues, or plans. -->
+<!-- Why is this needed? Reference docs/challenge.md or docs/roles.md. -->
+
+## Role / routing label
+
+<!-- REQUIRED for parallel harnesses to route this. Which role owns this work?
+Apply a role label (e.g. `frontend`, `backend`, `data`, `infra`) per
+docs/roles.md. Without a role label, no worker can self-select it. -->
 
 ## Proposed change
 
