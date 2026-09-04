@@ -26,7 +26,8 @@ choices before the challenge specification is available.
 - Work on a feature branch.
 - Keep commits focused.
 - Do not rewrite another person's branch.
-- Pull/rebase from main before opening a PR when appropriate.
+- Pull/rebase from main frequently and resolve merge conflicts directly when
+  landing work (no pull requests).
 
 ## Collaboration
 
@@ -58,7 +59,8 @@ protocol. In short:
 4. Pick the oldest/highest-priority one and **assign it to yourself** before
    starting.
 5. Branch as `task/<issue-id>-<slug>` from `main`, implement only that issue,
-   and open a PR that references/closes it.
+   then integrate your work back to `main` yourself, resolving any merge
+   conflicts directly (no pull request review or PR workflow).
 
 **Assignee is the lock.** Never begin work on an issue that is already assigned
 to another collaborator, and do not grab a second issue while one you claimed is

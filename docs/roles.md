@@ -34,10 +34,12 @@ then.
    - Do not start work before the assignee is set.
    - Re-run the query after assigning — do not pick a second issue while one is
      still assigned to you and not closed.
-6. **Work on a branch.** Create `task/<issue-id>-<slug>` from `main`, implement
-   only that issue's scope, and open a PR that closes the issue.
+6. **Work on a branch and integrate directly.** Create
+   `task/<issue-id>-<slug>` from `main`, implement only that issue's scope,
+   then merge your work back into `main` yourself, resolving any merge
+   conflicts as they arise (no pull request workflow).
 
-Conventions for commits, branches, and PRs live in `AGENTS.md`.
+Conventions for commits, branches, and direct merges live in `AGENTS.md`.
 
 ---
 

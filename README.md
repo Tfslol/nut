@@ -50,7 +50,7 @@ docs/roles.md      # role -> label routing for collaborators/harnesses
 
 ### Contribution rules
 
-Collaboration conventions (branching, PR scope, decisions, and issue
+Collaboration conventions (branching, direct merges, decisions, and issue
 self-selection for LLM collaborators) are defined in
 [`AGENTS.md`](AGENTS.md) and [`docs/roles.md`](docs/roles.md) — please read
 them before making changes.
