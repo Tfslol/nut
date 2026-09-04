@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "Hackathon project for the SingHacks 2026 challenge."
 readme = "README.md"
 requires-python = ">=3.11.15"
-dependencies = []
+dependencies = [
+    "pandas>=2.0",
+]
 
 [dependency-groups]
 dev = [
