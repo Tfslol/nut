@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11.15"
 dependencies = [
     "pandas>=2.0",
+    "streamlit>=1.63.0",
 ]
 
 [dependency-groups]
