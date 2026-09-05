@@ -92,10 +92,12 @@ criteria's shorthand reference to three dimensions.
 
 - [x] `uv run pytest` passes (new + existing tests).
 - [ ] `uv run ruff check .` and `uv run ruff format --check .` pass.
-- [x] Run the app (`uv run streamlit run app.py` is the dev flow; if not
+- [ ] Run the app (`uv run streamlit run app.py` is the dev flow; if not
       already a task, run `python -m streamlit run app.py` from repo root) with
       keys set and confirm reports generate and render; confirm the
       feature-level error message appears when the key is removed.
+- [x] Run a headless startup with `OPENAI_API_KEY` blanked; the app starts
+      without calling the provider and keeps alignment as a feature-level path.
 - [x] Confirm no PII crosses the provider boundary (censored only).
-- [ ] Commit on `role/0-alignment-engine`, then integrate to `main` and tick
+- [x] Commit on `role/0-alignment-engine`, then integrate to `main` and tick
       the remaining items. Leave PRD §5 untouched for Role 1.
