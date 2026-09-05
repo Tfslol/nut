@@ -110,5 +110,5 @@ and verified. When done, integrate back to `main` yourself (no PR).
       without crashing the dashboard; same check for `OPENAI_API_KEY` on the
       recommendation button.
 - [x] Confirm no PII crosses the provider boundary (censored only).
-- [ ] Commit on `role/1-news-recommendation`, then integrate to `main` and tick
+- [x] Commit on `role/1-news-recommendation`, then integrate to `main` and tick
       the remaining items.
