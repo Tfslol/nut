@@ -3,7 +3,7 @@
 ## Objective
 
 Turn team-supplied insight into client-ready action while keeping the Relationship Manager in
-control. Aurelia is the RM Intelligence Workbench (Block 3); it does not replace the portfolio
+control. Aurum is the RM Intelligence Workbench (Block 3); it does not replace the portfolio
 explanation or proactive risk engines in Blocks 1 and 2.
 
 ```text
@@ -11,7 +11,7 @@ Block 1 portfolio explanation ─┐
                                ├─→ versioned, read-only evidence contract
 Block 2 risk/event/scenario ───┘
                                             ↓
-RM Intelligence Workbench (Aurelia)
+RM Intelligence Workbench (Aurum)
   attention ordering · relationship context · choice framing · call preparation
   RM judgement · suitability/tax escalation · accountable follow-through
                                             ↓
@@ -24,7 +24,7 @@ Approved fact packet → optional AI language draft → guardrails → RM review
 
 - Blocks 1 and 2 own attribution, concentration, liquidity, currency, collateral and mandate-risk
   detection, event mapping, scenario analysis, severity and the supporting calculations.
-- Aurelia receives those outputs as immutable evidence. It owns what they mean for this client,
+- Aurum receives those outputs as immutable evidence. It owns what they mean for this client,
   who the RM should attend to first, which choices need discussion, and what happens next.
 - `intelligence.py` is a compatibility adapter that reconstructs upstream payloads only when this
   isolated hackathon demo is run without the other blocks. It is not the Block 3 product claim.
@@ -47,7 +47,7 @@ Approved fact packet → optional AI language draft → guardrails → RM review
 
 Each upstream signal should provide a stable ID, client and portfolio IDs, as-of date, category,
 severity, observed facts, evidence references, assumptions, uncertainty and calculation version.
-Aurelia may prioritise and annotate the signal but must not silently alter its calculation or
+Aurum may prioritise and annotate the signal but must not silently alter its calculation or
 provenance.
 
 ## Deliberate prototype limits

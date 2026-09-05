@@ -403,7 +403,7 @@ RELATIONSHIP_CANVAS = {
     },
 }
 
-st.set_page_config(page_title="Aurelia | RM Intelligence", page_icon="◈", layout="wide")
+st.set_page_config(page_title="Aurum | RM Intelligence", page_icon="◈", layout="wide")
 
 
 @st.cache_data
@@ -1307,7 +1307,7 @@ def case_json_payload(client, insight, facts):
             "signal_origin": "Block 2 contract; reconstructed locally only as a prototype fallback.",
         },
         "governance": {
-            "aurelia_owns_risk_detection_or_stress_testing": False,
+            "aurum_owns_risk_detection_or_stress_testing": False,
             "upstream_signal_is_read_only": True,
             "computed_facts_are_deterministic": True,
             "generated_narrative_requires_rm_review": True,
@@ -1530,7 +1530,7 @@ def navigate_to(page_name):
     st.session_state["navigation_page"] = page_name
 
 with st.sidebar:
-    st.markdown("### ◈ AURELIA")
+    st.markdown("### ◈ AURUM")
     st.caption("RM Intelligence Workbench")
     page = st.radio(
         "Navigation",
@@ -1582,11 +1582,7 @@ with header_right:
 
 if page == "Home":
     st.markdown(
-        '<div class="hero">Where should Priscilla focus her attention today?</div>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<div class="muted">A morning view of portfolio-relevant developments, dated obligations and clients requiring judgement.</div>',
+        '<div class="hero">Home</div>',
         unsafe_allow_html=True,
     )
 
@@ -1671,7 +1667,7 @@ if page == "Home":
         )
 
         st.markdown("### Client problems requiring attention")
-        st.caption("Block 2 supplies severity; Aurelia orders the RM’s attention using client context.")
+        st.caption("Block 2 supplies severity; Aurum orders the RM’s attention using client context.")
         ranked = attention.merge(clients[["client_id", "client_name"]], on="client_id", how="left")
         ranked["why"] = ranked.apply(
             lambda row: (
@@ -2316,9 +2312,9 @@ elif page == "Focus casebook":
             st.write(insight["client_view"])
 
     with evidence_tab:
-        st.markdown("### Signal supplied to Aurelia")
+        st.markdown("### Signal supplied to Aurum")
         st.caption(
-            "Risk detection and stress testing belong to Block 2. Aurelia treats this as "
+            "Risk detection and stress testing belong to Block 2. Aurum treats this as "
             "read-only evidence, then adds client meaning, conversation preparation and "
             "follow-through. The standalone prototype reconstructs the input locally when no "
             "team payload is available."
