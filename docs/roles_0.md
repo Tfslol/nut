@@ -102,7 +102,7 @@ criteria's shorthand reference to three dimensions.
 - [x] Commit on `role/0-alignment-engine`, then integrate to `main` and tick
       the remaining items. Leave PRD §5 untouched for Role 1.
 
-## User-requested extension — RM action advisor
+## User-requested extension — Command Center
 
 - [x] Add a separate Streamlit page that decomposes cached review
       leads into what / when / why / how actions for the RM.
@@ -112,3 +112,5 @@ criteria's shorthand reference to three dimensions.
       LLM or market API call to Streamlit reruns.
 - [x] Let the RM explicitly save a prefilled, owned and dated next step into
       the existing local Action Record and audit trail.
+- [x] Expose the page as "Command Center" in sidebar navigation and as a
+      persistent top-right button beside RM Notes.

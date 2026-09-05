@@ -1512,6 +1512,12 @@ else:
     attention = attention.copy()
     attention["alignment_reason"] = ""
 default_client = st.session_state.get("active_client", clients.client_id.iloc[0])
+if st.session_state.get("navigation_page") == "RM action advisor":
+    st.session_state["navigation_page"] = "Command Center"
+
+
+def open_command_center():
+    st.session_state["navigation_page"] = "Command Center"
 
 with st.sidebar:
     st.markdown("### ◈ AURELIA")
@@ -1521,7 +1527,7 @@ with st.sidebar:
         [
             "Attention map",
             "Alignment & conflicts",
-            "RM action advisor",
+            "Command Center",
             "Focus casebook",
             "Client deep dive",
             "Notes library",
@@ -1530,6 +1536,7 @@ with st.sidebar:
             "Methods & governance",
         ],
         label_visibility="collapsed",
+        key="navigation_page",
     )
     st.divider()
     st.markdown("**Data boundary**")
@@ -1537,12 +1544,21 @@ with st.sidebar:
         "Client data remains local. Only configured, censored sector queries are sent to the market/news feed."
     )
 
-header_left, header_right = st.columns([0.86, 0.14])
+header_left, header_right = st.columns([0.7, 0.3])
 with header_left:
     st.markdown('<div class="eyebrow">Asia desk · Singapore & Hong Kong</div>', unsafe_allow_html=True)
 with header_right:
-    if st.button("✦ Notes", width="stretch"):
-        notes_bubble(default_client)
+    command_button, notes_button = st.columns([0.62, 0.38])
+    with command_button:
+        st.button(
+            "Command Center",
+            width="stretch",
+            type="primary" if page == "Command Center" else "secondary",
+            on_click=open_command_center,
+        )
+    with notes_button:
+        if st.button("✦ Notes", width="stretch"):
+            notes_bubble(default_client)
 
 if page == "Attention map":
     st.markdown(
@@ -1813,7 +1829,8 @@ elif page == "Alignment & conflicts":
                 },
             )
 
-elif page == "RM action advisor":
+elif page == "Command Center":
+    st.markdown('<div class="eyebrow">Command Center</div>', unsafe_allow_html=True)
     st.markdown(
         '<div class="hero">From review lead to the next RM step.</div>',
         unsafe_allow_html=True,
