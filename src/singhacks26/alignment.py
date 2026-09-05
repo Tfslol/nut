@@ -12,7 +12,9 @@ import hashlib
 import json
 import os
 import re
+import threading
 from datetime import UTC, datetime
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any, Literal
 
@@ -31,7 +33,7 @@ from singhacks26.ai_brief import (
 from singhacks26.intelligence import AS_OF, portfolio_mandate_review, usd_per_unit
 from singhacks26.workbench import CURATED_THEMES
 
-CALCULATION_VERSION = "alignment/1.0"
+CALCULATION_VERSION = "alignment/1.1"
 DIMENSION_STATUSES = Literal["aligned", "partially_aligned", "review", "misaligned", "conflict"]
 OVERALL_BANDS = Literal["aligned", "partially_aligned", "review", "misaligned", "conflict"]
 CONFLICT_CATEGORIES = Literal["risk_profile", "mandate", "objectives", "event"]
@@ -49,6 +51,11 @@ THEME_LEXICON = {
     "real estate": ["real estate", "property"],
 }
 SEVERITY_RANK = {"Urgent": 4, "High": 3, "Medium": 2, "Low": 1}
+
+# Presentation preload set: deliberately spans a severe suitability mismatch,
+# a clean alignment case, a concentrated technology/collateral case, and a
+# diversified family-office/liquidity case.
+PRESENTATION_CLIENTS = ("CL-0003", "CL-0010", "CL-0013", "CL-0017")
 
 
 class AlignmentDimensions(BaseModel):
@@ -86,10 +93,6 @@ class AlignmentReport(BaseModel):
 
 def _empty_store() -> dict[str, Any]:
     return {"schema_version": "alignment/1.0", "reports": {}}
-
-
-def _as_float(value: Any) -> float:
-    return float(value) if pd.notna(value) else 0.0
 
 
 def _records(frame: pd.DataFrame, columns: list[str] | None = None) -> list[dict[str, Any]]:
@@ -496,15 +499,40 @@ def build_alignment_fact_packet(
     return packet
 
 
+def _normalised_numbers(text: str) -> set[Decimal]:
+    """Return numeric claims with presentation-only formatting normalised."""
+    values: set[Decimal] = set()
+    scales = {
+        "": Decimal("1"),
+        "%": Decimal("1"),
+        "m": Decimal("1000000"),
+        "bn": Decimal("1000000000"),
+    }
+    for token in NUMBER_PATTERN.findall(text):
+        suffix = ""
+        lower = token.lower()
+        for candidate in ("bn", "%", "m"):
+            if lower.endswith(candidate):
+                suffix = candidate
+                break
+        raw = token[: -len(suffix)] if suffix else token
+        try:
+            values.add(Decimal(raw.replace(",", "")) * scales[suffix])
+        except InvalidOperation:
+            continue
+    return values
+
+
 def _validate_numbers_and_language(report: AlignmentReport, fact_packet: dict[str, Any]) -> None:
     source = json.dumps(fact_packet, ensure_ascii=False)
     candidate = report.model_dump_json()
-    allowed_numbers = {token.lower() for token in NUMBER_PATTERN.findall(source)}
-    candidate_numbers = {token.lower() for token in NUMBER_PATTERN.findall(candidate)}
+    allowed_numbers = _normalised_numbers(source)
+    candidate_numbers = _normalised_numbers(candidate)
     unsupported = candidate_numbers - allowed_numbers
     if unsupported:
         raise RuntimeError(
-            f"AI report introduced unsupported numeric claims: {sorted(unsupported)}"
+            "AI report introduced unsupported numeric claims: "
+            f"{sorted(str(value) for value in unsupported)}"
         )
     for pattern in PROHIBITED_PATTERNS:
         if pattern.search(candidate):
@@ -599,7 +627,7 @@ def source_data_hash(data: dict[str, Any]) -> str:
         "event_log",
         "rm_notes",
     ]
-    payload = {}
+    payload = {"calculation_version": CALCULATION_VERSION}
     for name in names:
         value = data.get(name)
         if isinstance(value, pd.DataFrame):
@@ -614,6 +642,7 @@ class AlignmentStore:
 
     def __init__(self, path: Path):
         self.path = Path(path)
+        self._write_lock = threading.Lock()
 
     def load(self) -> dict[str, Any]:
         if not self.path.exists():
@@ -646,18 +675,50 @@ class AlignmentStore:
         )
         record = {
             "client_id": client_id,
+            "status": "ok",
             "report": report_dict,
             "model": model,
             "generated_at": generated_at or datetime.now(UTC).isoformat(timespec="seconds"),
             "vault_note_hash": vault_hash,
             "source_csv_hash": source_hash,
         }
-        payload["reports"][client_id] = record
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        temporary = self.path.with_suffix(".tmp")
-        temporary.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
-        temporary.replace(self.path)
+        self._write(payload, client_id, record)
         return record
+
+    def save_error(
+        self,
+        *,
+        client_id: str,
+        error: str,
+        model: str,
+        vault_hash: str,
+        source_hash: str,
+        generated_at: str | None = None,
+    ) -> dict[str, Any]:
+        """Persist a failed analysis so unchanged failures are not retried."""
+        record = {
+            "client_id": client_id,
+            "status": "error",
+            "report": None,
+            "error": error,
+            "model": model,
+            "generated_at": generated_at or datetime.now(UTC).isoformat(timespec="seconds"),
+            "vault_note_hash": vault_hash,
+            "source_csv_hash": source_hash,
+        }
+        payload = self.load()
+        self._write(payload, client_id, record)
+        return record
+
+    def _write(self, payload: dict[str, Any], client_id: str, record: dict[str, Any]) -> None:
+        with self._write_lock:
+            payload["reports"][client_id] = record
+            self.path.parent.mkdir(parents=True, exist_ok=True)
+            temporary = self.path.with_suffix(".tmp")
+            temporary.write_text(
+                json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8"
+            )
+            temporary.replace(self.path)
 
     def save(self, **kwargs: Any) -> dict[str, Any]:
         return self.save_report(**kwargs)
@@ -692,6 +753,88 @@ class AlignmentStore:
         )
 
     refresh_needed = needs_refresh
+
+
+class AlignmentBackgroundLoader:
+    """Process non-presentation clients serially without blocking the UI."""
+
+    def __init__(self, store: AlignmentStore):
+        self.store = store
+        self._lock = threading.Lock()
+        self._thread: threading.Thread | None = None
+        self._status = {"running": False, "completed": 0, "pending": 0, "errors": []}
+
+    def start(
+        self,
+        data: dict[str, Any],
+        notes: dict[str, str],
+        client_ids: list[str],
+        source_hash: str,
+    ) -> bool:
+        pending = [
+            client_id
+            for client_id in client_ids
+            if self.store.needs_refresh(client_id, notes.get(client_id, ""), source_hash)
+        ]
+        with self._lock:
+            if self._thread is not None and self._thread.is_alive():
+                return False
+            if not pending:
+                self._status = {"running": False, "completed": 0, "pending": 0, "errors": []}
+                return False
+            self._status = {
+                "running": True,
+                "completed": 0,
+                "pending": len(pending),
+                "errors": [],
+            }
+            self._thread = threading.Thread(
+                target=self._run,
+                args=(data, notes, pending, source_hash),
+                daemon=True,
+                name="alignment-background-loader",
+            )
+            self._thread.start()
+            return True
+
+    def _run(
+        self,
+        data: dict[str, Any],
+        notes: dict[str, str],
+        client_ids: list[str],
+        source_hash: str,
+    ) -> None:
+        model = os.getenv("OPENAI_MODEL", DEFAULT_MODEL)
+        for client_id in client_ids:
+            try:
+                report, model = analyze_alignment(data, client_id, notes.get(client_id, ""))
+                self.store.save_report(
+                    client_id=client_id,
+                    report=report,
+                    model=model,
+                    vault_hash=vault_note_hash(notes.get(client_id, "")),
+                    source_hash=source_hash,
+                )
+            except Exception as exc:  # persist feature-level failures, then continue the batch
+                message = f"{client_id}: {exc}"
+                self.store.save_error(
+                    client_id=client_id,
+                    error=message,
+                    model=model,
+                    vault_hash=vault_note_hash(notes.get(client_id, "")),
+                    source_hash=source_hash,
+                )
+                with self._lock:
+                    self._status["errors"].append(message)
+            with self._lock:
+                self._status["completed"] += 1
+                self._status["pending"] -= 1
+        with self._lock:
+            self._status["running"] = False
+
+    def status(self) -> dict[str, Any]:
+        with self._lock:
+            return dict(self._status)
 
 
 def conflict_inbox(reports: Any) -> pd.DataFrame:

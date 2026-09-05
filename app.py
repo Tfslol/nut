@@ -1,6 +1,7 @@
 """RM Intelligence Workbench — local-first Streamlit prototype."""
 
 import json
+import os
 import re
 from calendar import month_name, monthcalendar
 from datetime import datetime
@@ -11,6 +12,8 @@ import streamlit as st
 
 from singhacks26.ai_brief import ai_is_configured, draft_ai_brief
 from singhacks26.alignment import (
+    PRESENTATION_CLIENTS,
+    AlignmentBackgroundLoader,
     AlignmentStore,
     analyze_alignment,
     conflict_inbox,
@@ -37,6 +40,13 @@ DATA = ROOT / "data"
 VAULT = ROOT / "obsidian_vault"
 WORKFLOW = WorkbenchStore(VAULT / "workbench_state.json")
 ALIGNMENT = AlignmentStore(VAULT / "alignment_state.json")
+
+
+@st.cache_resource
+def alignment_background_loader():
+    return AlignmentBackgroundLoader(ALIGNMENT)
+
+
 SEVERITY = {"Severe": 4, "High": 3, "Medium": 2, "Low": 1}
 THEMES = {
     "gold": ["gold", "precious metals", "inflation hedge"],
@@ -589,13 +599,17 @@ def censored_vault_text(client_id):
 
 
 def load_alignment_reports(_data):
-    """Load cached alignment reports and refresh only stale client packets."""
+    """Load the presentation set first, then queue the rest without blocking the UI."""
     source_hash = source_data_hash(_data)
     reports = {}
     errors = []
     configured = ai_is_configured()
-    for client_id in _data["clients"].client_id.tolist():
-        note = censored_vault_text(client_id)
+    client_ids = _data["clients"].client_id.tolist()
+    preload_ids = [client_id for client_id in PRESENTATION_CLIENTS if client_id in client_ids]
+    notes = {client_id: censored_vault_text(client_id) for client_id in client_ids}
+
+    for client_id in preload_ids:
+        note = notes[client_id]
         record = ALIGNMENT.get(client_id)
         if ALIGNMENT.needs_refresh(client_id, note, source_hash):
             if not configured:
@@ -610,10 +624,39 @@ def load_alignment_reports(_data):
                         vault_hash=vault_note_hash(note),
                         source_hash=source_hash,
                     )
-                except Exception as exc:  # feature-level failure; keep the dashboard usable
-                    errors.append(f"{client_id}: {exc}")
+                except Exception as exc:  # persist failures and keep the dashboard usable
+                    record = ALIGNMENT.save_error(
+                        client_id=client_id,
+                        error=f"{client_id}: {exc}",
+                        model=os.getenv("OPENAI_MODEL", "alignment"),
+                        vault_hash=vault_note_hash(note),
+                        source_hash=source_hash,
+                    )
         if record and record.get("report"):
             reports[client_id] = record["report"]
+        elif record and record.get("error"):
+            errors.append(record["error"])
+
+    if configured:
+        alignment_background_loader().start(
+            _data,
+            notes,
+            [client_id for client_id in client_ids if client_id not in preload_ids],
+            source_hash,
+        )
+
+    # Existing non-presentation cache entries are available immediately. The
+    # background worker owns only missing or stale non-presentation entries.
+    for client_id in client_ids:
+        if client_id in reports:
+            continue
+        record = ALIGNMENT.get(client_id)
+        if record and record.get("report"):
+            reports[client_id] = record["report"]
+        elif record and record.get("error"):
+            errors.append(record["error"])
+    if not configured and not reports:
+        errors.append("OPENAI_API_KEY is not configured for alignment analysis.")
     return reports, list(dict.fromkeys(errors))
 
 
@@ -1564,10 +1607,29 @@ elif page == "Alignment & conflicts":
             "No alignment reports are cached yet. Configure OPENAI_API_KEY to generate the "
             "feature; the rest of the workbench remains available."
         )
+    presentation_ids = [
+        client_id for client_id in PRESENTATION_CLIENTS if client_id in clients.client_id.tolist()
+    ]
+    other_ids = [client_id for client_id in clients.client_id if client_id not in presentation_ids]
+    alignment_client_options = presentation_ids + other_ids
+    presentation_names = clients.loc[
+        clients.client_id.isin(presentation_ids), "client_name"
+    ].tolist()
+    st.caption(
+        "Presentation preload: "
+        + ", ".join(presentation_names)
+        + ". Remaining clients load in the background and are saved locally."
+    )
+    background_status = alignment_background_loader().status()
+    if background_status["running"]:
+        st.info(
+            f"Background alignment loading: {background_status['completed']} complete, "
+            f"{background_status['pending']} pending."
+        )
     selected_alignment_id = st.selectbox(
         "Client",
-        clients.client_id.tolist(),
-        index=clients.client_id.tolist().index(default_client),
+        alignment_client_options,
+        index=alignment_client_options.index(default_client),
         format_func=lambda client_id: clients.loc[
             clients.client_id == client_id, "client_name"
         ].iloc[0],
