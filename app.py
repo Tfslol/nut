@@ -714,10 +714,7 @@ def render_alignment_summary(client_id, compact=False):
         st.success("No conflicts were returned for this cached analysis.")
     for conflict in conflicts[: 3 if compact else None]:
         with st.container(border=True):
-            st.caption(
-                f"{conflict.get('severity', 'Low')} · {conflict.get('category', 'review')} · "
-                "RM review lead"
-            )
+            st.caption(f"{conflict.get('severity', 'Low')} · {conflict.get('category', 'review')} · " "RM review lead")
             st.markdown(f"**{conflict.get('headline', 'Review lead')}**")
             st.write(conflict.get("detail", ""))
             st.caption(f"Discussion topic: {conflict.get('discussion_topic', '')}")
@@ -1638,8 +1635,7 @@ if page == "Attention map":
         ranked = attention.merge(clients[["client_id", "client_name"]], on="client_id", how="left")
         ranked["why"] = ranked.apply(
             lambda row: (
-                " · ".join(row.reasons[:2])
-                + (f" · Alignment: {row.alignment_reason}" if row.alignment_reason else "")
+                " · ".join(row.reasons[:2]) + (f" · Alignment: {row.alignment_reason}" if row.alignment_reason else "")
             ),
             axis=1,
         )
@@ -1794,9 +1790,7 @@ elif page == "Alignment & conflicts":
         render_alignment_summary(selected_alignment_id)
         st.download_button(
             "Download alignment report JSON",
-            data=json.dumps(
-                alignment_reports[selected_alignment_id], indent=2, ensure_ascii=False, default=str
-            ),
+            data=json.dumps(alignment_reports[selected_alignment_id], indent=2, ensure_ascii=False, default=str),
             file_name=f"{selected_alignment_id.lower()}-alignment-report.json",
             mime="application/json",
         )

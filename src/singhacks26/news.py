@@ -267,11 +267,7 @@ def refresh_news(
 
     key = marketaux_api_key()
     holdings = data["holdings"]
-    selected = (
-        list(client_ids)
-        if client_ids is not None
-        else sorted(data["clients"]["client_id"].unique().tolist())
-    )
+    selected = list(client_ids) if client_ids is not None else sorted(data["clients"]["client_id"].unique().tolist())
     published_after = (datetime.now(UTC) - timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%S")
 
     payload = {
