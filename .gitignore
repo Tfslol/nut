@@ -15,6 +15,11 @@ wheels/
 
 .env
 
+# Generated local caches / workflow state (regenerated at runtime; do not commit)
+obsidian_vault/news_cache.json
+obsidian_vault/alignment_state.json
+obsidian_vault/workbench_state.json
+
 data/*
 !data/clients_uncensored.csv
 !data/clients_censored.csv

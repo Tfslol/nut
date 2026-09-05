@@ -17,87 +17,87 @@ and verified. When done, integrate back to `main` yourself (no PR).
 
 ## Phase 0 — Understand & align
 
-- [ ] Read `docs/PRD.md`, `docs/challenge.md`, `docs/ARCHITECTURE_V2.md`, and
+- [x] Read `docs/PRD.md`, `docs/challenge.md`, `docs/ARCHITECTURE_V2.md`, and
       `docs/DATA_DICTIONARY.md`.
-- [ ] Read `scripts/market_api.py` end to end (sector query map, fetching,
+- [x] Read `scripts/market_api.py` end to end (sector query map, fetching,
       rate limiting, CLI), `src/singhacks26/ai_brief.py` (LLM conventions +
       guardrails), the censored vault note `obsidian_vault/Clients/CL-0005.md`,
       and the `app.py` deep-dive page + sidebar page list.
-- [ ] Confirm Role 0's `AlignmentReport` contract (PRD §4.4) is available on
+- [x] Confirm Role 0's `AlignmentReport` contract (PRD §4.4) is available on
       `main` after rebase; if not, keep building against a local stub fixture
       placed under `ralph/`.
 
 ## Phase 1 — Importable news module
 
-- [ ] Create `src/singhacks26/news.py` by refactoring `scripts/market_api.py`
+- [x] Create `src/singhacks26/news.py` by refactoring `scripts/market_api.py`
       into importable functions: `held_sectors`, `queries_for`, `fetch_news`,
       the `SECTOR_QUERY` taxonomy, plus a `refresh_news(data) -> dict` that
       loops all 20 clients and returns per-client sector articles.
-- [ ] Refactor `scripts/market_api.py` to import from `news.py` so the CLI
+- [x] Refactor `scripts/market_api.py` to import from `news.py` so the CLI
       still works unchanged.
-- [ ] Respect rate limits: `group_similar`, de-dupe by `uuid`, sleep between
+- [x] Respect rate limits: `group_similar`, de-dupe by `uuid`, sleep between
       calls; cap articles per sector as today.
 
 ## Phase 2 — NewsCache
 
-- [ ] Add a `NewsCache` class (JSON in `obsidian_vault/news_cache.json`):
+- [x] Add a `NewsCache` class (JSON in `obsidian_vault/news_cache.json`):
       per-client sector entries with `uuid/title/url/source/published_at/
       snippet/entities`, per-sector errors, and a top-level `fetched_utc`.
-- [ ] Add a TTL (e.g. 1 hour) so plain app reruns within the TTL do not re-hit
+- [x] Add a TTL (e.g. 1 hour) so plain app reruns within the TTL do not re-hit
       the API; expose `load()`, `save()`, `needs_refresh()`, and a manual
       force-refresh flag.
-- [ ] If `MARKETAUX_API_KEY` is missing: raise a clear feature-level error
+- [x] If `MARKETAUX_API_KEY` is missing: raise a clear feature-level error
       (do not fake data, do not crash the rest of the app).
 
 ## Phase 3 — Most-affected ranking
 
-- [ ] Add `most_affected(cache, holdings) -> DataFrame/records` computing an
+- [x] Add `most_affected(cache, holdings) -> DataFrame/records` computing an
       exposure-weighted relevance score per client (sector exposure share from
       latest-snapshot holdings × article relevance/recency, summed over the
       client's sectors).
-- [ ] Label output as **live news** with fetch time, distinct from the
+- [x] Label output as **live news** with fetch time, distinct from the
       controlled `event_log.csv` surface.
 
 ## Phase 4 — Recommendation flow
 
-- [ ] Create `src/singhacks26/recommendation.py` with
+- [x] Create `src/singhacks26/recommendation.py` with
       `build_recommendation_fact_packet(data, client_id, vault_text,
       alignment_report, news_items) -> dict`: censored static facts, the
       `AlignmentReport`, surfaced conflicts, latest cached news, deterministic
       numbers, and `allowed_evidence_ids`; mark `synthetic_data: True`.
-- [ ] Add `generate_recommendation(...) -> RecommendationDraft` calling OpenAI
+- [x] Add `generate_recommendation(...) -> RecommendationDraft` calling OpenAI
       exactly as `ai_brief.draft_ai_brief` does (`responses.parse`, pydantic,
       `.env`).
-- [ ] pydantic `RecommendationDraft` must match PRD §5.3 (summary, topics for
+- [x] pydantic `RecommendationDraft` must match PRD §5.3 (summary, topics for
       RM review not orders, questions, risks, evidence, guardrail note).
-- [ ] Reuse `ai_brief` guardrails: no invented numbers, no direct-advice
+- [x] Reuse `ai_brief` guardrails: no invented numbers, no direct-advice
       phrasing, evidence allow-list. Fail loudly if `OPENAI_API_KEY` is
       missing.
 
 ## Phase 5 — Dashboard wiring
 
-- [ ] On app load, trigger the cached news refresh (`refresh_news` honouring
+- [x] On app load, trigger the cached news refresh (`refresh_news` honouring
       the cache TTL) and compute the most-affected ranking.
-- [ ] Extend the Market/Upstream context page with a "Live news" panel:
+- [x] Extend the Market/Upstream context page with a "Live news" panel:
       fetch time, ranked most-affected clients with driving headlines and
       exposed sectors; keep the controlled-event surface separate.
-- [ ] Add a clearly-labelled RM-initiated **"Get recommendation"** button in
+- [x] Add a clearly-labelled RM-initiated **"Get recommendation"** button in
       the Client deep dive page (near the Conversation brief area) that builds
       the fact packet, calls `generate_recommendation`, and renders the draft
       with evidence + an explicit "not approved / RM review" state.
-- [ ] Allow the RM to save a reviewed recommendation to the existing
+- [x] Allow the RM to save a reviewed recommendation to the existing
       note/workflow store (reuse `save_vault_note`/`WorkbenchStore` patterns).
-- [ ] Keep rendering in `app.py`; domain logic stays in `news.py` /
+- [x] Keep rendering in `app.py`; domain logic stays in `news.py` /
       `recommendation.py`.
 
 ## Phase 6 — Tests
 
-- [ ] `tests/test_news.py`: sector-query mapping, exposure-weighted ranking,
+- [x] `tests/test_news.py`: sector-query mapping, exposure-weighted ranking,
       cache load/save/TTL — offline (no live API calls).
-- [ ] `tests/test_recommendation.py`: fact-packet assembly + guardrail
+- [x] `tests/test_recommendation.py`: fact-packet assembly + guardrail
       validation against a stub `AlignmentReport` and stub news items (LLM
       call mocked/stubbed).
-- [ ] `uv run pytest` passes (new + existing tests).
+- [x] `uv run pytest` passes (new + existing tests).
 - [ ] `uv run ruff check .` and `uv run ruff format --check .` pass.
 
 ## Phase 7 — Verify & land
@@ -106,9 +106,9 @@ and verified. When done, integrate back to `main` yourself (no PR).
       reruns within TTL do not re-fetch; "Refresh news" forces a fetch; the
       recommendation button renders a guardrailed draft and saves a reviewed
       note.
-- [ ] Remove `MARKETAUX_API_KEY` and confirm the news panel errors clearly
+- [x] Remove `MARKETAUX_API_KEY` and confirm the news panel errors clearly
       without crashing the dashboard; same check for `OPENAI_API_KEY` on the
       recommendation button.
-- [ ] Confirm no PII crosses the provider boundary (censored only).
-- [ ] Commit on `role/1-news-recommendation`, then integrate to `main` and tick
+- [x] Confirm no PII crosses the provider boundary (censored only).
+- [x] Commit on `role/1-news-recommendation`, then integrate to `main` and tick
       the remaining items.
