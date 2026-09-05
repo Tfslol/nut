@@ -10,6 +10,13 @@ import pandas as pd
 import streamlit as st
 
 from singhacks26.ai_brief import ai_is_configured, draft_ai_brief
+from singhacks26.alignment import (
+    AlignmentStore,
+    analyze_alignment,
+    conflict_inbox,
+    source_data_hash,
+    vault_note_hash,
+)
 from singhacks26.intelligence import (
     AS_OF,
     attention_queue,
@@ -32,6 +39,7 @@ DATA = ROOT / "data"
 VAULT = ROOT / "obsidian_vault"
 WORKFLOW = WorkbenchStore(VAULT / "workbench_state.json")
 NEWS_CACHE = NewsCache(VAULT / "news_cache.json")
+ALIGNMENT = AlignmentStore(VAULT / "alignment_state.json")
 SEVERITY = {"Severe": 4, "High": 3, "Medium": 2, "Low": 1}
 THEMES = {
     "gold": ["gold", "precious metals", "inflation hedge"],
@@ -562,6 +570,102 @@ def save_vault_note(client_id, client_name, category, note):
     with path.open("a", encoding="utf-8") as handle:
         handle.write(f"\n<!-- RM-NOTE -->\n### {timestamp} · {category}\n\n{note.strip()}\n")
     return True
+
+
+def censored_vault_text(client_id):
+    path = VAULT / "Clients" / f"{client_id}.md"
+    return path.read_text(encoding="utf-8") if path.exists() else ""
+
+
+def load_alignment_reports(_data):
+    """Load cached alignment reports and refresh only stale client packets."""
+    source_hash = source_data_hash(_data)
+    reports = {}
+    errors = []
+    configured = ai_is_configured()
+    for client_id in _data["clients"].client_id.tolist():
+        note = censored_vault_text(client_id)
+        record = ALIGNMENT.get(client_id)
+        if ALIGNMENT.needs_refresh(client_id, note, source_hash):
+            if not configured:
+                errors.append("OPENAI_API_KEY is not configured for alignment analysis.")
+            else:
+                try:
+                    report, model = analyze_alignment(_data, client_id, note)
+                    record = ALIGNMENT.save_report(
+                        client_id=client_id,
+                        report=report,
+                        model=model,
+                        vault_hash=vault_note_hash(note),
+                        source_hash=source_hash,
+                    )
+                except Exception as exc:  # feature-level failure; keep the dashboard usable
+                    errors.append(f"{client_id}: {exc}")
+        if record and record.get("report"):
+            reports[client_id] = record["report"]
+    return reports, list(dict.fromkeys(errors))
+
+
+def render_alignment_summary(client_id, compact=False):
+    report = alignment_reports.get(client_id)
+    if not report:
+        st.info(
+            "No cached alignment report is available. Configure OPENAI_API_KEY and use "
+            "Re-analyse with AI on the Alignment & conflicts page."
+        )
+        return
+    dimensions = report.get("dimensions", {})
+    if compact:
+        metrics = st.columns(5)
+        metrics[0].metric("Alignment band", report.get("overall_band", "review").replace("_", " "))
+        for column, (label, key) in zip(
+            metrics[1:],
+            [
+                ("Risk", "risk_profile_alignment"),
+                ("Mandate", "mandate_alignment"),
+                ("Objectives", "objectives_life_event_alignment"),
+                ("Events", "event_consistency"),
+            ],
+            strict=False,
+        ):
+            column.metric(label, dimensions.get(key, "review").replace("_", " "))
+    else:
+        metrics = st.columns(5)
+        metrics[0].metric("Overall band", report.get("overall_band", "review").replace("_", " "))
+        for column, (label, key) in zip(
+            metrics[1:],
+            [
+                ("Risk profile", "risk_profile_alignment"),
+                ("Mandate", "mandate_alignment"),
+                ("Objectives / life event", "objectives_life_event_alignment"),
+                ("Event consistency", "event_consistency"),
+            ],
+            strict=False,
+        ):
+            column.metric(label, dimensions.get(key, "review").replace("_", " "))
+    conflicts = report.get("conflicts", [])
+    if not compact:
+        if report.get("strengths"):
+            st.markdown("**Strengths to preserve**")
+            for strength in report["strengths"]:
+                st.markdown(f"- {strength}")
+        st.markdown("**Conflicts to review**")
+    if not conflicts:
+        st.success("No conflicts were returned for this cached analysis.")
+    for conflict in conflicts[: 3 if compact else None]:
+        with st.container(border=True):
+            st.caption(
+                f"{conflict.get('severity', 'Low')} · {conflict.get('category', 'review')} · "
+                "RM review lead"
+            )
+            st.markdown(f"**{conflict.get('headline', 'Review lead')}**")
+            st.write(conflict.get("detail", ""))
+            st.caption(f"Discussion topic: {conflict.get('discussion_topic', '')}")
+            st.caption("Evidence: " + " · ".join(conflict.get("evidence_ids", [])))
+    if not compact and report.get("uncertainties"):
+        st.markdown("**Uncertainties to check**")
+        for uncertainty in report["uncertainties"]:
+            st.markdown(f"- {uncertainty}")
 
 
 def sentence(text, limit=220):
@@ -1333,6 +1437,21 @@ clients = data["clients"]
 impacts = build_event_impacts(data)
 attention = attention_queue(data)
 news_payload, news_ranking, news_error = ensure_news(data)
+alignment_reports, alignment_errors = load_alignment_reports(data)
+alignment_inbox = conflict_inbox(list(alignment_reports.values()))
+if not alignment_inbox.empty:
+    worst_conflicts = (
+        alignment_inbox.sort_values("severity_rank", ascending=False)
+        .drop_duplicates("client_id")
+        .set_index("client_id")
+    )
+    attention = attention.copy()
+    attention["alignment_reason"] = attention.client_id.map(
+        worst_conflicts["headline"] if "headline" in worst_conflicts else pd.Series(dtype=str)
+    ).fillna("")
+else:
+    attention = attention.copy()
+    attention["alignment_reason"] = ""
 default_client = st.session_state.get("active_client", clients.client_id.iloc[0])
 
 with st.sidebar:
@@ -1342,6 +1461,7 @@ with st.sidebar:
         "Navigation",
         [
             "Attention map",
+            "Alignment & conflicts",
             "Focus casebook",
             "Client deep dive",
             "Notes library",
@@ -1455,7 +1575,13 @@ if page == "Attention map":
         st.markdown("### Client problems requiring attention")
         st.caption("Block 2 supplies severity; Aurelia orders the RM’s attention using client context.")
         ranked = attention.merge(clients[["client_id", "client_name"]], on="client_id", how="left")
-        ranked["why"] = ranked.reasons.apply(lambda reasons: " · ".join(reasons[:2]))
+        ranked["why"] = ranked.apply(
+            lambda row: (
+                " · ".join(row.reasons[:2])
+                + (f" · Alignment: {row.alignment_reason}" if row.alignment_reason else "")
+            ),
+            axis=1,
+        )
         for _, problem in ranked.head(5).iterrows():
             with st.container(border=True):
                 title, score = st.columns([0.78, 0.22])
@@ -1491,6 +1617,100 @@ if page == "Attention map":
             "The ordering does not infer probability, profitability or relationship value. "
             "Priscilla remains responsible and may disagree."
         )
+
+elif page == "Alignment & conflicts":
+    st.markdown(
+        '<div class="hero">Does the portfolio still fit the client’s intent?</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="muted">Deterministic local facts are prioritised into RM review leads. '
+        "Nothing here is proof of causation or approved advice.</div>",
+        unsafe_allow_html=True,
+    )
+    if alignment_errors:
+        st.error(
+            "Alignment analysis is unavailable for one or more clients: "
+            + " · ".join(alignment_errors[:3])
+            + (" · …" if len(alignment_errors) > 3 else "")
+        )
+    if not alignment_reports:
+        st.info(
+            "No alignment reports are cached yet. Configure OPENAI_API_KEY to generate the "
+            "feature; the rest of the workbench remains available."
+        )
+    selected_alignment_id = st.selectbox(
+        "Client",
+        clients.client_id.tolist(),
+        index=clients.client_id.tolist().index(default_client),
+        format_func=lambda client_id: clients.loc[
+            clients.client_id == client_id, "client_name"
+        ].iloc[0],
+        key="alignment_client",
+    )
+    selected_alignment = clients.loc[clients.client_id == selected_alignment_id].iloc[0]
+    st.markdown(f"### {selected_alignment.client_name}")
+    st.caption(f"Client ID {selected_alignment_id} · all figures as of {AS_OF}")
+    left, right = st.columns([0.55, 0.45])
+    with left:
+        st.markdown("**Censored static context**")
+        note_text = censored_vault_text(selected_alignment_id)
+        st.code(note_text or "No censored Obsidian note is available.", language="markdown")
+    with right:
+        st.markdown("**Review lead across the book**")
+        client_conflicts = alignment_inbox.loc[alignment_inbox.client_id == selected_alignment_id]
+        if client_conflicts.empty:
+            st.caption("No surfaced conflict for this client.")
+        else:
+            st.dataframe(
+                client_conflicts[["severity", "category", "headline", "discussion_topic"]],
+                hide_index=True,
+                width="stretch",
+            )
+        if st.button(
+            "Re-analyse with AI",
+            type="primary",
+            disabled=not ai_is_configured(),
+            key=f"reanalyze_{selected_alignment_id}",
+        ):
+            try:
+                report, model = analyze_alignment(data, selected_alignment_id, note_text)
+                ALIGNMENT.save_report(
+                    client_id=selected_alignment_id,
+                    report=report,
+                    model=model,
+                    vault_hash=vault_note_hash(note_text),
+                    source_hash=source_data_hash(data),
+                )
+                st.success("Alignment report refreshed locally.")
+                st.rerun()
+            except Exception as exc:
+                st.error(f"Alignment analysis failed at feature level: {exc}")
+        if not ai_is_configured():
+            st.caption("Configure OPENAI_API_KEY to refresh this report.")
+
+    if selected_alignment_id in alignment_reports:
+        st.markdown("### Alignment report")
+        render_alignment_summary(selected_alignment_id)
+        st.download_button(
+            "Download alignment report JSON",
+            data=json.dumps(
+                alignment_reports[selected_alignment_id], indent=2, ensure_ascii=False, default=str
+            ),
+            file_name=f"{selected_alignment_id.lower()}-alignment-report.json",
+            mime="application/json",
+        )
+        st.caption(
+            "Review lead only · Evidence IDs identify the local source rows · "
+            "RM judgement and suitability review remain required."
+        )
+    if not alignment_inbox.empty:
+        with st.expander("Book-wide conflict inbox"):
+            st.dataframe(
+                alignment_inbox[["client_id", "severity", "category", "headline", "evidence_ids"]],
+                hide_index=True,
+                width="stretch",
+            )
 
 elif page == "Focus casebook":
     st.markdown(
@@ -2037,8 +2257,14 @@ elif page == "Client deep dive":
     metrics[4].metric("Relevant events", len(impacts[impacts.client_id == selected_id]))
     st.markdown("### Client intent")
     st.write(client.objectives)
-    holdings_tab, history_tab, events_tab, conversation_tab = st.tabs(
-        ["Portfolio exposure", "Snapshot history", "Events & outlook", "Conversation brief"]
+    holdings_tab, history_tab, events_tab, alignment_tab, conversation_tab = st.tabs(
+        [
+            "Portfolio exposure",
+            "Snapshot history",
+            "Events & outlook",
+            "Alignment",
+            "Conversation brief",
+        ]
     )
     latest_date = data["holdings"].snapshot_date.max()
     positions = data["holdings"].query("client_id == @selected_id and snapshot_date == @latest_date")
@@ -2126,6 +2352,13 @@ elif page == "Client deep dive":
             hide_index=True,
             width="stretch",
         )
+    with alignment_tab:
+        st.markdown("### Alignment and conflicts")
+        st.caption(
+            "A compact review lead from the cached alignment report. It is not a causation claim "
+            "or an approved recommendation."
+        )
+        render_alignment_summary(selected_id, compact=True)
     with conversation_tab:
         markdown = render_call_brief(selected_id)
         st.download_button(
