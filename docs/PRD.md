@@ -9,7 +9,7 @@ Build split: Role 0 (`docs/roles_0.md`) and Role 1 (`docs/roles_1.md`)
 ## 1. Context
 
 The repo is a SingHacks 2026 Julius Baer wealth-intelligence prototype. Today
-the RM (Priscilla Ong) uses a local Streamlit workbench (`app.py`, "AURELIA")
+the RM (Priscilla Ong) uses a local Streamlit workbench (`app.py`, "AURUM")
 over the 20-client synthetic dataset in `data/`. It already surfaces controlled
 event → client relevance, mandate reviews, attention ordering, focus casework
 for three clients, a deterministic "60-second brief" per client, and an
