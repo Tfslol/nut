@@ -30,6 +30,12 @@ from singhacks26.intelligence import (
 )
 from singhacks26.news import FOCUS_CLIENTS, NewsCache, most_affected, refresh_news
 from singhacks26.recommendation import build_recommendation_fact_packet, generate_recommendation
+from singhacks26.scenario import (
+    ASSET_CLASSES,
+    allocation_by_asset_class,
+    relevant_market_cards,
+    simulate_reallocation,
+)
 from singhacks26.workbench import (
     WorkbenchStore,
     liquidity_profile,
@@ -2027,6 +2033,202 @@ elif page == "Command Center":
                             st.success(
                                 "Next step saved locally to the Action Record with an audit event."
                             )
+
+    st.divider()
+    st.markdown("### Allocation scenario preview")
+    st.caption(
+        "Explore how an RM-defined hypothetical reallocation would change asset-class and "
+        "market exposure. The review lead supplies context; the RM supplies every allocation "
+        "input. No instrument, trade or expected return is inferred."
+    )
+    current_allocation = allocation_by_asset_class(data["holdings"], selected_advisor_id)
+    scenario = None
+    if current_allocation.empty:
+        st.info("No latest holdings snapshot is available for an allocation preview.")
+    else:
+        lead_options = [brief["conflict_id"] for brief in advisor_briefs]
+        selected_lead_id = st.selectbox(
+            "Review lead to explore",
+            lead_options,
+            index=0 if lead_options else None,
+            format_func=lambda conflict_id: next(
+                brief["headline"]
+                for brief in advisor_briefs
+                if brief["conflict_id"] == conflict_id
+            ),
+            placeholder="No open review lead",
+            disabled=not lead_options,
+            key=f"scenario_lead_{selected_advisor_id}",
+        )
+        current_weights = current_allocation.set_index("asset_class")["current_pct"].to_dict()
+        funded_classes = current_allocation["asset_class"].tolist()
+        input_columns = st.columns([0.38, 0.38, 0.24])
+        with input_columns[0]:
+            source_asset_class = st.selectbox(
+                "Reallocate from",
+                funded_classes,
+                index=None,
+                placeholder="Choose source",
+                key=f"scenario_source_{selected_advisor_id}",
+            )
+        with input_columns[1]:
+            destination_asset_class = st.selectbox(
+                "Reallocate to",
+                list(ASSET_CLASSES),
+                index=None,
+                placeholder="Choose destination",
+                key=f"scenario_destination_{selected_advisor_id}",
+            )
+        with input_columns[2]:
+            available_pct = float(current_weights.get(source_asset_class, 0.0))
+            shift_pct = st.number_input(
+                "Portfolio weight (%)",
+                min_value=0.0,
+                max_value=max(round(available_pct, 2), 0.0),
+                value=0.0,
+                step=0.5,
+                disabled=source_asset_class is None,
+                key=(
+                    f"scenario_shift_{selected_advisor_id}_"
+                    f"{source_asset_class or 'no_source'}"
+                ),
+            )
+
+        scenario_ready = (
+            source_asset_class is not None
+            and destination_asset_class is not None
+            and source_asset_class != destination_asset_class
+            and shift_pct > 0
+        )
+        if source_asset_class and source_asset_class == destination_asset_class:
+            st.warning("Choose different source and destination asset classes.")
+        elif source_asset_class and destination_asset_class and shift_pct == 0:
+            st.info("Enter a portfolio weight above zero to preview a change.")
+
+        if scenario_ready:
+            scenario = simulate_reallocation(
+                data["holdings"],
+                selected_advisor_id,
+                source_asset_class,
+                destination_asset_class,
+                shift_pct,
+            )
+            scenario_allocation = scenario["allocation"]
+        else:
+            scenario_allocation = current_allocation.assign(
+                scenario_value_usd=current_allocation["current_value_usd"],
+                scenario_pct=current_allocation["current_pct"],
+            )
+
+        chart = scenario_allocation[
+            ["asset_class", "current_pct", "scenario_pct"]
+        ].rename(columns={"current_pct": "Current %", "scenario_pct": "Scenario %"})
+        chart_left, chart_right = st.columns([0.62, 0.38])
+        with chart_left:
+            st.markdown("**Current versus scenario allocation**")
+            st.bar_chart(chart.set_index("asset_class"), horizontal=True)
+        with chart_right:
+            st.markdown("**Scenario effect**")
+            if scenario:
+                effect_metrics = st.columns(2)
+                effect_metrics[0].metric(
+                    "Illustrative shift",
+                    f"USD {scenario['shift_value_usd'] / 1e6:,.2f}m",
+                    f"{scenario['shift_pct']:.1f}% of portfolio",
+                )
+                concentration_change = (
+                    scenario["largest_scenario_pct"] - scenario["largest_current_pct"]
+                )
+                effect_metrics[1].metric(
+                    "Largest asset class",
+                    f"{scenario['largest_scenario_pct']:.1f}%",
+                    f"{concentration_change:+.1f} pts",
+                )
+                source_row = scenario_allocation.loc[
+                    scenario_allocation.asset_class == source_asset_class
+                ].iloc[0]
+                destination_row = scenario_allocation.loc[
+                    scenario_allocation.asset_class == destination_asset_class
+                ].iloc[0]
+                st.markdown(
+                    f"- **{source_asset_class}:** {source_row.current_pct:.1f}% → "
+                    f"{source_row.scenario_pct:.1f}%"
+                )
+                st.markdown(
+                    f"- **{destination_asset_class}:** {destination_row.current_pct:.1f}% → "
+                    f"{destination_row.scenario_pct:.1f}%"
+                )
+                st.caption(
+                    "Mandate compliance is not recalculated because this household-level preview "
+                    "does not select a governed portfolio or instrument."
+                )
+            else:
+                st.info("Choose the source, destination and weight to create a scenario.")
+
+        st.markdown("**Relevant controlled market cards**")
+        market_cards = relevant_market_cards(
+            data["market_context"],
+            data["holdings"],
+            selected_advisor_id,
+            scenario_allocation,
+        )
+        if market_cards:
+            for card_column, card in zip(st.columns(len(market_cards)), market_cards, strict=False):
+                with card_column:
+                    delta = None if card["delta"] is None else f"{card['delta']:+,.2f}"
+                    st.metric(
+                        card["label"],
+                        f"{card['value']:,.2f} {card['unit']}",
+                        delta,
+                    )
+                    exposure_delta = card["scenario_exposure_pct"] - card["current_exposure_pct"]
+                    st.caption(
+                        f"{card['exposure_asset_class']} exposure: "
+                        f"{card['current_exposure_pct']:.1f}% → "
+                        f"{card['scenario_exposure_pct']:.1f}% ({exposure_delta:+.1f} pts)"
+                    )
+        else:
+            st.caption("No controlled market card maps to the current portfolio exposure.")
+        st.caption(
+            "Price/yield values remain at the controlled market snapshot; the scenario changes "
+            "client exposure only. Card deltas compare the two latest supplied snapshots."
+        )
+
+        if scenario:
+            with st.expander("Scenario assumptions and audit"):
+                for assumption in scenario["assumptions"]:
+                    st.markdown(f"- {assumption}")
+                st.caption(f"Evidence version: holdings and market context as of {AS_OF}")
+                if st.button(
+                    "Save scenario comparison",
+                    key=f"save_advisor_scenario_{selected_advisor_id}",
+                ):
+                    linked_brief = next(
+                        (
+                            brief
+                            for brief in advisor_briefs
+                            if brief["conflict_id"] == selected_lead_id
+                        ),
+                        None,
+                    )
+                    WORKFLOW.save_comparison(
+                        client_id=selected_advisor_id,
+                        name="Command Center allocation scenario",
+                        inputs={
+                            "review_lead_id": selected_lead_id,
+                            "source_asset_class": source_asset_class,
+                            "destination_asset_class": destination_asset_class,
+                            "shift_pct": scenario["shift_pct"],
+                        },
+                        outputs={
+                            "shift_value_usd": scenario["shift_value_usd"],
+                            "allocation": scenario_allocation.to_dict(orient="records"),
+                        },
+                        assumptions=scenario["assumptions"],
+                        evidence_version=AS_OF,
+                    )
+                    lead_label = linked_brief["headline"] if linked_brief else "monitoring review"
+                    st.success(f"Scenario saved locally against: {lead_label}")
 
     st.warning(
         "RM review aid only. Validate source evidence, suitability and current market facts before "

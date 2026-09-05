@@ -114,3 +114,6 @@ criteria's shorthand reference to three dimensions.
       the existing local Action Record and audit trail.
 - [x] Expose the page as "Command Center" in sidebar navigation and as a
       persistent top-right button beside RM Notes.
+- [x] Add a bounded allocation scenario beneath the existing action briefs:
+      current-versus-hypothetical asset-class chart, exposure-linked controlled
+      market cards, explicit RM inputs, assumptions and comparison persistence.
