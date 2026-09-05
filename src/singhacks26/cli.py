@@ -47,7 +47,7 @@ def client_payload(data: dict[str, Any], client_id: str) -> dict[str, Any]:
     client = clients.iloc[0]
     attention = attention_queue(data).loc[lambda frame: frame.client_id == client_id].iloc[0]
     return {
-        "schema_version": "aurelia-casefile/1.0",
+        "schema_version": "aurum-casefile/1.0",
         "as_of": AS_OF,
         "client": {
             "client_id": client.client_id,

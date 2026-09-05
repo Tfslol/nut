@@ -1,6 +1,6 @@
 """Prototype compatibility adapter for upstream analytical inputs.
 
-It reconstructs Block 1/2 evidence when their team payload is unavailable. Aurelia consumes
+It reconstructs Block 1/2 evidence when their team payload is unavailable. Aurum consumes
 these outputs but does not claim portfolio explanation, risk detection or stress testing as
 RM Intelligence Workbench capabilities.
 """

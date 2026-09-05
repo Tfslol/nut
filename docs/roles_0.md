@@ -119,3 +119,5 @@ criteria's shorthand reference to three dimensions.
       market cards, explicit RM inputs, assumptions and comparison persistence.
 - [x] Rename Attention map to Home and add persistent top navigation for Home,
       Alignment & conflicts, Upstream context and Command Center beside Notes.
+- [x] Simplify the Home heading and apply the Aurum workbench brand across
+      visible UI, contracts and architecture documentation.
