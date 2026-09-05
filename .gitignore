@@ -16,5 +16,7 @@ wheels/
 ralph/
 .env
 
-data/
+data/*
+!data/clients_uncensored.csv
+!data/clients_censored.csv
 juliusbaer/
