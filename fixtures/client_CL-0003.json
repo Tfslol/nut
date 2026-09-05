@@ -1,0 +1,247 @@
+{
+  "schema_version": "aurelia-casefile/1.0",
+  "as_of": "2026-08-26",
+  "client": {
+    "client_id": "CL-0003",
+    "client_name": "Margarethe Voss-Brenner",
+    "life_stage": "Recently inherited - transition",
+    "risk_profile": "Conservative",
+    "objectives": "Understand and de-risk the inherited portfolio; secure a stable income; German inheritance tax planning",
+    "tax_domicile": "Germany"
+  },
+  "attention": {
+    "client_id": "CL-0003",
+    "attention_index": 74.0,
+    "attention_band": "Prepare soon",
+    "severity": 78.0,
+    "materiality": 55.8,
+    "urgency": 80.0,
+    "reasons": [
+      "2 portfolio mandate band(s) need review",
+      "Confirmed EUR 3,400,000 need from 2026-10-01 (One-off)"
+    ],
+    "evidence": [
+      {
+        "source_file": "mandates.csv",
+        "row_or_id": "CL-0003",
+        "field": "allocation_bands",
+        "value": 2,
+        "snapshot_date": "2026-08-26",
+        "note": null
+      },
+      {
+        "source_file": "planned_cash_needs.csv",
+        "row_or_id": "CN-004",
+        "field": "amount,due_from,due_to,recurrence,certainty",
+        "value": "EUR 3400000; 2026-10-01 to 2026-12-31; One-off; Confirmed",
+        "snapshot_date": null,
+        "note": null
+      }
+    ]
+  },
+  "attribution": {
+    "client_id": "CL-0003",
+    "start": "2025-12-31",
+    "end": "2026-08-26",
+    "start_value_usd": 23516977.67,
+    "end_value_usd": 22181135.66,
+    "change_usd": -1335842.0100000016,
+    "price_effect_usd": -271264.0000000015,
+    "fx_effect_usd": -1064578.0099999981,
+    "flow_effect_usd": 0.0,
+    "reconciliation_difference_usd": -2.0954757928848267e-09,
+    "contributions": [
+      {
+        "portfolio_id": "PF-0005",
+        "instrument_id": "SYN-EQ-0010",
+        "instrument_name": "Global Luxury and Consumer Brands Fund",
+        "start_value_usd": 6757696.0,
+        "end_value_usd": 5780174.4,
+        "price_effect_usd": -617584.0000000005,
+        "fx_effect_usd": -359937.59999999916,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -977521.5999999996
+      },
+      {
+        "portfolio_id": "PF-0005",
+        "instrument_id": "SYN-FI-0209",
+        "instrument_name": "EUR Investment Grade Bond Fund",
+        "start_value_usd": 2315360.0,
+        "end_value_usd": 2028936.0,
+        "price_effect_usd": -160080.0000000003,
+        "fx_effect_usd": -126343.9999999997,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -286424.0
+      },
+      {
+        "portfolio_id": "PF-0005",
+        "instrument_id": "SYN-ST-0107",
+        "instrument_name": "Nordvind Industrial AB",
+        "start_value_usd": 4304412.0,
+        "end_value_usd": 4075671.6,
+        "price_effect_usd": 25055.999999999472,
+        "fx_effect_usd": -253796.39999999938,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -228740.3999999999
+      },
+      {
+        "portfolio_id": "PF-0005",
+        "instrument_id": "SYN-EQ-0004",
+        "instrument_name": "European Equity Fund",
+        "start_value_usd": 3720816.0,
+        "end_value_usd": 3626532.0,
+        "price_effect_usd": 131543.99999999948,
+        "fx_effect_usd": -225827.99999999948,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -94284.0
+      },
+      {
+        "portfolio_id": "PF-0005",
+        "instrument_id": "SYN-CA-0604",
+        "instrument_name": "EUR Call Deposit",
+        "start_value_usd": 1044000.0,
+        "end_value_usd": 982800.0,
+        "price_effect_usd": -1.4551915228366852e-10,
+        "fx_effect_usd": -61199.999999999854,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -61200.0
+      },
+      {
+        "portfolio_id": "PF-0005",
+        "instrument_id": "SYN-CA-0605",
+        "instrument_name": "CHF Call Deposit",
+        "start_value_usd": 759493.67,
+        "end_value_usd": 722021.66,
+        "price_effect_usd": -2.9103830456733704e-11,
+        "fx_effect_usd": -37472.00999999998,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -37472.01000000001
+      },
+      {
+        "portfolio_id": "PF-0005",
+        "instrument_id": "SYN-SP-0506",
+        "instrument_name": "Autocallable ref. Asia Banks Basket, 7.80% p.a.",
+        "start_value_usd": 1200000.0,
+        "end_value_usd": 1195200.0,
+        "price_effect_usd": -4800.0,
+        "fx_effect_usd": 0.0,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -4800.0
+      },
+      {
+        "portfolio_id": "PF-0005",
+        "instrument_id": "SYN-AL-0304",
+        "instrument_name": "Harborline Long Short Equity Fund",
+        "start_value_usd": 1364000.0,
+        "end_value_usd": 1401400.0,
+        "price_effect_usd": 37400.0,
+        "fx_effect_usd": 0.0,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": 37400.0
+      },
+      {
+        "portfolio_id": "PF-0005",
+        "instrument_id": "SYN-EQ-0003",
+        "instrument_name": "US Technology Leaders Fund",
+        "start_value_usd": 2051200.0,
+        "end_value_usd": 2368400.0,
+        "price_effect_usd": 317200.0000000005,
+        "fx_effect_usd": -5.258904423044442e-10,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": 317200.0
+      }
+    ],
+    "evidence": [
+      {
+        "source_file": "holdings.csv",
+        "row_or_id": "CL-0003",
+        "field": "market_value_usd, quantity, price_local",
+        "value": "23516977.67 -> 22181135.66",
+        "snapshot_date": "2026-08-26",
+        "note": "Price/FX/flow bridge across all client portfolios."
+      }
+    ]
+  },
+  "mandate_review": [
+    {
+      "portfolio_id": "PF-0005",
+      "asset_class": "Cash and Equivalents",
+      "actual_pct": 7.69,
+      "min_pct": 5.0,
+      "max_pct": 25.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0005",
+      "asset_class": "Fixed Income",
+      "actual_pct": 9.15,
+      "min_pct": 45.0,
+      "max_pct": 75.0,
+      "status": "review"
+    },
+    {
+      "portfolio_id": "PF-0005",
+      "asset_class": "Equity",
+      "actual_pct": 71.46,
+      "min_pct": 10.0,
+      "max_pct": 30.0,
+      "status": "review"
+    },
+    {
+      "portfolio_id": "PF-0005",
+      "asset_class": "Alternatives",
+      "actual_pct": 6.32,
+      "min_pct": 0.0,
+      "max_pct": 15.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0005",
+      "asset_class": "Commodities",
+      "actual_pct": 0.0,
+      "min_pct": 0.0,
+      "max_pct": 10.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0005",
+      "asset_class": "Structured Products",
+      "actual_pct": 5.39,
+      "min_pct": 0.0,
+      "max_pct": 10.0,
+      "status": "pass"
+    }
+  ],
+  "rm_notes": [
+    {
+      "note_id": "N-005",
+      "client_id": "CL-0003",
+      "note_date": "2026-02-16",
+      "rm_id": "RM-SG-014",
+      "rm_name": "Priscilla Ong",
+      "channel": "Meeting",
+      "note": "First meeting following the transfer in. Mrs Voss-Brenner is still grieving and asked that we not make any changes for now. She said several times that she does not understand what is in the portfolio and that her husband handled all of it. She described herself as someone who has never taken a risk with money. Risk profiling completed as Conservative. The portfolio as transferred is not conservative."
+    },
+    {
+      "note_id": "N-006",
+      "client_id": "CL-0003",
+      "note_date": "2026-05-29",
+      "rm_id": "RM-SG-014",
+      "rm_name": "Priscilla Ong",
+      "channel": "Email",
+      "note": "Client asked whether she should be worried about the news from the Middle East. Sent a short note. She replied asking whether her portfolio would be affected and said she would prefer 'something safe and boring'. German inheritance tax instalment of around EUR 3.4m falls due before year end."
+    }
+  ],
+  "integrity_issues": [
+    {
+      "check": "unnamed_structured_product_underlyings",
+      "status": "review",
+      "records": 1,
+      "affected_clients": [
+        "CL-0003"
+      ],
+      "detail": "Underlying issuers are not named and must not be guessed.",
+      "evidence": "instruments.csv \u00b7 underlying_reference"
+    }
+  ]
+}

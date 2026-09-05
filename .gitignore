@@ -20,3 +20,6 @@ data/*
 !data/clients_uncensored.csv
 !data/clients_censored.csv
 juliusbaer/
+
+Singhacks26.pdf
+*.zip

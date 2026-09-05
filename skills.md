@@ -43,16 +43,34 @@ without support from the client's background, portfolio and approved notes.
 
 ## Conversation brief
 
-- Prepare an objective, facts to explain, questions, uncertainties and referrals.
-- Use only reviewed outputs and source notes.
+- Synthesize deterministic risk, aspiration clashes and controlled event impacts
+  into a brief consumable in approximately 60 seconds.
+- Return why to call, client context, core tension, what changed, a suggested
+  opening, questions, options to discuss, checks and an evidence trail.
+- Use only reviewed outputs and source notes; disclose when the generic fallback
+  has not established a specific clash.
 - Conversation support only; the RM remains accountable for advice.
+
+### Optional AI drafting
+
+- Use `gpt-5.6-luna` through the Responses API with low reasoning effort,
+  low verbosity and current-turn-only reasoning context for this bounded,
+  latency-sensitive drafting workload.
+- AI receives only the deterministic fact packet selected by the application,
+  not direct file, database, MCP or web access.
+- It may improve empathy, clarity and question framing but may not add facts,
+  calculate risk, predict markets or recommend a trade.
+- Structured output is required and evidence identifiers are validated against
+  the supplied allow-list before display.
+- API responses are requested with storage disabled. Every draft is visibly
+  unapproved until reviewed by Priscilla.
 
 ## Client narrative synthesis
 
 - Begin with life stage, source of wealth, objectives, risk tolerance and the
   client's own words in approved RM notes.
 - Add portfolio evidence and market context only where they change what matters.
-- Return a defensible narrative: background, belief, observed tension, why now,
+- Return a defensible narrative: background, belief, observed tension, why it matters today,
   suggested conversation, evidence and uncertainty.
 - Prefer three deeply supported client narratives over twenty generic summaries.
 
@@ -61,4 +79,4 @@ without support from the client's background, portfolio and approved notes.
 Raw client names, identifiers, holdings, tax details and RM notes remain local.
 External providers receive only public instrument identifiers, market themes or
 anonymous aggregate exposure requests. External results must be timestamped,
-sourced and reviewed before they affect client priority.
+sourced and reviewed before they affect the RM attention order.

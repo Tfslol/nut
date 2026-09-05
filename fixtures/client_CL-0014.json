@@ -1,0 +1,245 @@
+{
+  "schema_version": "aurelia-casefile/1.0",
+  "as_of": "2026-08-26",
+  "client": {
+    "client_id": "CL-0014",
+    "client_name": "Lau Chi Ming",
+    "life_stage": "Peak earning years",
+    "risk_profile": "Balanced",
+    "objectives": "Generate yield to service development financing; retain exposure to the Hong Kong property recovery; fund a Mid-Levels redevelopment project",
+    "tax_domicile": "Hong Kong SAR"
+  },
+  "attention": {
+    "client_id": "CL-0014",
+    "attention_index": 97.7,
+    "attention_band": "Call first",
+    "severity": 100.0,
+    "materiality": 96.7,
+    "urgency": 80.0,
+    "reasons": [
+      "Only 0.59 LTV points to margin-call trigger",
+      "1 portfolio mandate band(s) need review",
+      "Confirmed HKD 60,000,000 need from 2026-11-01 (One-off)"
+    ],
+    "evidence": [
+      {
+        "source_file": "credit_facilities.csv",
+        "row_or_id": "CF-0002",
+        "field": "ltv_pct_2026-08-26",
+        "value": 69.41,
+        "snapshot_date": "2026-08-26",
+        "note": null
+      },
+      {
+        "source_file": "mandates.csv",
+        "row_or_id": "CL-0014",
+        "field": "allocation_bands",
+        "value": 1,
+        "snapshot_date": "2026-08-26",
+        "note": null
+      },
+      {
+        "source_file": "planned_cash_needs.csv",
+        "row_or_id": "CN-013",
+        "field": "amount,due_from,due_to,recurrence,certainty",
+        "value": "HKD 60000000; 2026-11-01 to 2027-06-30; One-off; Confirmed",
+        "snapshot_date": null,
+        "note": null
+      }
+    ]
+  },
+  "attribution": {
+    "client_id": "CL-0014",
+    "start": "2025-12-31",
+    "end": "2026-08-26",
+    "start_value_usd": 28181815.15,
+    "end_value_usd": 26488970.55,
+    "change_usd": -1692844.5999999978,
+    "price_effect_usd": -4860706.47455674,
+    "fx_effect_usd": -33162.44791324125,
+    "flow_effect_usd": 3201024.322469983,
+    "reconciliation_difference_usd": 9.313225746154785e-10,
+    "contributions": [
+      {
+        "portfolio_id": "PF-0016",
+        "instrument_id": "SYN-FI-0207",
+        "instrument_name": "Golden Harbour Properties 5.25% Perpetual",
+        "start_value_usd": 4944000.0,
+        "end_value_usd": 3408000.0,
+        "price_effect_usd": -1536000.0,
+        "fx_effect_usd": 0.0,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -1536000.0
+      },
+      {
+        "portfolio_id": "PF-0016",
+        "instrument_id": "SYN-ST-0106",
+        "instrument_name": "Golden Harbour Properties Ltd",
+        "start_value_usd": 3342747.11,
+        "end_value_usd": 2527528.81,
+        "price_effect_usd": -808729.1395161297,
+        "fx_effect_usd": -6489.16048387008,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -815218.2999999998
+      },
+      {
+        "portfolio_id": "PF-0016",
+        "instrument_id": "SYN-FI-0206",
+        "instrument_name": "Pacific Rim Bank 4.75% Perpetual",
+        "start_value_usd": 5324000.0,
+        "end_value_usd": 4653000.0,
+        "price_effect_usd": -671000.0,
+        "fx_effect_usd": 0.0,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -671000.0
+      },
+      {
+        "portfolio_id": "PF-0016",
+        "instrument_id": "SYN-FI-0205",
+        "instrument_name": "Asia High Yield Bond Fund",
+        "start_value_usd": 3978000.0,
+        "end_value_usd": 3645000.0,
+        "price_effect_usd": -333000.0000000004,
+        "fx_effect_usd": 4.0467629247586956e-10,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -333000.0
+      },
+      {
+        "portfolio_id": "PF-0016",
+        "instrument_id": "SYN-AL-0307",
+        "instrument_name": "Direct Property - Mid-Levels Apartment",
+        "start_value_usd": 5391527.6,
+        "end_value_usd": 5185659.41,
+        "price_effect_usd": -192554.55714285697,
+        "fx_effect_usd": -13313.632857142502,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -205868.18999999948
+      },
+      {
+        "portfolio_id": "PF-0016",
+        "instrument_id": "SYN-CA-0603",
+        "instrument_name": "HKD Call Deposit",
+        "start_value_usd": 1540436.46,
+        "end_value_usd": 1536491.68,
+        "price_effect_usd": -4.6838977141305804e-11,
+        "fx_effect_usd": -3944.779999999981,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -3944.780000000028
+      },
+      {
+        "portfolio_id": "PF-0016",
+        "instrument_id": "SYN-EQ-0021",
+        "instrument_name": "Greater China Equity Fund",
+        "start_value_usd": 3661103.98,
+        "end_value_usd": 3667093.47,
+        "price_effect_usd": 15404.364572229319,
+        "fx_effect_usd": -9414.874572229095,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": 5989.4900000002235
+      },
+      {
+        "portfolio_id": "PF-0016",
+        "instrument_id": "SYN-SP-0503",
+        "instrument_name": "Accumulator ref. Golden Harbour Properties Ltd, 12M",
+        "start_value_usd": 0.0,
+        "end_value_usd": 1866197.18,
+        "price_effect_usd": -1334827.1424699828,
+        "fx_effect_usd": 0.0,
+        "flow_effect_usd": 3201024.322469983,
+        "total_change_usd": 1866197.18
+      }
+    ],
+    "evidence": [
+      {
+        "source_file": "holdings.csv",
+        "row_or_id": "CL-0014",
+        "field": "market_value_usd, quantity, price_local",
+        "value": "28181815.15 -> 26488970.55",
+        "snapshot_date": "2026-08-26",
+        "note": "Price/FX/flow bridge across all client portfolios."
+      }
+    ]
+  },
+  "mandate_review": [
+    {
+      "portfolio_id": "PF-0016",
+      "asset_class": "Cash and Equivalents",
+      "actual_pct": 5.8,
+      "min_pct": 2.0,
+      "max_pct": 18.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0016",
+      "asset_class": "Fixed Income",
+      "actual_pct": 44.19,
+      "min_pct": 25.0,
+      "max_pct": 50.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0016",
+      "asset_class": "Equity",
+      "actual_pct": 23.39,
+      "min_pct": 30.0,
+      "max_pct": 55.0,
+      "status": "review"
+    },
+    {
+      "portfolio_id": "PF-0016",
+      "asset_class": "Alternatives",
+      "actual_pct": 19.58,
+      "min_pct": 0.0,
+      "max_pct": 20.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0016",
+      "asset_class": "Commodities",
+      "actual_pct": 0.0,
+      "min_pct": 0.0,
+      "max_pct": 10.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0016",
+      "asset_class": "Structured Products",
+      "actual_pct": 7.05,
+      "min_pct": 0.0,
+      "max_pct": 15.0,
+      "status": "pass"
+    }
+  ],
+  "rm_notes": [
+    {
+      "note_id": "N-018",
+      "client_id": "CL-0014",
+      "note_date": "2026-03-05",
+      "rm_id": "RM-SG-014",
+      "rm_name": "Priscilla Ong",
+      "channel": "Call",
+      "note": "Accumulator settlements are running against the client. Drew a further HKD 4m on the facility to meet obligations. Client remains convinced the Hong Kong property market turns this year. I pointed out that the perpetual, the shares, the accumulator and his own development business are all the same bet. He said that is why he is confident."
+    },
+    {
+      "note_id": "N-019",
+      "client_id": "CL-0014",
+      "note_date": "2026-08-11",
+      "rm_id": "RM-SG-014",
+      "rm_name": "Priscilla Ong",
+      "channel": "Meeting",
+      "note": "Redevelopment project needs an HKD 60m equity contribution by mid-2027. Client expects to fund it partly from the portfolio. Reviewed what is actually sellable. He was surprised how little of it is liquid."
+    }
+  ],
+  "integrity_issues": [
+    {
+      "check": "facility_drawdown_reconciliation",
+      "status": "block",
+      "records": 1,
+      "affected_clients": [
+        "CL-0014"
+      ],
+      "detail": "Facility change less ledger drawdowns: 2,000,000 HKD",
+      "evidence": "credit_facilities.csv \u00b7 CF-0002; transactions.csv"
+    }
+  ]
+}

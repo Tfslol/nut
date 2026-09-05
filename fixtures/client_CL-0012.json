@@ -1,0 +1,251 @@
+{
+  "schema_version": "aurelia-casefile/1.0",
+  "as_of": "2026-08-26",
+  "client": {
+    "client_id": "CL-0012",
+    "client_name": "Cheung Kwok Wing",
+    "life_stage": "Retired",
+    "risk_profile": "Income",
+    "objectives": "Draw USD 1.1m per year to fund living costs and medical care; preserve capital for two children",
+    "tax_domicile": "Hong Kong SAR"
+  },
+  "attention": {
+    "client_id": "CL-0012",
+    "attention_index": 67.5,
+    "attention_band": "Prepare soon",
+    "severity": 75.0,
+    "materiality": 15.2,
+    "urgency": 100.0,
+    "reasons": [
+      "Confirmed USD 1,280,000 need from 2026-01-01 (Annual)"
+    ],
+    "evidence": [
+      {
+        "source_file": "planned_cash_needs.csv",
+        "row_or_id": "CN-012",
+        "field": "amount,due_from,due_to,recurrence,certainty",
+        "value": "USD 1280000; 2026-01-01 to 2038-01-01; Annual; Confirmed",
+        "snapshot_date": null,
+        "note": null
+      }
+    ]
+  },
+  "attribution": {
+    "client_id": "CL-0012",
+    "start": "2025-12-31",
+    "end": "2026-08-26",
+    "start_value_usd": 30130861.79,
+    "end_value_usd": 28028704.720000003,
+    "change_usd": -2102157.0699999966,
+    "price_effect_usd": -2036241.6669656672,
+    "fx_effect_usd": -65915.4030343331,
+    "flow_effect_usd": 0.0,
+    "reconciliation_difference_usd": 3.6816345527768135e-09,
+    "contributions": [
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-FI-0201",
+        "instrument_name": "US Treasury 2.375% due 2045",
+        "start_value_usd": 6840000.0,
+        "end_value_usd": 5820000.0,
+        "price_effect_usd": -1020000.0000000007,
+        "fx_effect_usd": 6.461498003318411e-10,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -1020000.0
+      },
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-FI-0207",
+        "instrument_name": "Golden Harbour Properties 5.25% Perpetual",
+        "start_value_usd": 2060000.0,
+        "end_value_usd": 1420000.0,
+        "price_effect_usd": -640000.0000000001,
+        "fx_effect_usd": 1.5765166949677223e-10,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -640000.0
+      },
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-FI-0206",
+        "instrument_name": "Pacific Rim Bank 4.75% Perpetual",
+        "start_value_usd": 2904000.0,
+        "end_value_usd": 2538000.0,
+        "price_effect_usd": -366000.0,
+        "fx_effect_usd": 0.0,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -366000.0
+      },
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-FI-0203",
+        "instrument_name": "Global Investment Grade Corporate Bond Fund",
+        "start_value_usd": 4915200.0,
+        "end_value_usd": 4670400.0,
+        "price_effect_usd": -244800.0,
+        "fx_effect_usd": 0.0,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -244800.0
+      },
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-FI-0204",
+        "instrument_name": "Asia Investment Grade Credit Fund",
+        "start_value_usd": 4437000.0,
+        "end_value_usd": 4225500.0,
+        "price_effect_usd": -211500.0,
+        "fx_effect_usd": 0.0,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -211500.0
+      },
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-EQ-0024",
+        "instrument_name": "Singapore REIT Income Fund",
+        "start_value_usd": 1377906.98,
+        "end_value_usd": 1222633.14,
+        "price_effect_usd": -96511.6281350211,
+        "fx_effect_usd": -58762.21186497897,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -155273.84000000008
+      },
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-AL-0309",
+        "instrument_name": "Global Infrastructure Debt Fund",
+        "start_value_usd": 1250400.0,
+        "end_value_usd": 1202400.0,
+        "price_effect_usd": -48000.0,
+        "fx_effect_usd": 0.0,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -48000.0
+      },
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-CA-0603",
+        "instrument_name": "HKD Call Deposit",
+        "start_value_usd": 1155327.34,
+        "end_value_usd": 1152368.76,
+        "price_effect_usd": -2.7284841053187847e-12,
+        "fx_effect_usd": -2958.580000000072,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": -2958.5800000000745
+      },
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-CA-0601",
+        "instrument_name": "USD Call Deposit",
+        "start_value_usd": 800000.0,
+        "end_value_usd": 800000.0,
+        "price_effect_usd": 0.0,
+        "fx_effect_usd": 0.0,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": 0.0
+      },
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-EQ-0009",
+        "instrument_name": "Global Listed Infrastructure Fund",
+        "start_value_usd": 1588800.0,
+        "end_value_usd": 1677600.0,
+        "price_effect_usd": 88800.00000000019,
+        "fx_effect_usd": -1.8625101461111629e-10,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": 88800.0
+      },
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-EQ-0001",
+        "instrument_name": "Global Developed Equity Index Fund",
+        "start_value_usd": 1528800.0,
+        "end_value_usd": 1666000.0,
+        "price_effect_usd": 137200.0,
+        "fx_effect_usd": 0.0,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": 137200.0
+      },
+      {
+        "portfolio_id": "PF-0014",
+        "instrument_id": "SYN-ST-0104",
+        "instrument_name": "Pacific Orient Shipping Ltd",
+        "start_value_usd": 1273427.47,
+        "end_value_usd": 1633802.82,
+        "price_effect_usd": 364569.96116935473,
+        "fx_effect_usd": -4194.611169354668,
+        "flow_effect_usd": 0.0,
+        "total_change_usd": 360375.3500000001
+      }
+    ],
+    "evidence": [
+      {
+        "source_file": "holdings.csv",
+        "row_or_id": "CL-0012",
+        "field": "market_value_usd, quantity, price_local",
+        "value": "30130861.79 -> 28028704.72",
+        "snapshot_date": "2026-08-26",
+        "note": "Price/FX/flow bridge across all client portfolios."
+      }
+    ]
+  },
+  "mandate_review": [
+    {
+      "portfolio_id": "PF-0014",
+      "asset_class": "Cash and Equivalents",
+      "actual_pct": 6.97,
+      "min_pct": 3.0,
+      "max_pct": 20.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0014",
+      "asset_class": "Fixed Income",
+      "actual_pct": 66.62,
+      "min_pct": 40.0,
+      "max_pct": 70.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0014",
+      "asset_class": "Equity",
+      "actual_pct": 22.12,
+      "min_pct": 15.0,
+      "max_pct": 35.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0014",
+      "asset_class": "Alternatives",
+      "actual_pct": 4.29,
+      "min_pct": 0.0,
+      "max_pct": 15.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0014",
+      "asset_class": "Commodities",
+      "actual_pct": 0.0,
+      "min_pct": 0.0,
+      "max_pct": 8.0,
+      "status": "pass"
+    },
+    {
+      "portfolio_id": "PF-0014",
+      "asset_class": "Structured Products",
+      "actual_pct": 0.0,
+      "min_pct": 0.0,
+      "max_pct": 12.0,
+      "status": "pass"
+    }
+  ],
+  "rm_notes": [
+    {
+      "note_id": "N-016",
+      "client_id": "CL-0012",
+      "note_date": "2026-07-16",
+      "rm_id": "RM-SG-014",
+      "rm_name": "Priscilla Ong",
+      "channel": "Call",
+      "note": "Client increased his quarterly drawdown to cover medical costs. He asked why his income portfolio has lost money in a year when he was told bonds were the safe part. Explained duration. He said he does not want to sell anything at a loss and would rather wait for the bonds to come back. Note that he is 71 and the longest bond does not mature until 2045."
+    }
+  ],
+  "integrity_issues": []
+}
