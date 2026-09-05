@@ -2,12 +2,15 @@
 
 ## Project Status
 
-This repository is a hackathon project.
+This repository is a SingHacks 2026 hackathon project (Julius Baer wealth
+intelligence).
 
-The challenge has not yet been released.
+The challenge specification is available in `docs/challenge.md` and is the
+source of truth for requirements. The current build plan and per-coder task
+split live in `docs/PRD.md` and `docs/roles_<index>.md`.
 
-Do not invent a product, architecture, requirements, or technology
-choices before the challenge specification is available.
+Do not invent product requirements that are not grounded in the challenge or in
+`docs/PRD.md`.
 
 ## General Rules
 
@@ -39,33 +42,32 @@ Before implementing a substantial feature:
 4. State assumptions explicitly.
 5. Implement only the requested scope.
 
-## Roles & Issue Selection
+## Roles & Task Selection
 
 This section is for LLM harnesses and their human collaborators working out of
-this repository. It defines how a worker figures out *which task to do*.
+this repository. Future tasks are driven by per-coder checklist files rather
+than GitHub issues or pull requests.
 
 **Self-identify first.** When you are started, you may be told who you act for
-(e.g. "you are Coder A"). If you are, that is your identity. If not stated,
-assume you are an unassigned helper and do NOT claim issues without a human
-explicitly telling you whom you represent.
+(e.g. "you are Role 0" / "you are Coder A"). If so, that is your identity. If
+not stated, assume you are an unassigned helper and do not begin implementation
+until a human tells you which role index you represent.
 
-Then read `docs/roles.md` and follow its "How a worker decides what to work on"
-protocol. In short:
+Then:
 
-1. Find your collaborator in the role table in `docs/roles.md`.
-2. Collect the GitHub issue **labels** your role owns.
-3. List **open, unassigned** issues in the origin repo that carry one of your
-   labels (and are not `in-progress`).
-4. Pick the oldest/highest-priority one and **assign it to yourself** before
-   starting.
-5. Branch as `task/<issue-id>-<slug>` from `main`, implement only that issue,
-   then integrate your work back to `main` yourself, resolving any merge
-   conflicts directly (no pull request review or PR workflow).
+1. Read `docs/PRD.md` for the product requirements the work is split from.
+2. Open `docs/roles_<index>.md` for your role index (e.g. `docs/roles_0.md`).
+   It is a markdown checklist owned by your role.
+3. Work the checklist top to bottom. Tick an item (`- [x]`) only when it is
+   genuinely complete and verified.
+4. Branch as `role/<index>-<slug>` from `main`, implement only your role's
+   scope, then integrate your work back to `main` yourself, resolving any merge
+   conflicts directly. No pull requests, no GitHub issues, no issue assignment.
 
-**Assignee is the lock.** Never begin work on an issue that is already assigned
-to another collaborator, and do not grab a second issue while one you claimed is
-open. The role table and label scheme are scaffolding and are filled in for real
-once the challenge is released (`docs/challenge.md`).
+**Your role file is the plan.** Do not start items another role owns, do not
+pick up extra scope, and do not rewrite another role's branch. If a shared
+interface or the PRD is ambiguous, state your assumption and note it in your
+role file rather than inventing silently.
 
 ## Python Environment
 
@@ -85,13 +87,10 @@ Rules:
 
 ## Challenge
 
-The challenge specification will be added to:
+The challenge specification lives at:
 
 docs/challenge.md
 
-Once the challenge is released, treat that document as the
-primary source of truth for requirements.
-
-If the challenge specification conflicts with assumptions made
-elsewhere in the repository, the challenge specification takes
-precedence.
+Treat that document as the primary source of truth for requirements. Where it
+conflicts with assumptions made elsewhere in the repository (including this
+file and the PRD), the challenge specification takes precedence.

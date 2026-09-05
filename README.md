@@ -4,9 +4,10 @@ This repository contains our hackathon project.
 
 ## Status
 
-The challenge has not been released yet. Once released, requirements live in
+SingHacks 2026 challenge released. Requirements live in
 [`docs/challenge.md`](docs/challenge.md) and take precedence over any other
-assumptions in the repository.
+assumptions. The current build plan is in [`docs/PRD.md`](docs/PRD.md); the
+per-coder task checklists are in `docs/roles_<index>.md`.
 
 ## Development
 
@@ -44,13 +45,13 @@ When dependencies change, commit both `pyproject.toml` and `uv.lock`.
 ```
 src/singhacks26/   # package source (src layout)
 tests/             # pytest tests
-docs/challenge.md  # challenge requirements (source of truth)
-docs/roles.md      # role -> label routing for collaborators/harnesses
+docs/challenge.md      # challenge requirements (source of truth)
+docs/PRD.md            # product requirements for the current build
+docs/roles_<index>.md  # per-coder ralph checklists (roles_0.md, roles_1.md, ...)
 ```
 
 ### Contribution rules
 
-Collaboration conventions (branching, direct merges, decisions, and issue
-self-selection for LLM collaborators) are defined in
-[`AGENTS.md`](AGENTS.md) and [`docs/roles.md`](docs/roles.md) — please read
-them before making changes.
+Collaboration conventions (branching, direct merges, and per-coder task
+checklists for LLM collaborators) are defined in [`AGENTS.md`](AGENTS.md) and
+`docs/roles_<index>.md` — please read them before making changes.
