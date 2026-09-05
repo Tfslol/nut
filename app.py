@@ -669,11 +669,20 @@ def render_alignment_summary(client_id, compact=False):
         )
         return
     dimensions = report.get("dimensions", {})
+
+    def status_card(container, label, value):
+        display_value = str(value or "review").replace("_", " ").title()
+        container.markdown(
+            f'<div class="alignment-status-card"><div class="alignment-status-label">{label}</div>'
+            f'<div class="alignment-status-value">{display_value}</div></div>',
+            unsafe_allow_html=True,
+        )
+
     if compact:
-        metrics = st.columns(5)
-        metrics[0].metric("Alignment band", report.get("overall_band", "review").replace("_", " "))
+        cards = st.columns(5)
+        status_card(cards[0], "Alignment band", report.get("overall_band", "review"))
         for column, (label, key) in zip(
-            metrics[1:],
+            cards[1:],
             [
                 ("Risk", "risk_profile_alignment"),
                 ("Mandate", "mandate_alignment"),
@@ -682,12 +691,12 @@ def render_alignment_summary(client_id, compact=False):
             ],
             strict=False,
         ):
-            column.metric(label, dimensions.get(key, "review").replace("_", " "))
+            status_card(column, label, dimensions.get(key, "review"))
     else:
-        metrics = st.columns(5)
-        metrics[0].metric("Overall band", report.get("overall_band", "review").replace("_", " "))
+        cards = st.columns(5)
+        status_card(cards[0], "Overall band", report.get("overall_band", "review"))
         for column, (label, key) in zip(
-            metrics[1:],
+            cards[1:],
             [
                 ("Risk profile", "risk_profile_alignment"),
                 ("Mandate", "mandate_alignment"),
@@ -696,7 +705,7 @@ def render_alignment_summary(client_id, compact=False):
             ],
             strict=False,
         ):
-            column.metric(label, dimensions.get(key, "review").replace("_", " "))
+            status_card(column, label, dimensions.get(key, "review"))
     conflicts = report.get("conflicts", [])
     if not compact:
         if report.get("strengths"):
@@ -1389,6 +1398,7 @@ h1,h2,h3 {letter-spacing:-.025em}.eyebrow{color:#78d6c6;text-transform:uppercase
 .event-card{padding:18px 20px;margin:10px 0;background:linear-gradient(135deg,#102831,#0a1b21);border:1px solid #1f414c;border-radius:18px}
 .event-title{font-size:1.05rem;font-weight:700;color:#eef5f3}.pill{display:inline-block;padding:3px 9px;margin:6px 5px 0 0;border-radius:999px;background:#153641;color:#8ee3d2;font-size:.72rem}
 .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:8px 0 16px}.cal-head{text-align:center;color:#77939a;font-size:.72rem;font-weight:700}.cal-day{position:relative;min-height:42px;padding:8px;border:1px solid #1b3942;border-radius:9px;background:#0d2229;color:#dfecea;font-size:.82rem}.cal-empty{opacity:.28}.cal-dot{position:absolute;right:7px;bottom:7px;width:7px;height:7px;border-radius:50%;background:#59d7bd;box-shadow:0 0 8px #59d7bd}.dashboard-panel{padding:18px 20px;border:1px solid #1b3942;border-radius:18px;background:#0b1d23;margin-bottom:14px}
+.alignment-status-card{min-height:74px;padding:12px 14px;margin:2px 0 10px;border:1px solid #1d414d;border-radius:12px;background:linear-gradient(145deg,#102932,#0b1d24)}.alignment-status-label{color:#8faab2;font-size:.72rem;font-weight:700;letter-spacing:.04em}.alignment-status-value{color:#f4f7f5;font-size:1rem;font-weight:700;line-height:1.2;overflow-wrap:anywhere;white-space:normal;margin-top:6px}
 </style>""",
     unsafe_allow_html=True,
 )
@@ -1640,20 +1650,40 @@ elif page == "Alignment & conflicts":
     st.caption(f"Client ID {selected_alignment_id} · all figures as of {AS_OF}")
     left, right = st.columns([0.55, 0.45])
     with left:
-        st.markdown("**Censored static context**")
+        st.markdown("**Client profile**")
+        profile_metrics = st.columns(3)
+        profile_metrics[0].metric("AUM", f"USD {selected_alignment.total_aum_usd / 1e6:,.1f}m")
+        profile_metrics[1].metric("Risk profile", selected_alignment.risk_profile)
+        profile_metrics[2].metric("Liquidity need", selected_alignment.liquidity_needs)
+        profile_fields = st.columns(2)
+        with profile_fields[0]:
+            st.markdown("**Life stage**")
+            st.write(selected_alignment.life_stage)
+            st.markdown("**Base currency**")
+            st.write(selected_alignment.base_currency)
+        with profile_fields[1]:
+            st.markdown("**Investment horizon**")
+            st.write(f"{selected_alignment.investment_horizon_years:g} years")
+            st.markdown("**Tax domicile**")
+            st.write(selected_alignment.tax_domicile)
+        st.markdown("**Objectives**")
+        st.info(selected_alignment.objectives)
+        st.markdown("**Source of wealth**")
+        st.write(selected_alignment.source_of_wealth)
         note_text = censored_vault_text(selected_alignment_id)
-        st.code(note_text or "No censored Obsidian note is available.", language="markdown")
+        with st.expander("View censored source note"):
+            st.code(note_text or "No censored Obsidian note is available.", language="markdown")
     with right:
-        st.markdown("**Review lead across the book**")
+        st.markdown("**Review leads for this client**")
         client_conflicts = alignment_inbox.loc[alignment_inbox.client_id == selected_alignment_id]
         if client_conflicts.empty:
             st.caption("No surfaced conflict for this client.")
         else:
-            st.dataframe(
-                client_conflicts[["severity", "category", "headline", "discussion_topic"]],
-                hide_index=True,
-                width="stretch",
-            )
+            for _, conflict in client_conflicts.head(4).iterrows():
+                with st.container(border=True):
+                    st.caption(f"{conflict.severity} · {conflict.category}")
+                    st.markdown(f"**{conflict.headline}**")
+                    st.caption(f"Discuss: {conflict.discussion_topic}")
         if st.button(
             "Re-analyse with AI",
             type="primary",
@@ -1694,9 +1724,12 @@ elif page == "Alignment & conflicts":
     if not alignment_inbox.empty:
         with st.expander("Book-wide conflict inbox"):
             st.dataframe(
-                alignment_inbox[["client_id", "severity", "category", "headline", "evidence_ids"]],
+                alignment_inbox[["client_id", "severity", "category", "headline"]],
                 hide_index=True,
                 width="stretch",
+                column_config={
+                    "headline": st.column_config.TextColumn("Review lead", width="large"),
+                },
             )
 
 elif page == "Focus casebook":

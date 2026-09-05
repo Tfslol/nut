@@ -55,6 +55,7 @@ def test_fact_packet_has_deterministic_sections_and_cites_sources(data):
     assert packet["planned_cash_needs"][0]["need_id"] == "CN-004"
     assert packet["matched_controlled_events"]
     assert "event_log.csv:2026-06-05" in packet["allowed_evidence_ids"]
+    assert "note:RM notes" in packet["allowed_evidence_ids"]
 
 
 def test_fact_packet_does_not_leak_uncensored_identity(data):

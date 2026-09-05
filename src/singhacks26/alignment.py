@@ -33,7 +33,7 @@ from singhacks26.ai_brief import (
 from singhacks26.intelligence import AS_OF, portfolio_mandate_review, usd_per_unit
 from singhacks26.workbench import CURATED_THEMES
 
-CALCULATION_VERSION = "alignment/1.1"
+CALCULATION_VERSION = "alignment/1.2"
 DIMENSION_STATUSES = Literal["aligned", "partially_aligned", "review", "misaligned", "conflict"]
 OVERALL_BANDS = Literal["aligned", "partially_aligned", "review", "misaligned", "conflict"]
 CONFLICT_CATEGORIES = Literal["risk_profile", "mandate", "objectives", "event"]
@@ -210,6 +210,7 @@ def _evidence_ids(
         "note:Exposure by region (top 5, latest)",
         "note:Planned cash needs",
         "note:Credit facilities",
+        "note:RM notes",
         "note:Relevant controlled events (theme match)",
     }
     ids.update(f"portfolios.csv:{value}" for value in portfolios.portfolio_id)
