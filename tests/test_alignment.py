@@ -56,6 +56,7 @@ def test_fact_packet_has_deterministic_sections_and_cites_sources(data):
     assert packet["matched_controlled_events"]
     assert "event_log.csv:2026-06-05" in packet["allowed_evidence_ids"]
     assert "note:RM notes" in packet["allowed_evidence_ids"]
+    assert "note:Transaction activity (censored)" in packet["allowed_evidence_ids"]
 
 
 def test_fact_packet_does_not_leak_uncensored_identity(data):
@@ -127,6 +128,38 @@ def test_numeric_guardrail_accepts_percent_formatting_but_rejects_new_value(data
     report.conflicts[0].detail = f"The recorded collateral reading is {ltv + 0.01:.2f}%."
     with pytest.raises(RuntimeError, match="unsupported numeric claims"):
         validate_alignment_report(report, packet)
+
+
+def test_numeric_guardrail_accepts_one_decimal_display_rounding(data):
+    packet = build_alignment_fact_packet(data, "CL-0013", censored_note("CL-0013"))
+    illiquid_share = next(
+        item["household_weight_pct"]
+        for item in packet["household"]["liquidity_tiers"]
+        if item["liquidity_tier"] == "Illiquid"
+    )
+    report = AlignmentReport(
+        client_id="CL-0013",
+        as_of="2026-08-26",
+        overall_band="review",
+        dimensions=AlignmentDimensions(
+            risk_profile_alignment="review",
+            mandate_alignment="review",
+            objectives_life_event_alignment="review",
+            event_consistency="aligned",
+        ),
+        conflicts=[
+            Conflict(
+                conflict_id="CL-0013-C-1",
+                category="mandate",
+                severity="Medium",
+                headline="Liquidity review",
+                detail=f"Illiquid holdings represent {illiquid_share:.1f}% of the household.",
+                evidence_ids=["holdings.csv:2026-08-26"],
+                discussion_topic="Confirm the liquidity plan.",
+            )
+        ],
+    )
+    validate_alignment_report(report, packet)
 
 
 def test_alignment_store_refreshes_on_note_or_source_change(tmp_path):

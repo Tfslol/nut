@@ -33,7 +33,7 @@ from singhacks26.ai_brief import (
 from singhacks26.intelligence import AS_OF, portfolio_mandate_review, usd_per_unit
 from singhacks26.workbench import CURATED_THEMES
 
-CALCULATION_VERSION = "alignment/1.2"
+CALCULATION_VERSION = "alignment/1.3"
 DIMENSION_STATUSES = Literal["aligned", "partially_aligned", "review", "misaligned", "conflict"]
 OVERALL_BANDS = Literal["aligned", "partially_aligned", "review", "misaligned", "conflict"]
 CONFLICT_CATEGORIES = Literal["risk_profile", "mandate", "objectives", "event"]
@@ -190,6 +190,7 @@ def _evidence_ids(
     facilities: pd.DataFrame,
     commitments: pd.DataFrame,
     events: list[dict[str, Any]],
+    vault_text: str | None = None,
 ) -> list[str]:
     ids = {
         f"clients.csv:{client_id}",
@@ -213,6 +214,8 @@ def _evidence_ids(
         "note:RM notes",
         "note:Relevant controlled events (theme match)",
     }
+    note_headings = re.findall(r"^#{2,3}\s+(.+?)\s*$", vault_text or "", flags=re.MULTILINE)
+    ids.update(f"note:{heading.strip()}" for heading in note_headings)
     ids.update(f"portfolios.csv:{value}" for value in portfolios.portfolio_id)
     ids.update(f"planned_cash_needs.csv:{value}" for value in needs.need_id)
     ids.update(f"credit_facilities.csv:{value}" for value in facilities.facility_id)
@@ -439,7 +442,7 @@ def build_alignment_fact_packet(
 
     events = _event_rows(data, client, positions)
     allowed_evidence_ids = _evidence_ids(
-        client_id, portfolios, needs, facilities, commitments, events
+        client_id, portfolios, needs, facilities, commitments, events, vault_text
     )
 
     packet = {
@@ -500,9 +503,9 @@ def build_alignment_fact_packet(
     return packet
 
 
-def _normalised_numbers(text: str) -> set[Decimal]:
-    """Return numeric claims with presentation-only formatting normalised."""
-    values: set[Decimal] = set()
+def _number_claims(text: str) -> list[tuple[Decimal, int, str]]:
+    """Extract numeric claims, retaining precision for safe display rounding."""
+    claims = []
     scales = {
         "": Decimal("1"),
         "%": Decimal("1"),
@@ -518,22 +521,34 @@ def _normalised_numbers(text: str) -> set[Decimal]:
                 break
         raw = token[: -len(suffix)] if suffix else token
         try:
-            values.add(Decimal(raw.replace(",", "")) * scales[suffix])
+            decimal_places = len(raw.partition(".")[2])
+            claims.append((Decimal(raw.replace(",", "")) * scales[suffix], decimal_places, token))
         except InvalidOperation:
             continue
-    return values
+    return claims
+
+
+def _unsupported_number_tokens(source: str, candidate: str) -> set[str]:
+    allowed_claims = _number_claims(source)
+    allowed_values = {value for value, _, _ in allowed_claims}
+    unsupported = set()
+    for value, decimal_places, token in _number_claims(candidate):
+        if value in allowed_values:
+            continue
+        quantum = Decimal(1).scaleb(-decimal_places)
+        if any(value == allowed.quantize(quantum) for allowed in allowed_values):
+            continue
+        unsupported.add(token.lower())
+    return unsupported
 
 
 def _validate_numbers_and_language(report: AlignmentReport, fact_packet: dict[str, Any]) -> None:
     source = json.dumps(fact_packet, ensure_ascii=False)
     candidate = report.model_dump_json()
-    allowed_numbers = _normalised_numbers(source)
-    candidate_numbers = _normalised_numbers(candidate)
-    unsupported = candidate_numbers - allowed_numbers
+    unsupported = _unsupported_number_tokens(source, candidate)
     if unsupported:
         raise RuntimeError(
-            "AI report introduced unsupported numeric claims: "
-            f"{sorted(str(value) for value in unsupported)}"
+            f"AI report introduced unsupported numeric claims: {sorted(unsupported)}"
         )
     for pattern in PROHIBITED_PATTERNS:
         if pattern.search(candidate):
