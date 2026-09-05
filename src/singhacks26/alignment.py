@@ -33,7 +33,7 @@ from singhacks26.ai_brief import (
 from singhacks26.intelligence import AS_OF, portfolio_mandate_review, usd_per_unit
 from singhacks26.workbench import CURATED_THEMES
 
-CALCULATION_VERSION = "alignment/1.3"
+CALCULATION_VERSION = "alignment/1.4"
 DIMENSION_STATUSES = Literal["aligned", "partially_aligned", "review", "misaligned", "conflict"]
 OVERALL_BANDS = Literal["aligned", "partially_aligned", "review", "misaligned", "conflict"]
 CONFLICT_CATEGORIES = Literal["risk_profile", "mandate", "objectives", "event"]
@@ -566,11 +566,10 @@ def validate_alignment_report(report: AlignmentReport, fact_packet: dict[str, An
     for conflict in report.conflicts:
         unknown = set(conflict.evidence_ids) - allowed
         if conflict.category == "event":
-            invalid_events = set(conflict.evidence_ids) - event_evidence
-            if invalid_events:
+            matched = set(conflict.evidence_ids) & event_evidence
+            if not matched:
                 raise RuntimeError(
-                    "Event-consistency conflicts may cite only matched event_log.csv rows: "
-                    f"{sorted(invalid_events)}"
+                    "Event-consistency conflicts must cite at least one matched event_log.csv row."
                 )
         if unknown:
             raise RuntimeError(f"AI returned unsupported evidence IDs: {sorted(unknown)}")
@@ -593,31 +592,43 @@ def analyze_alignment(
             f"Unsupported OPENAI_REASONING_EFFORT={reasoning_effort!r}. Use one of: {supported}."
         )
     packet = build_alignment_fact_packet(data, client_id, vault_text)
-    client = OpenAI(api_key=api_key)
-    response = client.responses.parse(
-        model=model,
-        store=False,
-        max_output_tokens=1200,
-        text={"verbosity": "low"},
-        reasoning={"effort": reasoning_effort, "context": "current_turn"},
-        instructions=(
-            "You are preparing a private-bank relationship manager's alignment review. "
-            "Use only the supplied synthetic fact packet and censored note. Do not calculate, "
-            "invent numbers, infer causation, recommend a trade, or give tax conclusions. "
-            "Distinguish client belief from verified observation. Return concise strengths, "
-            "uncertainties and review leads for the RM; discussion topics are not advice. "
-            "Use all four dimensions in the schema. Every conflict needs an allowed evidence ID "
-            "and a discussion topic. Event conflicts may cite only matched event_log.csv IDs, "
-            "because event_log.csv is the controlled source of truth."
-        ),
-        input=json.dumps(packet, ensure_ascii=False),
-        text_format=AlignmentReport,
+    instructions = (
+        "You are preparing a private-bank relationship manager's alignment review. "
+        "Use only the supplied synthetic fact packet and censored note. Do not calculate, "
+        "invent numbers, infer causation, recommend a trade, or give tax conclusions. "
+        "Distinguish client belief from verified observation. Return concise strengths, "
+        "uncertainties and review leads for the RM; discussion topics are not advice. "
+        "Use all four dimensions in the schema. Return ONLY a single JSON object that "
+        "matches the requested schema, never markdown prose. Every conflict needs an "
+        "allowed evidence ID and a discussion topic. For event conflicts cite at least one "
+        "matched event_log.csv ID (you may also cite the affected holdings or note); "
+        "event_log.csv is the controlled source of truth."
     )
-    report = response.output_parsed
-    if report is None:
-        raise RuntimeError("The model did not return a structured alignment report.")
-    validate_alignment_report(report, packet)
-    return report, model
+    last_error: Exception | None = None
+    client = OpenAI(api_key=api_key)
+    for _ in range(2):  # the model is nondeterministic; retry a transient failure once
+        response = client.responses.parse(
+            model=model,
+            store=False,
+            max_output_tokens=1200,
+            text={"verbosity": "low"},
+            reasoning={"effort": reasoning_effort, "context": "current_turn"},
+            instructions=instructions,
+            input=json.dumps(packet, ensure_ascii=False),
+            text_format=AlignmentReport,
+        )
+        report = response.output_parsed
+        if report is None:
+            last_error = RuntimeError("The model did not return a structured alignment report.")
+            continue
+        try:
+            validate_alignment_report(report, packet)
+            return report, model
+        except Exception as exc:  # retry once, then surface the guardrail error
+            last_error = exc
+    if last_error is None:
+        last_error = RuntimeError("The model did not return a structured alignment report.")
+    raise last_error
 
 
 def _hash_text(text: str) -> str:

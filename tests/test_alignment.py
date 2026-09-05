@@ -99,6 +99,34 @@ def test_event_conflict_must_use_matched_controlled_event(data):
         validate_alignment_report(report, packet)
 
 
+def test_event_conflict_may_also_cite_affected_holdings(data):
+    """Event conflicts need >=1 matched event row; holdings/note may also be cited."""
+    packet = build_alignment_fact_packet(data, "CL-0003", censored_note("CL-0003"))
+    report = AlignmentReport(
+        client_id="CL-0003",
+        as_of="2026-08-26",
+        overall_band="review",
+        dimensions=AlignmentDimensions(
+            risk_profile_alignment="review",
+            mandate_alignment="review",
+            objectives_life_event_alignment="review",
+            event_consistency="conflict",
+        ),
+        conflicts=[
+            Conflict(
+                conflict_id="CL-0003-C-2",
+                category="event",
+                severity="High",
+                headline="Controlled event review",
+                detail="Discuss the dated event evidence against the exposure.",
+                evidence_ids=["event_log.csv:2026-06-05", "holdings.csv:2026-08-26"],
+                discussion_topic="Ask what the client understood about the exposure.",
+            )
+        ],
+    )
+    validate_alignment_report(report, packet)
+
+
 def test_numeric_guardrail_accepts_percent_formatting_but_rejects_new_value(data):
     packet = build_alignment_fact_packet(data, "CL-0002", censored_note("CL-0002"))
     ltv = packet["credit_facilities"][0]["ltv_pct"]

@@ -597,10 +597,16 @@ def censored_vault_text(client_id):
 
 
 def load_alignment_reports(_data):
-    """Load the presentation set first, then queue the rest without blocking the UI."""
+    """Load cached reports; keep the banner for config errors only.
+
+    Per-client analysis failures (e.g. a guardrail rejection on one client) are
+    muted into ``client_errors`` so they never flood the top of the page. A
+    muted note is shown for the specific client instead, with a re-run action.
+    """
     source_hash = source_data_hash(_data)
     reports = {}
-    errors = []
+    config_errors = []
+    client_errors = {}
     configured = ai_is_configured()
     client_ids = _data["clients"].client_id.tolist()
     preload_ids = [client_id for client_id in PRESENTATION_CLIENTS if client_id in client_ids]
@@ -611,7 +617,7 @@ def load_alignment_reports(_data):
         record = ALIGNMENT.get(client_id)
         if ALIGNMENT.needs_refresh(client_id, note, source_hash):
             if not configured:
-                errors.append("OPENAI_API_KEY is not configured for alignment analysis.")
+                config_errors.append("OPENAI_API_KEY is not configured for alignment analysis.")
             else:
                 try:
                     report, model = analyze_alignment(_data, client_id, note)
@@ -633,7 +639,7 @@ def load_alignment_reports(_data):
         if record and record.get("report"):
             reports[client_id] = record["report"]
         elif record and record.get("error") and not ALIGNMENT.needs_refresh(client_id, note, source_hash):
-            errors.append(record["error"])
+            client_errors[client_id] = record["error"]
 
     if configured:
         alignment_background_loader().start(
@@ -652,10 +658,10 @@ def load_alignment_reports(_data):
         if record and record.get("report"):
             reports[client_id] = record["report"]
         elif record and record.get("error") and not ALIGNMENT.needs_refresh(client_id, notes[client_id], source_hash):
-            errors.append(record["error"])
+            client_errors[client_id] = record["error"]
     if not configured and not reports:
-        errors.append("OPENAI_API_KEY is not configured for alignment analysis.")
-    return reports, list(dict.fromkeys(errors))
+        config_errors.append("OPENAI_API_KEY is not configured for alignment analysis.")
+    return reports, config_errors, client_errors
 
 
 def render_alignment_summary(client_id, compact=False):
@@ -1566,7 +1572,7 @@ clients = data["clients"]
 impacts = build_event_impacts(data)
 attention = attention_queue(data)
 news_payload, news_ranking, news_error = ensure_news(data)
-alignment_reports, alignment_errors = load_alignment_reports(data)
+alignment_reports, alignment_errors, alignment_client_errors = load_alignment_reports(data)
 alignment_inbox = conflict_inbox(list(alignment_reports.values()))
 if not alignment_inbox.empty:
     worst_conflicts = (
@@ -1592,6 +1598,7 @@ if st.session_state.get("navigation_page") in legacy_page_names:
 
 def navigate_to(page_name):
     st.session_state["navigation_page"] = page_name
+
 
 with st.sidebar:
     st.markdown("### ◈ AURUM")
@@ -1788,11 +1795,7 @@ elif page == "Alignment & conflicts":
         unsafe_allow_html=True,
     )
     if alignment_errors:
-        st.error(
-            "Alignment analysis is unavailable for one or more clients: "
-            + " · ".join(alignment_errors[:3])
-            + (" · …" if len(alignment_errors) > 3 else "")
-        )
+        st.error(" · ".join(dict.fromkeys(alignment_errors)))
     if not alignment_reports:
         st.info(
             "No alignment reports are cached yet. Configure OPENAI_API_KEY to generate the "
@@ -1849,6 +1852,9 @@ elif page == "Alignment & conflicts":
         with st.expander("View censored source note"):
             st.code(note_text or "No censored Obsidian note is available.", language="markdown")
     with right:
+        if selected_alignment_id not in alignment_reports and selected_alignment_id in alignment_client_errors:
+            with st.expander("Why this client has no report yet"):
+                st.caption(alignment_client_errors[selected_alignment_id])
         st.markdown("**Review leads for this client**")
         client_conflicts = alignment_inbox.loc[alignment_inbox.client_id == selected_alignment_id]
         if client_conflicts.empty:
@@ -1924,9 +1930,7 @@ elif page == "Command Center":
         unsafe_allow_html=True,
     )
 
-    presentation_ids = [
-        client_id for client_id in PRESENTATION_CLIENTS if client_id in clients.client_id.tolist()
-    ]
+    presentation_ids = [client_id for client_id in PRESENTATION_CLIENTS if client_id in clients.client_id.tolist()]
     advisor_client_options = presentation_ids + [
         client_id for client_id in clients.client_id if client_id not in presentation_ids
     ]
@@ -1940,9 +1944,7 @@ elif page == "Command Center":
         "Client",
         advisor_client_options,
         index=advisor_client_options.index(advisor_default),
-        format_func=lambda client_id: clients.loc[
-            clients.client_id == client_id, "client_name"
-        ].iloc[0],
+        format_func=lambda client_id: clients.loc[clients.client_id == client_id, "client_name"].iloc[0],
         key="action_advisor_client",
     )
     selected_advisor = clients.loc[clients.client_id == selected_advisor_id].iloc[0]
@@ -1956,15 +1958,8 @@ elif page == "Command Center":
 
     st.markdown(f"### {selected_advisor.client_name}")
     fetched_at = pd.to_datetime(news_payload.get("fetched_utc"), utc=True, errors="coerce")
-    fetched_label = (
-        fetched_at.strftime("%d %b %Y, %H:%M UTC")
-        if not pd.isna(fetched_at)
-        else "not available"
-    )
-    st.caption(
-        f"Client ID {selected_advisor_id} · portfolio facts as of {AS_OF} · "
-        f"news fetched {fetched_label}"
-    )
+    fetched_label = fetched_at.strftime("%d %b %Y, %H:%M UTC") if not pd.isna(fetched_at) else "not available"
+    st.caption(f"Client ID {selected_advisor_id} · portfolio facts as of {AS_OF} · " f"news fetched {fetched_label}")
     summary = st.columns(4)
     summary[0].metric("Next priority", advisor_briefs[0]["severity"] if advisor_briefs else "Monitor")
     summary[1].metric("Open review leads", len(advisor_briefs))
@@ -1986,13 +1981,9 @@ elif page == "Command Center":
         for column, signal in zip(signal_columns, advisor_signals, strict=False):
             with column:
                 with st.container(border=True):
-                    st.caption(
-                        f"{signal['sector']} · {signal['sector_exposure_pct']:.1f}% of latest portfolio"
-                    )
+                    st.caption(f"{signal['sector']} · {signal['sector_exposure_pct']:.1f}% of latest portfolio")
                     st.markdown(f"**{signal['title']}**")
-                    published_at = pd.to_datetime(
-                        signal.get("published_at"), utc=True, errors="coerce"
-                    )
+                    published_at = pd.to_datetime(signal.get("published_at"), utc=True, errors="coerce")
                     published_label = (
                         published_at.strftime("%d %b %Y, %H:%M UTC")
                         if not pd.isna(published_at)
@@ -2076,13 +2067,9 @@ elif page == "Command Center":
                         )
 
                 due_days = {"Urgent": 0, "High": 5, "Medium": 14, "Low": 30}
-                suggested_due = datetime.now().date() + timedelta(
-                    days=due_days.get(brief["severity"], 30)
-                )
+                suggested_due = datetime.now().date() + timedelta(days=due_days.get(brief["severity"], 30))
                 with st.expander("Add this step to the Action Record"):
-                    with st.form(
-                        key=f"advisor_task_{selected_advisor_id}_{brief['conflict_id']}"
-                    ):
+                    with st.form(key=f"advisor_task_{selected_advisor_id}_{brief['conflict_id']}"):
                         task_title = st.text_input("Task", value=brief["what"])
                         task_owner = st.text_input("Owner", value="Priscilla Ong")
                         task_due = st.date_input("Due date", value=suggested_due)
@@ -2095,8 +2082,7 @@ elif page == "Command Center":
                             st.warning("Add both a task and an owner before saving.")
                         else:
                             evidence_ref = " · ".join(
-                                brief["evidence_ids"]
-                                + [signal["evidence_id"] for signal in brief["market_signals"]]
+                                brief["evidence_ids"] + [signal["evidence_id"] for signal in brief["market_signals"]]
                             )
                             WORKFLOW.add_task(
                                 client_id=selected_advisor_id,
@@ -2106,9 +2092,7 @@ elif page == "Command Center":
                                 task_type="Follow-up task",
                                 evidence_ref=evidence_ref or f"alignment:{brief['conflict_id']}",
                             )
-                            st.success(
-                                "Next step saved locally to the Action Record with an audit event."
-                            )
+                            st.success("Next step saved locally to the Action Record with an audit event.")
 
     st.divider()
     st.markdown("### Allocation scenario preview")
@@ -2128,9 +2112,7 @@ elif page == "Command Center":
             lead_options,
             index=0 if lead_options else None,
             format_func=lambda conflict_id: next(
-                brief["headline"]
-                for brief in advisor_briefs
-                if brief["conflict_id"] == conflict_id
+                brief["headline"] for brief in advisor_briefs if brief["conflict_id"] == conflict_id
             ),
             placeholder="No open review lead",
             disabled=not lead_options,
@@ -2164,10 +2146,7 @@ elif page == "Command Center":
                 value=0.0,
                 step=0.5,
                 disabled=source_asset_class is None,
-                key=(
-                    f"scenario_shift_{selected_advisor_id}_"
-                    f"{source_asset_class or 'no_source'}"
-                ),
+                key=(f"scenario_shift_{selected_advisor_id}_{source_asset_class or 'no_source'}"),
             )
 
         scenario_ready = (
@@ -2196,9 +2175,9 @@ elif page == "Command Center":
                 scenario_pct=current_allocation["current_pct"],
             )
 
-        chart = scenario_allocation[
-            ["asset_class", "current_pct", "scenario_pct"]
-        ].rename(columns={"current_pct": "Current %", "scenario_pct": "Scenario %"})
+        chart = scenario_allocation[["asset_class", "current_pct", "scenario_pct"]].rename(
+            columns={"current_pct": "Current %", "scenario_pct": "Scenario %"}
+        )
         chart_left, chart_right = st.columns([0.62, 0.38])
         with chart_left:
             st.markdown("**Current versus scenario allocation**")
@@ -2212,23 +2191,18 @@ elif page == "Command Center":
                     f"USD {scenario['shift_value_usd'] / 1e6:,.2f}m",
                     f"{scenario['shift_pct']:.1f}% of portfolio",
                 )
-                concentration_change = (
-                    scenario["largest_scenario_pct"] - scenario["largest_current_pct"]
-                )
+                concentration_change = scenario["largest_scenario_pct"] - scenario["largest_current_pct"]
                 effect_metrics[1].metric(
                     "Largest asset class",
                     f"{scenario['largest_scenario_pct']:.1f}%",
                     f"{concentration_change:+.1f} pts",
                 )
-                source_row = scenario_allocation.loc[
-                    scenario_allocation.asset_class == source_asset_class
-                ].iloc[0]
+                source_row = scenario_allocation.loc[scenario_allocation.asset_class == source_asset_class].iloc[0]
                 destination_row = scenario_allocation.loc[
                     scenario_allocation.asset_class == destination_asset_class
                 ].iloc[0]
                 st.markdown(
-                    f"- **{source_asset_class}:** {source_row.current_pct:.1f}% → "
-                    f"{source_row.scenario_pct:.1f}%"
+                    f"- **{source_asset_class}:** {source_row.current_pct:.1f}% → " f"{source_row.scenario_pct:.1f}%"
                 )
                 st.markdown(
                     f"- **{destination_asset_class}:** {destination_row.current_pct:.1f}% → "
@@ -2280,11 +2254,7 @@ elif page == "Command Center":
                     key=f"save_advisor_scenario_{selected_advisor_id}",
                 ):
                     linked_brief = next(
-                        (
-                            brief
-                            for brief in advisor_briefs
-                            if brief["conflict_id"] == selected_lead_id
-                        ),
+                        (brief for brief in advisor_briefs if brief["conflict_id"] == selected_lead_id),
                         None,
                     )
                     WORKFLOW.save_comparison(
