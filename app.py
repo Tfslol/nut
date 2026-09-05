@@ -634,7 +634,11 @@ def load_alignment_reports(_data):
                     )
         if record and record.get("report"):
             reports[client_id] = record["report"]
-        elif record and record.get("error"):
+        elif (
+            record
+            and record.get("error")
+            and not ALIGNMENT.needs_refresh(client_id, note, source_hash)
+        ):
             errors.append(record["error"])
 
     if configured:
@@ -653,7 +657,11 @@ def load_alignment_reports(_data):
         record = ALIGNMENT.get(client_id)
         if record and record.get("report"):
             reports[client_id] = record["report"]
-        elif record and record.get("error"):
+        elif (
+            record
+            and record.get("error")
+            and not ALIGNMENT.needs_refresh(client_id, notes[client_id], source_hash)
+        ):
             errors.append(record["error"])
     if not configured and not reports:
         errors.append("OPENAI_API_KEY is not configured for alignment analysis.")
