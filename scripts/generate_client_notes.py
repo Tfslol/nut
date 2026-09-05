@@ -209,8 +209,9 @@ def latest_position_lines(hold: pd.DataFrame, pf_order: list[str], pf_name_map: 
     return lines
 
 
-def top_exposure_lines(frame: pd.DataFrame, by_col: str,
-                       value_col: str = "market_value_usd", limit: int = 5) -> list[str]:
+def top_exposure_lines(
+    frame: pd.DataFrame, by_col: str, value_col: str = "market_value_usd", limit: int = 5
+) -> list[str]:
     """Top-N exposure lines grouped by a categorical column at the latest snapshot.
 
     Aggregates market value across the client's portfolios (so a sector held in two
@@ -345,9 +346,6 @@ def build_note(
     if not latest.empty:
         md.append("## Exposure by sector (top 5, latest)")
         md.extend(top_exposure_lines(latest, "sector"))
-        md.append("")
-        md.append("## Exposure by industry (top 5, latest, sub-asset class)")
-        md.extend(top_exposure_lines(latest, "sub_asset_class"))
         md.append("")
         md.append("## Exposure by region (top 5, latest)")
         md.extend(top_exposure_lines(latest, "region"))
