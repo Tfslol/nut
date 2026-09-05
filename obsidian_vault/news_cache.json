@@ -1,0 +1,3060 @@
+{
+  "schema_version": "news-cache/1.0",
+  "fetched_utc": "2026-09-05T06:17:19.584212+00:00",
+  "days": 7,
+  "clients": {
+    "CL-0001": {
+      "client_id": "CL-0001",
+      "sectors": [
+        {
+          "sector": "Energy",
+          "market_value_usd": 19287976.54,
+          "query": {
+            "industries": "Energy"
+          },
+          "articles": [
+            {
+              "uuid": "4505fb08-f774-42ea-9e7c-6dc7b9526e08",
+              "title": "Trump calls Venezuela oil deal 'greatest ever', but US firms raise concerns",
+              "url": "https://www.business-standard.com/world-news/trump-calls-venezuela-oil-deal-greatest-ever-but-us-firms-raise-concerns-126090500083_1.html",
+              "source": "business-standard.com",
+              "published_at": "2026-09-05T03:28:02.000000Z",
+              "snippet": "By Jennifer A. Dlouhy, Kevin Crowley and David Wethe\n\nPresident Donald Trump has boasted that his sweeping oil accord with Venezuela — effectively giving the ...",
+              "entities": [
+                {
+                  "symbol": "CVXD.BA",
+                  "name": "CHEVRON CORP",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "E.BA",
+                  "name": "ENI SPA",
+                  "industry": "Energy"
+                }
+              ]
+            },
+            {
+              "uuid": "adafebbc-f18e-40ac-add2-c9923b584626",
+              "title": "EnQuest PLC (ENQUF) (H1 2026) Earnings Call Highlights: Production Surges 9% and Malaysia Deal to Double Output",
+              "url": "https://www.gurufocus.com/news/9069045/enquest-plc-enquf-h1-2026-earnings-call-highlights-production-surges-9-and-malaysia-deal-to-double-output",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:51.000000Z",
+              "snippet": "Release Date: September 03, 2026\n\nFor the complete transcript of the earnings call, please refer to the full earnings call transcript.\n\nPositive Points\n\nProduct...",
+              "entities": [
+                {
+                  "symbol": "ENQUF",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                },
+                {
+                  "symbol": "ENQ.L",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                }
+              ]
+            },
+            {
+              "uuid": "16a091ba-1eeb-46a1-930e-6b13876e88c7",
+              "title": "Half Year 2026 EnQuest PLC Earnings Call Transcript",
+              "url": "https://www.gurufocus.com/news/9069020/half-year-2026-enquest-plc-earnings-call-transcript",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T00:50:57.000000Z",
+              "snippet": "Sep 03, 2026 / 10:00AM GMT\n\nOperator\n\n\n\nGood morning, and welcome to the EnQuest PLC's half year results investor presentation. (Operator Instructions) The comp...",
+              "entities": [
+                {
+                  "symbol": "ENQUF",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                },
+                {
+                  "symbol": "ENQ.L",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Information Technology",
+          "market_value_usd": 2368400.0,
+          "query": {
+            "industries": "Technology"
+          },
+          "articles": [
+            {
+              "uuid": "0209c876-9e66-4924-86f7-8bfeb834d7b8",
+              "title": "DOCU SWOT Analysis: Strong Financial Performance Amidst Competitive Challenges Revealed in 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069094/docu-swot-analysis-strong-financial-performance-amidst-competitive-challenges-revealed-in-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:02:46.000000Z",
+              "snippet": "On September 04, 2026, Docusign Inc DOCU released its 10-Q filing for the second quarter of fiscal 2026, showcasing a solid financial performance with significa...",
+              "entities": [
+                {
+                  "symbol": "DOCU",
+                  "name": "DocuSign, Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "DOCU.BA",
+                  "name": "DocuSign, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "DOCUD.BA",
+                  "name": "DOCUSIGN INC",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "de8c0b03-7530-487a-8c5a-8202f084ff66",
+              "title": "Pranav Constructions raises ₹84 crore from anchor investors; IPO to open on Sep 7",
+              "url": "https://www.thehindubusinessline.com/markets/pranav-constructions-raises-84-crore-from-anchor-investors-ipo-to-open-on-sep-7/article71430994.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-09-05T04:10:55.000000Z",
+              "snippet": "Real estate developer Pranav Constructions Ltd on Friday raised ₹84.24 crore from anchor investors, ahead of the opening of its initial public offering (IPO) ...",
+              "entities": [
+                {
+                  "symbol": "ITI.BO",
+                  "name": "ITI Limited",
+                  "industry": "Technology"
+                }
+              ]
+            },
+            {
+              "uuid": "f5cd0e21-b3fb-4263-9ff2-2d7cb6726bae",
+              "title": "IND vs PAK Women's Asia Cup 2026: Playing 11, match time IST, streaming",
+              "url": "https://www.business-standard.com/cricket/news/ind-vs-pak-women-s-asia-cup-2026-playing-11-match-time-ist-streaming-126090400936_1.html",
+              "source": "business-standard.com",
+              "published_at": "2026-09-05T04:03:24.000000Z",
+              "snippet": "Harmanpreet Kaur-led India will look to carry their dominant start into the biggest fixture of their Women's Asia Cup campaign when they face Pakistan in their ...",
+              "entities": [
+                {
+                  "symbol": "SONY",
+                  "name": "Sony Group Corporation",
+                  "industry": "Technology"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Gold",
+          "market_value_usd": 1708400.0,
+          "query": {
+            "search": "gold"
+          },
+          "articles": [
+            {
+              "uuid": "8e4e7d47-17ac-4733-a30e-af6092621948",
+              "title": "Gold Rate Today: Check gold prices in Coimbatore, Jaipur, Lucknow & more",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-coimbatore-nagpur-visakhapatnam-surat-jaipur-lucknow-chandigarh-gold-rates-other-cities-august-29-2026/article71403968.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:38:05.000000Z",
+              "snippet": "Gold prices declined across most other cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "e79ffd9c-ea58-471b-9b64-84d800da624f",
+              "title": "Gold Rate Today: Check 22K, 24K gold prices in Delhi, Mumbai & Chennai",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-delhi-mumbai-kolkata-chennai-bengaluru-hyderabad-pune-gold-rates-metro-cities-august-29-2026/article71403967.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:35:53.000000Z",
+              "snippet": "Gold prices declined across most metro cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "803d5bc2-0dc7-481c-bb43-4d68c8e21dd6",
+              "title": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska",
+              "url": "https://finance.yahoo.com/markets/commodities/articles/tnr-gold-launches-2026-exploration-132600566.html",
+              "source": "finance.yahoo.com",
+              "published_at": "2026-08-31T13:26:00.000000Z",
+              "snippet": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska Proactive uses images sourced from Shutterstock\n\nTNR Gold Corp (TSX-V:TNR, FRA:TNW,...",
+              "entities": [
+                {
+                  "symbol": "TRRXF",
+                  "name": "TNR Gold Corp.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "TNR.V",
+                  "name": "TNR Gold Corp.",
+                  "industry": "Basic Materials"
+                },
+                {
+                  "symbol": "NG.TO",
+                  "name": "NovaGold Resources Inc.",
+                  "industry": "Basic Materials"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0002": {
+      "client_id": "CL-0002",
+      "sectors": [
+        {
+          "sector": "Information Technology",
+          "market_value_usd": 41357000.0,
+          "query": {
+            "industries": "Technology"
+          },
+          "articles": [
+            {
+              "uuid": "0209c876-9e66-4924-86f7-8bfeb834d7b8",
+              "title": "DOCU SWOT Analysis: Strong Financial Performance Amidst Competitive Challenges Revealed in 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069094/docu-swot-analysis-strong-financial-performance-amidst-competitive-challenges-revealed-in-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:02:46.000000Z",
+              "snippet": "On September 04, 2026, Docusign Inc DOCU released its 10-Q filing for the second quarter of fiscal 2026, showcasing a solid financial performance with significa...",
+              "entities": [
+                {
+                  "symbol": "DOCU",
+                  "name": "DocuSign, Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "DOCU.BA",
+                  "name": "DocuSign, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "DOCUD.BA",
+                  "name": "DOCUSIGN INC",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "de8c0b03-7530-487a-8c5a-8202f084ff66",
+              "title": "Pranav Constructions raises ₹84 crore from anchor investors; IPO to open on Sep 7",
+              "url": "https://www.thehindubusinessline.com/markets/pranav-constructions-raises-84-crore-from-anchor-investors-ipo-to-open-on-sep-7/article71430994.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-09-05T04:10:55.000000Z",
+              "snippet": "Real estate developer Pranav Constructions Ltd on Friday raised ₹84.24 crore from anchor investors, ahead of the opening of its initial public offering (IPO) ...",
+              "entities": [
+                {
+                  "symbol": "ITI.BO",
+                  "name": "ITI Limited",
+                  "industry": "Technology"
+                }
+              ]
+            },
+            {
+              "uuid": "f5cd0e21-b3fb-4263-9ff2-2d7cb6726bae",
+              "title": "IND vs PAK Women's Asia Cup 2026: Playing 11, match time IST, streaming",
+              "url": "https://www.business-standard.com/cricket/news/ind-vs-pak-women-s-asia-cup-2026-playing-11-match-time-ist-streaming-126090400936_1.html",
+              "source": "business-standard.com",
+              "published_at": "2026-09-05T04:03:24.000000Z",
+              "snippet": "Harmanpreet Kaur-led India will look to carry their dominant start into the biggest fixture of their Women's Asia Cup campaign when they face Pakistan in their ...",
+              "entities": [
+                {
+                  "symbol": "SONY",
+                  "name": "Sony Group Corporation",
+                  "industry": "Technology"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0003": {
+      "client_id": "CL-0003",
+      "sectors": [
+        {
+          "sector": "Consumer Discretionary",
+          "market_value_usd": 5780174.4,
+          "query": {
+            "industries": "Consumer Cyclical"
+          },
+          "articles": [
+            {
+              "uuid": "8f84cbb9-58db-4a7f-9507-71cd7200c72f",
+              "title": "DDS SWOT Analysis: Strong Financial Performance Amidst Market Challenges Revealed in 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069096/dds-swot-analysis-strong-financial-performance-amidst-market-challenges-revealed-in-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:03:25.000000Z",
+              "snippet": "On September 04, 2026, Dillard's Inc DDS released its quarterly 10-Q filing, providing insights into its financial performance for the three and six months ende...",
+              "entities": [
+                {
+                  "symbol": "DDS",
+                  "name": "Dillard's, Inc.",
+                  "industry": "Consumer Cyclical"
+                }
+              ]
+            },
+            {
+              "uuid": "2836ce39-2fd4-479d-8ead-4d0bd0790be5",
+              "title": "BBY SWOT Analysis: Key Financial Insights from 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069092/bby-swot-analysis-key-financial-insights-from-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:02:08.000000Z",
+              "snippet": "On September 04, 2026, Best Buy Co Inc BBY released its 10-Q filing for the quarter ended August 1, 2026. The report highlights the company's ongoing efforts to...",
+              "entities": [
+                {
+                  "symbol": "BBY",
+                  "name": "Best Buy Co., Inc.",
+                  "industry": "Consumer Cyclical"
+                }
+              ]
+            },
+            {
+              "uuid": "551360e5-a3f2-42d9-8eb6-6d2333f32daa",
+              "title": "ANF SWOT Analysis: Key Insights from the 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069086/anf-swot-analysis-key-insights-from-the-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:00:41.000000Z",
+              "snippet": "On September 04, 2026, Abercrombie & Fitch Co ANF released its quarterly 10-Q filing, providing insights into its financial performance for the twenty-six weeks...",
+              "entities": [
+                {
+                  "symbol": "ANF",
+                  "name": "Abercrombie & Fitch Co.",
+                  "industry": "Consumer Cyclical"
+                },
+                {
+                  "symbol": "AFT.DE",
+                  "name": "Abercrombie & Fitch Co.",
+                  "industry": "Consumer Cyclical"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Industrials",
+          "market_value_usd": 4075671.6,
+          "query": {
+            "industries": "Industrials"
+          },
+          "articles": [
+            {
+              "uuid": "e130751c-770f-41a0-8507-dfcb74a884ca",
+              "title": "Nidec Corporation (NJDCY) Analyst/Investor Day Transcript",
+              "url": "https://seekingalpha.com/article/4943249-nidec-corporation-njdcy-analyst-investor-day-transcript",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:29:18.000000Z",
+              "snippet": "Presentation\n\nNow the press conference by the Investigation Committee will start with its own moderator. I will excuse myself. Thank you.\n\nUnknown Executive\n\nGo...",
+              "entities": [
+                {
+                  "symbol": "NNDNF",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "6594.T",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "NJDCY",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "efae3a2c-615a-4de2-b9fe-2b5e15201864",
+              "title": "Smart Look At The Week Ahead: Apple, Oracle, ECB And US Treasuries",
+              "url": "https://thesmartinvestor.com.sg/smart-look-at-the-week-ahead-apple-oracle-ecb-and-us-treasuries/",
+              "source": "thesmartinvestor.com.sg",
+              "published_at": "2026-09-05T03:56:04.000000Z",
+              "snippet": "The US market will be closed for Labour Day on Monday. So, the rest of the world will have to fly solo at the start of the week.\n\nThe European Central Bank is e...",
+              "entities": [
+                {
+                  "symbol": "AAPL",
+                  "name": "Apple Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "ADBE",
+                  "name": "Adobe Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "ORCL",
+                  "name": "Oracle Corporation",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "KFY",
+                  "name": "Korn Ferry",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "0c25a05e-103b-435e-93a8-a02972fef24b",
+              "title": "Automatic Data Processing Inc (ADP) Executive VP Joseph Desilva Sells 631 Shares",
+              "url": "https://www.gurufocus.com/news/9069063/automatic-data-processing-inc-adp-executive-vp-joseph-desilva-sells-631-shares",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T03:01:12.000000Z",
+              "snippet": "Executive Vice President Joseph Desilva sold 631 shares of Automatic Data Processing Inc ADP on September 3, 2026, according to a recent SEC Filing. Following t...",
+              "entities": [
+                {
+                  "symbol": "ADP",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "0HJI.L",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "ADPR34.SA",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "Industrials"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Information Technology",
+          "market_value_usd": 2368400.0,
+          "query": {
+            "industries": "Technology"
+          },
+          "articles": [
+            {
+              "uuid": "0209c876-9e66-4924-86f7-8bfeb834d7b8",
+              "title": "DOCU SWOT Analysis: Strong Financial Performance Amidst Competitive Challenges Revealed in 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069094/docu-swot-analysis-strong-financial-performance-amidst-competitive-challenges-revealed-in-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:02:46.000000Z",
+              "snippet": "On September 04, 2026, Docusign Inc DOCU released its 10-Q filing for the second quarter of fiscal 2026, showcasing a solid financial performance with significa...",
+              "entities": [
+                {
+                  "symbol": "DOCU",
+                  "name": "DocuSign, Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "DOCU.BA",
+                  "name": "DocuSign, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "DOCUD.BA",
+                  "name": "DOCUSIGN INC",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "de8c0b03-7530-487a-8c5a-8202f084ff66",
+              "title": "Pranav Constructions raises ₹84 crore from anchor investors; IPO to open on Sep 7",
+              "url": "https://www.thehindubusinessline.com/markets/pranav-constructions-raises-84-crore-from-anchor-investors-ipo-to-open-on-sep-7/article71430994.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-09-05T04:10:55.000000Z",
+              "snippet": "Real estate developer Pranav Constructions Ltd on Friday raised ₹84.24 crore from anchor investors, ahead of the opening of its initial public offering (IPO) ...",
+              "entities": [
+                {
+                  "symbol": "ITI.BO",
+                  "name": "ITI Limited",
+                  "industry": "Technology"
+                }
+              ]
+            },
+            {
+              "uuid": "f5cd0e21-b3fb-4263-9ff2-2d7cb6726bae",
+              "title": "IND vs PAK Women's Asia Cup 2026: Playing 11, match time IST, streaming",
+              "url": "https://www.business-standard.com/cricket/news/ind-vs-pak-women-s-asia-cup-2026-playing-11-match-time-ist-streaming-126090400936_1.html",
+              "source": "business-standard.com",
+              "published_at": "2026-09-05T04:03:24.000000Z",
+              "snippet": "Harmanpreet Kaur-led India will look to carry their dominant start into the biggest fixture of their Women's Asia Cup campaign when they face Pakistan in their ...",
+              "entities": [
+                {
+                  "symbol": "SONY",
+                  "name": "Sony Group Corporation",
+                  "industry": "Technology"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0004": {
+      "client_id": "CL-0004",
+      "sectors": [
+        {
+          "sector": "Financials",
+          "market_value_usd": 3807000.0,
+          "query": {
+            "industries": "Financial Services"
+          },
+          "articles": [
+            {
+              "uuid": "dc6cf5d7-f9fe-413a-8bc7-0270d445016b",
+              "title": "Rocket Companies Stock: Compressing Margins And High Multiples (NYSE:RKT)",
+              "url": "https://seekingalpha.com/article/4943275-rocket-companies-compressing-margins-and-high-multiples",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:46:33.000000Z",
+              "snippet": "Over the past few weeks, market volatility has converged around a single fear: persistently high long-term interest rates, as investors sell off bonds and worry...",
+              "entities": [
+                {
+                  "symbol": "RKT",
+                  "name": "Rocket Companies, Inc.",
+                  "industry": "Financial Services"
+                }
+              ]
+            },
+            {
+              "uuid": "81024e1f-ac0a-4c0b-b913-bcf705dd5d92",
+              "title": "Bessent sees oil as low as $40 post-Iran war, lower yields",
+              "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/bessent-sees-oil-as-low-as-40-post-iran-war-lower-yields/articleshow/133787900.cms",
+              "source": "economictimes.indiatimes.com",
+              "published_at": "2026-09-05T04:43:30.000000Z",
+              "snippet": "Live Events\n\n\n\nas a Reliable and Trusted News Source Addas a Reliable and Trusted News Source Add Now!\n\n(You can now subscribe to our\n\n(You can now subscribe to...",
+              "entities": [
+                {
+                  "symbol": "FMCC",
+                  "name": "Freddie Mac",
+                  "industry": "Financial Services"
+                },
+                {
+                  "symbol": "FMCKL",
+                  "name": "Freddie Mac",
+                  "industry": "Financial Services"
+                },
+                {
+                  "symbol": "FMCCI",
+                  "name": "Freddie Mac",
+                  "industry": "Financial Services"
+                }
+              ]
+            },
+            {
+              "uuid": "723f7ab2-8857-4ab0-8ce7-a04ec919f160",
+              "title": "FY28 Budget Work Starts Early",
+              "url": "https://www.rediff.com/business/report/fy28-budget-work-starts-early/20260905.htm",
+              "source": "rediff.com",
+              "published_at": "2026-09-05T03:35:31.000000Z",
+              "snippet": "The Centre has spent 28 per cent of its FY27 capital expenditure budget of Rs 12.21 trillion in the first three months against around 24.5 per cent during the c...",
+              "entities": [
+                {
+                  "symbol": "BANKBARODA.NS",
+                  "name": "Bank of Baroda",
+                  "industry": "Financial Services"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Real Estate",
+          "market_value_usd": 3260355.03,
+          "query": {
+            "industries": "Real Estate"
+          },
+          "articles": [
+            {
+              "uuid": "c2946eeb-c1f5-4503-ac3e-31681a987069",
+              "title": "Weyerhaeuser Stock: Bottoming Despite Higher Interest Rate Pressure (NYSE:WY)",
+              "url": "https://seekingalpha.com/article/4943274-weyerhaeuser-bottoming-despite-higher-interest-rate-pressure",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:32:56.000000Z",
+              "snippet": "Shares of Weyerhaeuser ( WY ) have languished over the past year, losing about 7% of their value. The timberlands and lumber company has struggled with weak dem...",
+              "entities": [
+                {
+                  "symbol": "WY",
+                  "name": "Weyerhaeuser Company",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "7118652b-e3a2-4712-9aad-c68dc990ef13",
+              "title": "Innovative Industrial Properties Stock: 13% Dividend Yield Regulatory Catalysts(NYSE:IIPR)",
+              "url": "https://seekingalpha.com/article/4943268-innovative-industrial-properties-13-percent-dividend-yield-regulatory-catalysts",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T03:11:10.000000Z",
+              "snippet": "Cannabis stocks have been arguably muted since medicinal cannabis was rescheduled earlier this year. Innovative Industrial Properties ( IIPR ) has also been sur...",
+              "entities": [
+                {
+                  "symbol": "IIPR",
+                  "name": "Innovative Industrial Properties, Inc.",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "b28d497a-93f2-4018-a6f8-83c34b1974d7",
+              "title": "C3.ai Inc (AI) Shares Fall 4.0% -- What GF Score of 59 Tells Investors",
+              "url": "https://www.gurufocus.com/news/9069010/c3ai-inc-ai-shares-fall-40-what-gf-score-of-59-tells-investors",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T00:43:37.000000Z",
+              "snippet": "On September 04, 2026, C3.ai Inc AI shares fell 4.0% to a current price of $10.46, remaining within a 52-week range of $7.68 to $20.22. The decline today adds t...",
+              "entities": [
+                {
+                  "symbol": "AI",
+                  "name": "C3.ai, Inc.",
+                  "industry": "Real Estate"
+                },
+                {
+                  "symbol": "AI1.MX",
+                  "name": "C3.ai, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Utilities",
+          "market_value_usd": 2796000.0,
+          "query": {
+            "industries": "Utilities"
+          },
+          "articles": [
+            {
+              "uuid": "adcd0a2c-76c6-4495-a82d-1da99fabc2fb",
+              "title": "DTE Energy Director David A. Thomas Announces Retirement From Board",
+              "url": "https://www.gurufocus.com/news/9069084/dte-energy-director-david-a-thomas-announces-retirement-from-board",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:00:09.000000Z",
+              "snippet": "DTE Energy Company DTE announced that David A. Thomas, a member of its Board of Directors, has decided to retire effective September 3, 2026. The company disclo...",
+              "entities": [
+                {
+                  "symbol": "DTE",
+                  "name": "DTE Energy Company",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "DTY",
+                  "name": "DTE Energy Company",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "DTE-WI",
+                  "name": "DTE Energy Company",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "6af02512-efa7-47b6-aec7-906710c8388c",
+              "title": "Consolidated Edison (ED) Reaches Joint Proposal for New York Steam Rate Plan",
+              "url": "https://www.gurufocus.com/news/9069041/consolidated-edison-ed-reaches-joint-proposal-for-new-york-steam-rate-plan",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:15.000000Z",
+              "snippet": "Consolidated Edison, Inc. ED announced on September 4, 2026, that its subsidiary, Consolidated Edison Company of New York, Inc. (CECONY), has entered into a joi...",
+              "entities": [
+                {
+                  "symbol": "ED",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "EDC.DE",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "0I35.L",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "db50b7a2-8201-472b-ae74-c80eb5092963",
+              "title": "WEC Energy Group (WEC) to Present at Upcoming Investor Meetings",
+              "url": "https://www.gurufocus.com/news/9069036/wec-energy-group-wec-to-present-at-upcoming-investor-meetings",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:10.000000Z",
+              "snippet": "MILWAUKEE, Sept. 4, 2026 — WEC Energy Group WEC announced today that representatives of the company will be participating in upcoming meetings with investors....",
+              "entities": [
+                {
+                  "symbol": "WEC",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "0LSL.L",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "W1EC34.SA",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "Utilities"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0005": {
+      "client_id": "CL-0005",
+      "sectors": [
+        {
+          "sector": "Health Care",
+          "market_value_usd": 2491500.0,
+          "query": {
+            "industries": "Healthcare"
+          },
+          "articles": [
+            {
+              "uuid": "ab803703-4f12-4c29-8920-957de191e334",
+              "title": "Axogen (AXGN) Director Joseph Tyndall Sells 3,500 Shares",
+              "url": "https://www.gurufocus.com/news/9069066/axogen-axgn-director-joseph-tyndall-sells-3500-shares",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T03:02:28.000000Z",
+              "snippet": "Joseph Tyndall, a director at Axogen Inc AXGN, sold 3,500 shares of the company's stock on September 2, 2026, according to a recent SEC Filing. Following the tr...",
+              "entities": [
+                {
+                  "symbol": "AXGN",
+                  "name": "AxoGen, Inc.",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "0HKD.L",
+                  "name": "AxoGen, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "0bcb09c0-3415-4fba-ad4a-d40dd21b917f",
+              "title": "Are DOW shares or COH shares better value in 2026?",
+              "url": "https://www.raskmedia.com.au/2026/09/05/are-dow-shares-or-coh-shares-better-value-in-2026-7/",
+              "source": "raskmedia.com.au",
+              "published_at": "2026-09-05T02:04:52.000000Z",
+              "snippet": "DOW share price in focus\n\nThe ASX:DOW ) share price is down around 20.2% since the start of 2025. Meanwhile, the ASX:COH ) share price is 53.0% away from its 52...",
+              "entities": [
+                {
+                  "symbol": "COH.AX",
+                  "name": "Cochlear Limited",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "DOW.AX",
+                  "name": "Downer EDI Limited",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "da62469d-1484-4dff-ad08-d0c9e39847f7",
+              "title": "Resonance Health Ltd (ASX:RHT) (FY 2026) Earnings Call Highlights: Revenue Surges 42% as Company Returns to Profitability",
+              "url": "https://www.gurufocus.com/news/9069046/resonance-health-ltd-asxrht-fy-2026-earnings-call-highlights-revenue-surges-42-as-company-returns-to-profitability",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:55.000000Z",
+              "snippet": "Release Date: August 28, 2026\n\nFor the complete transcript of the earnings call, please refer to the full earnings call transcript.\n\nPositive Points\n\nResonance ...",
+              "entities": [
+                {
+                  "symbol": "RHT.AX",
+                  "name": "Resonance Health Limited",
+                  "industry": "Healthcare"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Energy",
+          "market_value_usd": 2159100.0,
+          "query": {
+            "industries": "Energy"
+          },
+          "articles": [
+            {
+              "uuid": "4505fb08-f774-42ea-9e7c-6dc7b9526e08",
+              "title": "Trump calls Venezuela oil deal 'greatest ever', but US firms raise concerns",
+              "url": "https://www.business-standard.com/world-news/trump-calls-venezuela-oil-deal-greatest-ever-but-us-firms-raise-concerns-126090500083_1.html",
+              "source": "business-standard.com",
+              "published_at": "2026-09-05T03:28:02.000000Z",
+              "snippet": "By Jennifer A. Dlouhy, Kevin Crowley and David Wethe\n\nPresident Donald Trump has boasted that his sweeping oil accord with Venezuela — effectively giving the ...",
+              "entities": [
+                {
+                  "symbol": "CVXD.BA",
+                  "name": "CHEVRON CORP",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "E.BA",
+                  "name": "ENI SPA",
+                  "industry": "Energy"
+                }
+              ]
+            },
+            {
+              "uuid": "adafebbc-f18e-40ac-add2-c9923b584626",
+              "title": "EnQuest PLC (ENQUF) (H1 2026) Earnings Call Highlights: Production Surges 9% and Malaysia Deal to Double Output",
+              "url": "https://www.gurufocus.com/news/9069045/enquest-plc-enquf-h1-2026-earnings-call-highlights-production-surges-9-and-malaysia-deal-to-double-output",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:51.000000Z",
+              "snippet": "Release Date: September 03, 2026\n\nFor the complete transcript of the earnings call, please refer to the full earnings call transcript.\n\nPositive Points\n\nProduct...",
+              "entities": [
+                {
+                  "symbol": "ENQUF",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                },
+                {
+                  "symbol": "ENQ.L",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                }
+              ]
+            },
+            {
+              "uuid": "16a091ba-1eeb-46a1-930e-6b13876e88c7",
+              "title": "Half Year 2026 EnQuest PLC Earnings Call Transcript",
+              "url": "https://www.gurufocus.com/news/9069020/half-year-2026-enquest-plc-earnings-call-transcript",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T00:50:57.000000Z",
+              "snippet": "Sep 03, 2026 / 10:00AM GMT\n\nOperator\n\n\n\nGood morning, and welcome to the EnQuest PLC's half year results investor presentation. (Operator Instructions) The comp...",
+              "entities": [
+                {
+                  "symbol": "ENQUF",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                },
+                {
+                  "symbol": "ENQ.L",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Consumer Staples",
+          "market_value_usd": 1972633.14,
+          "query": {
+            "industries": "Consumer Defensive"
+          },
+          "articles": [
+            {
+              "uuid": "5573bc10-4d09-4316-adef-2a26dba32a03",
+              "title": "Sysco Corporation (SYY) Secures $750 Million Term Loan to Fund JRD Acquisition",
+              "url": "https://www.gurufocus.com/news/9069042/sysco-corporation-syy-secures-750-million-term-loan-to-fund-jrd-acquisition",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:18.000000Z",
+              "snippet": "Sysco Corporation SYY, the global foodservice distribution leader, announced on September 4, 2026, that it has entered into a First Amendment to its existing Re...",
+              "entities": [
+                {
+                  "symbol": "SYY",
+                  "name": "Sysco Corporation",
+                  "industry": "Consumer Defensive"
+                },
+                {
+                  "symbol": "SYY.DE",
+                  "name": "Sysco Corporation",
+                  "industry": "Consumer Defensive"
+                },
+                {
+                  "symbol": "CBKLP",
+                  "name": "CoBank, ACB",
+                  "industry": "Financial Services"
+                },
+                {
+                  "symbol": "CBKPP",
+                  "name": "CoBank, ACB",
+                  "industry": "Financial Services"
+                },
+                {
+                  "symbol": "CKNQP",
+                  "name": "CoBank, ACB",
+                  "industry": "Financial Services"
+                },
+                {
+                  "symbol": "0LC6.L",
+                  "name": "Sysco Corporation",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "S1YY34.SA",
+                  "name": "Sysco Corporation",
+                  "industry": "Consumer Defensive"
+                }
+              ]
+            },
+            {
+              "uuid": "0b7ef986-3ebd-4beb-8376-b986502c71b1",
+              "title": "Monster Beverage Corporation (MNST) Appoints Matthew S. Burroughs as Chief Accounting Officer and Deputy CFO",
+              "url": "https://www.gurufocus.com/news/9069040/monster-beverage-corporation-mnst-appoints-matthew-s-burroughs-as-chief-accounting-officer-and-deputy-cfo",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:14.000000Z",
+              "snippet": "Monster Beverage Corporation MNST announced on September 3, 2026, that its Board of Directors has elected Matthew S. Burroughs to serve as Chief Accounting Offi...",
+              "entities": [
+                {
+                  "symbol": "MNST",
+                  "name": "Monster Beverage Corporation",
+                  "industry": "Consumer Defensive"
+                },
+                {
+                  "symbol": "MNST.MX",
+                  "name": "Monster Beverage Corporation",
+                  "industry": "Consumer Defensive"
+                },
+                {
+                  "symbol": "0K34.L",
+                  "name": "Monster Beverage Corporation",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "a6b509c1-cb10-4c06-85f1-2dd0837cd59d",
+              "title": "Seneca Foods Corp (SENEA) Stock Down 4.1% but Still Overvalued -- GF Score: 69/100",
+              "url": "https://www.gurufocus.com/news/9069023/seneca-foods-corp-senea-stock-down-41-but-still-overvalued-gf-score-69100",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T00:53:04.000000Z",
+              "snippet": "On September 04, 2026, Seneca Foods Corp SENEA shares fell 4.1% to a current price of $195.71, amidst a 52-week range of $99.58 to $210.00. The decline in share...",
+              "entities": [
+                {
+                  "symbol": "SENEA",
+                  "name": "Seneca Foods Corporation",
+                  "industry": "Consumer Defensive"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Utilities",
+          "market_value_usd": 1957200.0,
+          "query": {
+            "industries": "Utilities"
+          },
+          "articles": [
+            {
+              "uuid": "adcd0a2c-76c6-4495-a82d-1da99fabc2fb",
+              "title": "DTE Energy Director David A. Thomas Announces Retirement From Board",
+              "url": "https://www.gurufocus.com/news/9069084/dte-energy-director-david-a-thomas-announces-retirement-from-board",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:00:09.000000Z",
+              "snippet": "DTE Energy Company DTE announced that David A. Thomas, a member of its Board of Directors, has decided to retire effective September 3, 2026. The company disclo...",
+              "entities": [
+                {
+                  "symbol": "DTE",
+                  "name": "DTE Energy Company",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "DTY",
+                  "name": "DTE Energy Company",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "DTE-WI",
+                  "name": "DTE Energy Company",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "6af02512-efa7-47b6-aec7-906710c8388c",
+              "title": "Consolidated Edison (ED) Reaches Joint Proposal for New York Steam Rate Plan",
+              "url": "https://www.gurufocus.com/news/9069041/consolidated-edison-ed-reaches-joint-proposal-for-new-york-steam-rate-plan",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:15.000000Z",
+              "snippet": "Consolidated Edison, Inc. ED announced on September 4, 2026, that its subsidiary, Consolidated Edison Company of New York, Inc. (CECONY), has entered into a joi...",
+              "entities": [
+                {
+                  "symbol": "ED",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "EDC.DE",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "0I35.L",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "db50b7a2-8201-472b-ae74-c80eb5092963",
+              "title": "WEC Energy Group (WEC) to Present at Upcoming Investor Meetings",
+              "url": "https://www.gurufocus.com/news/9069036/wec-energy-group-wec-to-present-at-upcoming-investor-meetings",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:10.000000Z",
+              "snippet": "MILWAUKEE, Sept. 4, 2026 — WEC Energy Group WEC announced today that representatives of the company will be participating in upcoming meetings with investors....",
+              "entities": [
+                {
+                  "symbol": "WEC",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "0LSL.L",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "W1EC34.SA",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "Utilities"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0006": {
+      "client_id": "CL-0006",
+      "sectors": [
+        {
+          "sector": "Real Estate",
+          "market_value_usd": 4529881.65,
+          "query": {
+            "industries": "Real Estate"
+          },
+          "articles": [
+            {
+              "uuid": "c2946eeb-c1f5-4503-ac3e-31681a987069",
+              "title": "Weyerhaeuser Stock: Bottoming Despite Higher Interest Rate Pressure (NYSE:WY)",
+              "url": "https://seekingalpha.com/article/4943274-weyerhaeuser-bottoming-despite-higher-interest-rate-pressure",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:32:56.000000Z",
+              "snippet": "Shares of Weyerhaeuser ( WY ) have languished over the past year, losing about 7% of their value. The timberlands and lumber company has struggled with weak dem...",
+              "entities": [
+                {
+                  "symbol": "WY",
+                  "name": "Weyerhaeuser Company",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "7118652b-e3a2-4712-9aad-c68dc990ef13",
+              "title": "Innovative Industrial Properties Stock: 13% Dividend Yield Regulatory Catalysts(NYSE:IIPR)",
+              "url": "https://seekingalpha.com/article/4943268-innovative-industrial-properties-13-percent-dividend-yield-regulatory-catalysts",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T03:11:10.000000Z",
+              "snippet": "Cannabis stocks have been arguably muted since medicinal cannabis was rescheduled earlier this year. Innovative Industrial Properties ( IIPR ) has also been sur...",
+              "entities": [
+                {
+                  "symbol": "IIPR",
+                  "name": "Innovative Industrial Properties, Inc.",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "b28d497a-93f2-4018-a6f8-83c34b1974d7",
+              "title": "C3.ai Inc (AI) Shares Fall 4.0% -- What GF Score of 59 Tells Investors",
+              "url": "https://www.gurufocus.com/news/9069010/c3ai-inc-ai-shares-fall-40-what-gf-score-of-59-tells-investors",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T00:43:37.000000Z",
+              "snippet": "On September 04, 2026, C3.ai Inc AI shares fell 4.0% to a current price of $10.46, remaining within a 52-week range of $7.68 to $20.22. The decline today adds t...",
+              "entities": [
+                {
+                  "symbol": "AI",
+                  "name": "C3.ai, Inc.",
+                  "industry": "Real Estate"
+                },
+                {
+                  "symbol": "AI1.MX",
+                  "name": "C3.ai, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0007": {
+      "client_id": "CL-0007",
+      "sectors": [
+        {
+          "sector": "Gold",
+          "market_value_usd": 9619140.0,
+          "query": {
+            "search": "gold"
+          },
+          "articles": [
+            {
+              "uuid": "8e4e7d47-17ac-4733-a30e-af6092621948",
+              "title": "Gold Rate Today: Check gold prices in Coimbatore, Jaipur, Lucknow & more",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-coimbatore-nagpur-visakhapatnam-surat-jaipur-lucknow-chandigarh-gold-rates-other-cities-august-29-2026/article71403968.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:38:05.000000Z",
+              "snippet": "Gold prices declined across most other cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "e79ffd9c-ea58-471b-9b64-84d800da624f",
+              "title": "Gold Rate Today: Check 22K, 24K gold prices in Delhi, Mumbai & Chennai",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-delhi-mumbai-kolkata-chennai-bengaluru-hyderabad-pune-gold-rates-metro-cities-august-29-2026/article71403967.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:35:53.000000Z",
+              "snippet": "Gold prices declined across most metro cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "803d5bc2-0dc7-481c-bb43-4d68c8e21dd6",
+              "title": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska",
+              "url": "https://finance.yahoo.com/markets/commodities/articles/tnr-gold-launches-2026-exploration-132600566.html",
+              "source": "finance.yahoo.com",
+              "published_at": "2026-08-31T13:26:00.000000Z",
+              "snippet": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska Proactive uses images sourced from Shutterstock\n\nTNR Gold Corp (TSX-V:TNR, FRA:TNW,...",
+              "entities": [
+                {
+                  "symbol": "TRRXF",
+                  "name": "TNR Gold Corp.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "TNR.V",
+                  "name": "TNR Gold Corp.",
+                  "industry": "Basic Materials"
+                },
+                {
+                  "symbol": "NG.TO",
+                  "name": "NovaGold Resources Inc.",
+                  "industry": "Basic Materials"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Industrials",
+          "market_value_usd": 2616800.0,
+          "query": {
+            "industries": "Industrials"
+          },
+          "articles": [
+            {
+              "uuid": "e130751c-770f-41a0-8507-dfcb74a884ca",
+              "title": "Nidec Corporation (NJDCY) Analyst/Investor Day Transcript",
+              "url": "https://seekingalpha.com/article/4943249-nidec-corporation-njdcy-analyst-investor-day-transcript",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:29:18.000000Z",
+              "snippet": "Presentation\n\nNow the press conference by the Investigation Committee will start with its own moderator. I will excuse myself. Thank you.\n\nUnknown Executive\n\nGo...",
+              "entities": [
+                {
+                  "symbol": "NNDNF",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "6594.T",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "NJDCY",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "efae3a2c-615a-4de2-b9fe-2b5e15201864",
+              "title": "Smart Look At The Week Ahead: Apple, Oracle, ECB And US Treasuries",
+              "url": "https://thesmartinvestor.com.sg/smart-look-at-the-week-ahead-apple-oracle-ecb-and-us-treasuries/",
+              "source": "thesmartinvestor.com.sg",
+              "published_at": "2026-09-05T03:56:04.000000Z",
+              "snippet": "The US market will be closed for Labour Day on Monday. So, the rest of the world will have to fly solo at the start of the week.\n\nThe European Central Bank is e...",
+              "entities": [
+                {
+                  "symbol": "AAPL",
+                  "name": "Apple Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "ADBE",
+                  "name": "Adobe Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "ORCL",
+                  "name": "Oracle Corporation",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "KFY",
+                  "name": "Korn Ferry",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "0c25a05e-103b-435e-93a8-a02972fef24b",
+              "title": "Automatic Data Processing Inc (ADP) Executive VP Joseph Desilva Sells 631 Shares",
+              "url": "https://www.gurufocus.com/news/9069063/automatic-data-processing-inc-adp-executive-vp-joseph-desilva-sells-631-shares",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T03:01:12.000000Z",
+              "snippet": "Executive Vice President Joseph Desilva sold 631 shares of Automatic Data Processing Inc ADP on September 3, 2026, according to a recent SEC Filing. Following t...",
+              "entities": [
+                {
+                  "symbol": "ADP",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "0HJI.L",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "ADPR34.SA",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "Industrials"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0008": {
+      "client_id": "CL-0008",
+      "sectors": [
+        {
+          "sector": "Real Estate",
+          "market_value_usd": 978106.51,
+          "query": {
+            "industries": "Real Estate"
+          },
+          "articles": [
+            {
+              "uuid": "c2946eeb-c1f5-4503-ac3e-31681a987069",
+              "title": "Weyerhaeuser Stock: Bottoming Despite Higher Interest Rate Pressure (NYSE:WY)",
+              "url": "https://seekingalpha.com/article/4943274-weyerhaeuser-bottoming-despite-higher-interest-rate-pressure",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:32:56.000000Z",
+              "snippet": "Shares of Weyerhaeuser ( WY ) have languished over the past year, losing about 7% of their value. The timberlands and lumber company has struggled with weak dem...",
+              "entities": [
+                {
+                  "symbol": "WY",
+                  "name": "Weyerhaeuser Company",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "7118652b-e3a2-4712-9aad-c68dc990ef13",
+              "title": "Innovative Industrial Properties Stock: 13% Dividend Yield Regulatory Catalysts(NYSE:IIPR)",
+              "url": "https://seekingalpha.com/article/4943268-innovative-industrial-properties-13-percent-dividend-yield-regulatory-catalysts",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T03:11:10.000000Z",
+              "snippet": "Cannabis stocks have been arguably muted since medicinal cannabis was rescheduled earlier this year. Innovative Industrial Properties ( IIPR ) has also been sur...",
+              "entities": [
+                {
+                  "symbol": "IIPR",
+                  "name": "Innovative Industrial Properties, Inc.",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "b28d497a-93f2-4018-a6f8-83c34b1974d7",
+              "title": "C3.ai Inc (AI) Shares Fall 4.0% -- What GF Score of 59 Tells Investors",
+              "url": "https://www.gurufocus.com/news/9069010/c3ai-inc-ai-shares-fall-40-what-gf-score-of-59-tells-investors",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T00:43:37.000000Z",
+              "snippet": "On September 04, 2026, C3.ai Inc AI shares fell 4.0% to a current price of $10.46, remaining within a 52-week range of $7.68 to $20.22. The decline today adds t...",
+              "entities": [
+                {
+                  "symbol": "AI",
+                  "name": "C3.ai, Inc.",
+                  "industry": "Real Estate"
+                },
+                {
+                  "symbol": "AI1.MX",
+                  "name": "C3.ai, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Health Care",
+          "market_value_usd": 818786.98,
+          "query": {
+            "industries": "Healthcare"
+          },
+          "articles": [
+            {
+              "uuid": "ab803703-4f12-4c29-8920-957de191e334",
+              "title": "Axogen (AXGN) Director Joseph Tyndall Sells 3,500 Shares",
+              "url": "https://www.gurufocus.com/news/9069066/axogen-axgn-director-joseph-tyndall-sells-3500-shares",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T03:02:28.000000Z",
+              "snippet": "Joseph Tyndall, a director at Axogen Inc AXGN, sold 3,500 shares of the company's stock on September 2, 2026, according to a recent SEC Filing. Following the tr...",
+              "entities": [
+                {
+                  "symbol": "AXGN",
+                  "name": "AxoGen, Inc.",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "0HKD.L",
+                  "name": "AxoGen, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "0bcb09c0-3415-4fba-ad4a-d40dd21b917f",
+              "title": "Are DOW shares or COH shares better value in 2026?",
+              "url": "https://www.raskmedia.com.au/2026/09/05/are-dow-shares-or-coh-shares-better-value-in-2026-7/",
+              "source": "raskmedia.com.au",
+              "published_at": "2026-09-05T02:04:52.000000Z",
+              "snippet": "DOW share price in focus\n\nThe ASX:DOW ) share price is down around 20.2% since the start of 2025. Meanwhile, the ASX:COH ) share price is 53.0% away from its 52...",
+              "entities": [
+                {
+                  "symbol": "COH.AX",
+                  "name": "Cochlear Limited",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "DOW.AX",
+                  "name": "Downer EDI Limited",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "da62469d-1484-4dff-ad08-d0c9e39847f7",
+              "title": "Resonance Health Ltd (ASX:RHT) (FY 2026) Earnings Call Highlights: Revenue Surges 42% as Company Returns to Profitability",
+              "url": "https://www.gurufocus.com/news/9069046/resonance-health-ltd-asxrht-fy-2026-earnings-call-highlights-revenue-surges-42-as-company-returns-to-profitability",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:55.000000Z",
+              "snippet": "Release Date: August 28, 2026\n\nFor the complete transcript of the earnings call, please refer to the full earnings call transcript.\n\nPositive Points\n\nResonance ...",
+              "entities": [
+                {
+                  "symbol": "RHT.AX",
+                  "name": "Resonance Health Limited",
+                  "industry": "Healthcare"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Gold",
+          "market_value_usd": 512520.0,
+          "query": {
+            "search": "gold"
+          },
+          "articles": [
+            {
+              "uuid": "8e4e7d47-17ac-4733-a30e-af6092621948",
+              "title": "Gold Rate Today: Check gold prices in Coimbatore, Jaipur, Lucknow & more",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-coimbatore-nagpur-visakhapatnam-surat-jaipur-lucknow-chandigarh-gold-rates-other-cities-august-29-2026/article71403968.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:38:05.000000Z",
+              "snippet": "Gold prices declined across most other cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "e79ffd9c-ea58-471b-9b64-84d800da624f",
+              "title": "Gold Rate Today: Check 22K, 24K gold prices in Delhi, Mumbai & Chennai",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-delhi-mumbai-kolkata-chennai-bengaluru-hyderabad-pune-gold-rates-metro-cities-august-29-2026/article71403967.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:35:53.000000Z",
+              "snippet": "Gold prices declined across most metro cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "803d5bc2-0dc7-481c-bb43-4d68c8e21dd6",
+              "title": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska",
+              "url": "https://finance.yahoo.com/markets/commodities/articles/tnr-gold-launches-2026-exploration-132600566.html",
+              "source": "finance.yahoo.com",
+              "published_at": "2026-08-31T13:26:00.000000Z",
+              "snippet": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska Proactive uses images sourced from Shutterstock\n\nTNR Gold Corp (TSX-V:TNR, FRA:TNW,...",
+              "entities": [
+                {
+                  "symbol": "TRRXF",
+                  "name": "TNR Gold Corp.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "TNR.V",
+                  "name": "TNR Gold Corp.",
+                  "industry": "Basic Materials"
+                },
+                {
+                  "symbol": "NG.TO",
+                  "name": "NovaGold Resources Inc.",
+                  "industry": "Basic Materials"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0009": {
+      "client_id": "CL-0009",
+      "sectors": [
+        {
+          "sector": "Industrials",
+          "market_value_usd": 5434228.8,
+          "query": {
+            "industries": "Industrials"
+          },
+          "articles": [
+            {
+              "uuid": "e130751c-770f-41a0-8507-dfcb74a884ca",
+              "title": "Nidec Corporation (NJDCY) Analyst/Investor Day Transcript",
+              "url": "https://seekingalpha.com/article/4943249-nidec-corporation-njdcy-analyst-investor-day-transcript",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:29:18.000000Z",
+              "snippet": "Presentation\n\nNow the press conference by the Investigation Committee will start with its own moderator. I will excuse myself. Thank you.\n\nUnknown Executive\n\nGo...",
+              "entities": [
+                {
+                  "symbol": "NNDNF",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "6594.T",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "NJDCY",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "efae3a2c-615a-4de2-b9fe-2b5e15201864",
+              "title": "Smart Look At The Week Ahead: Apple, Oracle, ECB And US Treasuries",
+              "url": "https://thesmartinvestor.com.sg/smart-look-at-the-week-ahead-apple-oracle-ecb-and-us-treasuries/",
+              "source": "thesmartinvestor.com.sg",
+              "published_at": "2026-09-05T03:56:04.000000Z",
+              "snippet": "The US market will be closed for Labour Day on Monday. So, the rest of the world will have to fly solo at the start of the week.\n\nThe European Central Bank is e...",
+              "entities": [
+                {
+                  "symbol": "AAPL",
+                  "name": "Apple Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "ADBE",
+                  "name": "Adobe Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "ORCL",
+                  "name": "Oracle Corporation",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "KFY",
+                  "name": "Korn Ferry",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "0c25a05e-103b-435e-93a8-a02972fef24b",
+              "title": "Automatic Data Processing Inc (ADP) Executive VP Joseph Desilva Sells 631 Shares",
+              "url": "https://www.gurufocus.com/news/9069063/automatic-data-processing-inc-adp-executive-vp-joseph-desilva-sells-631-shares",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T03:01:12.000000Z",
+              "snippet": "Executive Vice President Joseph Desilva sold 631 shares of Automatic Data Processing Inc ADP on September 3, 2026, according to a recent SEC Filing. Following t...",
+              "entities": [
+                {
+                  "symbol": "ADP",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "0HJI.L",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "ADPR34.SA",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "Industrials"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0010": {
+      "client_id": "CL-0010",
+      "sectors": [
+        {
+          "sector": "Utilities",
+          "market_value_usd": 1118400.0,
+          "query": {
+            "industries": "Utilities"
+          },
+          "articles": [
+            {
+              "uuid": "adcd0a2c-76c6-4495-a82d-1da99fabc2fb",
+              "title": "DTE Energy Director David A. Thomas Announces Retirement From Board",
+              "url": "https://www.gurufocus.com/news/9069084/dte-energy-director-david-a-thomas-announces-retirement-from-board",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:00:09.000000Z",
+              "snippet": "DTE Energy Company DTE announced that David A. Thomas, a member of its Board of Directors, has decided to retire effective September 3, 2026. The company disclo...",
+              "entities": [
+                {
+                  "symbol": "DTE",
+                  "name": "DTE Energy Company",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "DTY",
+                  "name": "DTE Energy Company",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "DTE-WI",
+                  "name": "DTE Energy Company",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "6af02512-efa7-47b6-aec7-906710c8388c",
+              "title": "Consolidated Edison (ED) Reaches Joint Proposal for New York Steam Rate Plan",
+              "url": "https://www.gurufocus.com/news/9069041/consolidated-edison-ed-reaches-joint-proposal-for-new-york-steam-rate-plan",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:15.000000Z",
+              "snippet": "Consolidated Edison, Inc. ED announced on September 4, 2026, that its subsidiary, Consolidated Edison Company of New York, Inc. (CECONY), has entered into a joi...",
+              "entities": [
+                {
+                  "symbol": "ED",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "EDC.DE",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "0I35.L",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "db50b7a2-8201-472b-ae74-c80eb5092963",
+              "title": "WEC Energy Group (WEC) to Present at Upcoming Investor Meetings",
+              "url": "https://www.gurufocus.com/news/9069036/wec-energy-group-wec-to-present-at-upcoming-investor-meetings",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:10.000000Z",
+              "snippet": "MILWAUKEE, Sept. 4, 2026 — WEC Energy Group WEC announced today that representatives of the company will be participating in upcoming meetings with investors....",
+              "entities": [
+                {
+                  "symbol": "WEC",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "0LSL.L",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "W1EC34.SA",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "Utilities"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Health Care",
+          "market_value_usd": 996600.0,
+          "query": {
+            "industries": "Healthcare"
+          },
+          "articles": [
+            {
+              "uuid": "ab803703-4f12-4c29-8920-957de191e334",
+              "title": "Axogen (AXGN) Director Joseph Tyndall Sells 3,500 Shares",
+              "url": "https://www.gurufocus.com/news/9069066/axogen-axgn-director-joseph-tyndall-sells-3500-shares",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T03:02:28.000000Z",
+              "snippet": "Joseph Tyndall, a director at Axogen Inc AXGN, sold 3,500 shares of the company's stock on September 2, 2026, according to a recent SEC Filing. Following the tr...",
+              "entities": [
+                {
+                  "symbol": "AXGN",
+                  "name": "AxoGen, Inc.",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "0HKD.L",
+                  "name": "AxoGen, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "0bcb09c0-3415-4fba-ad4a-d40dd21b917f",
+              "title": "Are DOW shares or COH shares better value in 2026?",
+              "url": "https://www.raskmedia.com.au/2026/09/05/are-dow-shares-or-coh-shares-better-value-in-2026-7/",
+              "source": "raskmedia.com.au",
+              "published_at": "2026-09-05T02:04:52.000000Z",
+              "snippet": "DOW share price in focus\n\nThe ASX:DOW ) share price is down around 20.2% since the start of 2025. Meanwhile, the ASX:COH ) share price is 53.0% away from its 52...",
+              "entities": [
+                {
+                  "symbol": "COH.AX",
+                  "name": "Cochlear Limited",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "DOW.AX",
+                  "name": "Downer EDI Limited",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "da62469d-1484-4dff-ad08-d0c9e39847f7",
+              "title": "Resonance Health Ltd (ASX:RHT) (FY 2026) Earnings Call Highlights: Revenue Surges 42% as Company Returns to Profitability",
+              "url": "https://www.gurufocus.com/news/9069046/resonance-health-ltd-asxrht-fy-2026-earnings-call-highlights-revenue-surges-42-as-company-returns-to-profitability",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:55.000000Z",
+              "snippet": "Release Date: August 28, 2026\n\nFor the complete transcript of the earnings call, please refer to the full earnings call transcript.\n\nPositive Points\n\nResonance ...",
+              "entities": [
+                {
+                  "symbol": "RHT.AX",
+                  "name": "Resonance Health Limited",
+                  "industry": "Healthcare"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0011": {
+      "client_id": "CL-0011",
+      "sectors": [
+        {
+          "sector": "Real Estate",
+          "market_value_usd": 18170857.990000002,
+          "query": {
+            "industries": "Real Estate"
+          },
+          "articles": [
+            {
+              "uuid": "c2946eeb-c1f5-4503-ac3e-31681a987069",
+              "title": "Weyerhaeuser Stock: Bottoming Despite Higher Interest Rate Pressure (NYSE:WY)",
+              "url": "https://seekingalpha.com/article/4943274-weyerhaeuser-bottoming-despite-higher-interest-rate-pressure",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:32:56.000000Z",
+              "snippet": "Shares of Weyerhaeuser ( WY ) have languished over the past year, losing about 7% of their value. The timberlands and lumber company has struggled with weak dem...",
+              "entities": [
+                {
+                  "symbol": "WY",
+                  "name": "Weyerhaeuser Company",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "7118652b-e3a2-4712-9aad-c68dc990ef13",
+              "title": "Innovative Industrial Properties Stock: 13% Dividend Yield Regulatory Catalysts(NYSE:IIPR)",
+              "url": "https://seekingalpha.com/article/4943268-innovative-industrial-properties-13-percent-dividend-yield-regulatory-catalysts",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T03:11:10.000000Z",
+              "snippet": "Cannabis stocks have been arguably muted since medicinal cannabis was rescheduled earlier this year. Innovative Industrial Properties ( IIPR ) has also been sur...",
+              "entities": [
+                {
+                  "symbol": "IIPR",
+                  "name": "Innovative Industrial Properties, Inc.",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "b28d497a-93f2-4018-a6f8-83c34b1974d7",
+              "title": "C3.ai Inc (AI) Shares Fall 4.0% -- What GF Score of 59 Tells Investors",
+              "url": "https://www.gurufocus.com/news/9069010/c3ai-inc-ai-shares-fall-40-what-gf-score-of-59-tells-investors",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T00:43:37.000000Z",
+              "snippet": "On September 04, 2026, C3.ai Inc AI shares fell 4.0% to a current price of $10.46, remaining within a 52-week range of $7.68 to $20.22. The decline today adds t...",
+              "entities": [
+                {
+                  "symbol": "AI",
+                  "name": "C3.ai, Inc.",
+                  "industry": "Real Estate"
+                },
+                {
+                  "symbol": "AI1.MX",
+                  "name": "C3.ai, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0012": {
+      "client_id": "CL-0012",
+      "sectors": [
+        {
+          "sector": "Real Estate",
+          "market_value_usd": 2642633.1399999997,
+          "query": {
+            "industries": "Real Estate"
+          },
+          "articles": [
+            {
+              "uuid": "c2946eeb-c1f5-4503-ac3e-31681a987069",
+              "title": "Weyerhaeuser Stock: Bottoming Despite Higher Interest Rate Pressure (NYSE:WY)",
+              "url": "https://seekingalpha.com/article/4943274-weyerhaeuser-bottoming-despite-higher-interest-rate-pressure",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:32:56.000000Z",
+              "snippet": "Shares of Weyerhaeuser ( WY ) have languished over the past year, losing about 7% of their value. The timberlands and lumber company has struggled with weak dem...",
+              "entities": [
+                {
+                  "symbol": "WY",
+                  "name": "Weyerhaeuser Company",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "7118652b-e3a2-4712-9aad-c68dc990ef13",
+              "title": "Innovative Industrial Properties Stock: 13% Dividend Yield Regulatory Catalysts(NYSE:IIPR)",
+              "url": "https://seekingalpha.com/article/4943268-innovative-industrial-properties-13-percent-dividend-yield-regulatory-catalysts",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T03:11:10.000000Z",
+              "snippet": "Cannabis stocks have been arguably muted since medicinal cannabis was rescheduled earlier this year. Innovative Industrial Properties ( IIPR ) has also been sur...",
+              "entities": [
+                {
+                  "symbol": "IIPR",
+                  "name": "Innovative Industrial Properties, Inc.",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "b28d497a-93f2-4018-a6f8-83c34b1974d7",
+              "title": "C3.ai Inc (AI) Shares Fall 4.0% -- What GF Score of 59 Tells Investors",
+              "url": "https://www.gurufocus.com/news/9069010/c3ai-inc-ai-shares-fall-40-what-gf-score-of-59-tells-investors",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T00:43:37.000000Z",
+              "snippet": "On September 04, 2026, C3.ai Inc AI shares fell 4.0% to a current price of $10.46, remaining within a 52-week range of $7.68 to $20.22. The decline today adds t...",
+              "entities": [
+                {
+                  "symbol": "AI",
+                  "name": "C3.ai, Inc.",
+                  "industry": "Real Estate"
+                },
+                {
+                  "symbol": "AI1.MX",
+                  "name": "C3.ai, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Financials",
+          "market_value_usd": 2538000.0,
+          "query": {
+            "industries": "Financial Services"
+          },
+          "articles": [
+            {
+              "uuid": "dc6cf5d7-f9fe-413a-8bc7-0270d445016b",
+              "title": "Rocket Companies Stock: Compressing Margins And High Multiples (NYSE:RKT)",
+              "url": "https://seekingalpha.com/article/4943275-rocket-companies-compressing-margins-and-high-multiples",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:46:33.000000Z",
+              "snippet": "Over the past few weeks, market volatility has converged around a single fear: persistently high long-term interest rates, as investors sell off bonds and worry...",
+              "entities": [
+                {
+                  "symbol": "RKT",
+                  "name": "Rocket Companies, Inc.",
+                  "industry": "Financial Services"
+                }
+              ]
+            },
+            {
+              "uuid": "81024e1f-ac0a-4c0b-b913-bcf705dd5d92",
+              "title": "Bessent sees oil as low as $40 post-Iran war, lower yields",
+              "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/bessent-sees-oil-as-low-as-40-post-iran-war-lower-yields/articleshow/133787900.cms",
+              "source": "economictimes.indiatimes.com",
+              "published_at": "2026-09-05T04:43:30.000000Z",
+              "snippet": "Live Events\n\n\n\nas a Reliable and Trusted News Source Addas a Reliable and Trusted News Source Add Now!\n\n(You can now subscribe to our\n\n(You can now subscribe to...",
+              "entities": [
+                {
+                  "symbol": "FMCC",
+                  "name": "Freddie Mac",
+                  "industry": "Financial Services"
+                },
+                {
+                  "symbol": "FMCKL",
+                  "name": "Freddie Mac",
+                  "industry": "Financial Services"
+                },
+                {
+                  "symbol": "FMCCI",
+                  "name": "Freddie Mac",
+                  "industry": "Financial Services"
+                }
+              ]
+            },
+            {
+              "uuid": "723f7ab2-8857-4ab0-8ce7-a04ec919f160",
+              "title": "FY28 Budget Work Starts Early",
+              "url": "https://www.rediff.com/business/report/fy28-budget-work-starts-early/20260905.htm",
+              "source": "rediff.com",
+              "published_at": "2026-09-05T03:35:31.000000Z",
+              "snippet": "The Centre has spent 28 per cent of its FY27 capital expenditure budget of Rs 12.21 trillion in the first three months against around 24.5 per cent during the c...",
+              "entities": [
+                {
+                  "symbol": "BANKBARODA.NS",
+                  "name": "Bank of Baroda",
+                  "industry": "Financial Services"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Utilities",
+          "market_value_usd": 1677600.0,
+          "query": {
+            "industries": "Utilities"
+          },
+          "articles": [
+            {
+              "uuid": "adcd0a2c-76c6-4495-a82d-1da99fabc2fb",
+              "title": "DTE Energy Director David A. Thomas Announces Retirement From Board",
+              "url": "https://www.gurufocus.com/news/9069084/dte-energy-director-david-a-thomas-announces-retirement-from-board",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:00:09.000000Z",
+              "snippet": "DTE Energy Company DTE announced that David A. Thomas, a member of its Board of Directors, has decided to retire effective September 3, 2026. The company disclo...",
+              "entities": [
+                {
+                  "symbol": "DTE",
+                  "name": "DTE Energy Company",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "DTY",
+                  "name": "DTE Energy Company",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "DTE-WI",
+                  "name": "DTE Energy Company",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "6af02512-efa7-47b6-aec7-906710c8388c",
+              "title": "Consolidated Edison (ED) Reaches Joint Proposal for New York Steam Rate Plan",
+              "url": "https://www.gurufocus.com/news/9069041/consolidated-edison-ed-reaches-joint-proposal-for-new-york-steam-rate-plan",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:15.000000Z",
+              "snippet": "Consolidated Edison, Inc. ED announced on September 4, 2026, that its subsidiary, Consolidated Edison Company of New York, Inc. (CECONY), has entered into a joi...",
+              "entities": [
+                {
+                  "symbol": "ED",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "EDC.DE",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "0I35.L",
+                  "name": "Consolidated Edison, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "db50b7a2-8201-472b-ae74-c80eb5092963",
+              "title": "WEC Energy Group (WEC) to Present at Upcoming Investor Meetings",
+              "url": "https://www.gurufocus.com/news/9069036/wec-energy-group-wec-to-present-at-upcoming-investor-meetings",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:10.000000Z",
+              "snippet": "MILWAUKEE, Sept. 4, 2026 — WEC Energy Group WEC announced today that representatives of the company will be participating in upcoming meetings with investors....",
+              "entities": [
+                {
+                  "symbol": "WEC",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "Utilities"
+                },
+                {
+                  "symbol": "0LSL.L",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "W1EC34.SA",
+                  "name": "WEC Energy Group, Inc.",
+                  "industry": "Utilities"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Industrials",
+          "market_value_usd": 1633802.82,
+          "query": {
+            "industries": "Industrials"
+          },
+          "articles": [
+            {
+              "uuid": "e130751c-770f-41a0-8507-dfcb74a884ca",
+              "title": "Nidec Corporation (NJDCY) Analyst/Investor Day Transcript",
+              "url": "https://seekingalpha.com/article/4943249-nidec-corporation-njdcy-analyst-investor-day-transcript",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:29:18.000000Z",
+              "snippet": "Presentation\n\nNow the press conference by the Investigation Committee will start with its own moderator. I will excuse myself. Thank you.\n\nUnknown Executive\n\nGo...",
+              "entities": [
+                {
+                  "symbol": "NNDNF",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "6594.T",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "NJDCY",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "efae3a2c-615a-4de2-b9fe-2b5e15201864",
+              "title": "Smart Look At The Week Ahead: Apple, Oracle, ECB And US Treasuries",
+              "url": "https://thesmartinvestor.com.sg/smart-look-at-the-week-ahead-apple-oracle-ecb-and-us-treasuries/",
+              "source": "thesmartinvestor.com.sg",
+              "published_at": "2026-09-05T03:56:04.000000Z",
+              "snippet": "The US market will be closed for Labour Day on Monday. So, the rest of the world will have to fly solo at the start of the week.\n\nThe European Central Bank is e...",
+              "entities": [
+                {
+                  "symbol": "AAPL",
+                  "name": "Apple Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "ADBE",
+                  "name": "Adobe Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "ORCL",
+                  "name": "Oracle Corporation",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "KFY",
+                  "name": "Korn Ferry",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "0c25a05e-103b-435e-93a8-a02972fef24b",
+              "title": "Automatic Data Processing Inc (ADP) Executive VP Joseph Desilva Sells 631 Shares",
+              "url": "https://www.gurufocus.com/news/9069063/automatic-data-processing-inc-adp-executive-vp-joseph-desilva-sells-631-shares",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T03:01:12.000000Z",
+              "snippet": "Executive Vice President Joseph Desilva sold 631 shares of Automatic Data Processing Inc ADP on September 3, 2026, according to a recent SEC Filing. Following t...",
+              "entities": [
+                {
+                  "symbol": "ADP",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "0HJI.L",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "ADPR34.SA",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "Industrials"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0013": {
+      "client_id": "CL-0013",
+      "sectors": [
+        {
+          "sector": "Information Technology",
+          "market_value_usd": 21086400.0,
+          "query": {
+            "industries": "Technology"
+          },
+          "articles": [
+            {
+              "uuid": "0209c876-9e66-4924-86f7-8bfeb834d7b8",
+              "title": "DOCU SWOT Analysis: Strong Financial Performance Amidst Competitive Challenges Revealed in 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069094/docu-swot-analysis-strong-financial-performance-amidst-competitive-challenges-revealed-in-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:02:46.000000Z",
+              "snippet": "On September 04, 2026, Docusign Inc DOCU released its 10-Q filing for the second quarter of fiscal 2026, showcasing a solid financial performance with significa...",
+              "entities": [
+                {
+                  "symbol": "DOCU",
+                  "name": "DocuSign, Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "DOCU.BA",
+                  "name": "DocuSign, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "DOCUD.BA",
+                  "name": "DOCUSIGN INC",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "de8c0b03-7530-487a-8c5a-8202f084ff66",
+              "title": "Pranav Constructions raises ₹84 crore from anchor investors; IPO to open on Sep 7",
+              "url": "https://www.thehindubusinessline.com/markets/pranav-constructions-raises-84-crore-from-anchor-investors-ipo-to-open-on-sep-7/article71430994.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-09-05T04:10:55.000000Z",
+              "snippet": "Real estate developer Pranav Constructions Ltd on Friday raised ₹84.24 crore from anchor investors, ahead of the opening of its initial public offering (IPO) ...",
+              "entities": [
+                {
+                  "symbol": "ITI.BO",
+                  "name": "ITI Limited",
+                  "industry": "Technology"
+                }
+              ]
+            },
+            {
+              "uuid": "f5cd0e21-b3fb-4263-9ff2-2d7cb6726bae",
+              "title": "IND vs PAK Women's Asia Cup 2026: Playing 11, match time IST, streaming",
+              "url": "https://www.business-standard.com/cricket/news/ind-vs-pak-women-s-asia-cup-2026-playing-11-match-time-ist-streaming-126090400936_1.html",
+              "source": "business-standard.com",
+              "published_at": "2026-09-05T04:03:24.000000Z",
+              "snippet": "Harmanpreet Kaur-led India will look to carry their dominant start into the biggest fixture of their Women's Asia Cup campaign when they face Pakistan in their ...",
+              "entities": [
+                {
+                  "symbol": "SONY",
+                  "name": "Sony Group Corporation",
+                  "industry": "Technology"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0014": {
+      "client_id": "CL-0014",
+      "sectors": [
+        {
+          "sector": "Real Estate",
+          "market_value_usd": 12987385.4,
+          "query": {
+            "industries": "Real Estate"
+          },
+          "articles": [
+            {
+              "uuid": "c2946eeb-c1f5-4503-ac3e-31681a987069",
+              "title": "Weyerhaeuser Stock: Bottoming Despite Higher Interest Rate Pressure (NYSE:WY)",
+              "url": "https://seekingalpha.com/article/4943274-weyerhaeuser-bottoming-despite-higher-interest-rate-pressure",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:32:56.000000Z",
+              "snippet": "Shares of Weyerhaeuser ( WY ) have languished over the past year, losing about 7% of their value. The timberlands and lumber company has struggled with weak dem...",
+              "entities": [
+                {
+                  "symbol": "WY",
+                  "name": "Weyerhaeuser Company",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "7118652b-e3a2-4712-9aad-c68dc990ef13",
+              "title": "Innovative Industrial Properties Stock: 13% Dividend Yield Regulatory Catalysts(NYSE:IIPR)",
+              "url": "https://seekingalpha.com/article/4943268-innovative-industrial-properties-13-percent-dividend-yield-regulatory-catalysts",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T03:11:10.000000Z",
+              "snippet": "Cannabis stocks have been arguably muted since medicinal cannabis was rescheduled earlier this year. Innovative Industrial Properties ( IIPR ) has also been sur...",
+              "entities": [
+                {
+                  "symbol": "IIPR",
+                  "name": "Innovative Industrial Properties, Inc.",
+                  "industry": "Real Estate"
+                }
+              ]
+            },
+            {
+              "uuid": "b28d497a-93f2-4018-a6f8-83c34b1974d7",
+              "title": "C3.ai Inc (AI) Shares Fall 4.0% -- What GF Score of 59 Tells Investors",
+              "url": "https://www.gurufocus.com/news/9069010/c3ai-inc-ai-shares-fall-40-what-gf-score-of-59-tells-investors",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T00:43:37.000000Z",
+              "snippet": "On September 04, 2026, C3.ai Inc AI shares fell 4.0% to a current price of $10.46, remaining within a 52-week range of $7.68 to $20.22. The decline today adds t...",
+              "entities": [
+                {
+                  "symbol": "AI",
+                  "name": "C3.ai, Inc.",
+                  "industry": "Real Estate"
+                },
+                {
+                  "symbol": "AI1.MX",
+                  "name": "C3.ai, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Financials",
+          "market_value_usd": 4653000.0,
+          "query": {
+            "industries": "Financial Services"
+          },
+          "articles": [
+            {
+              "uuid": "dc6cf5d7-f9fe-413a-8bc7-0270d445016b",
+              "title": "Rocket Companies Stock: Compressing Margins And High Multiples (NYSE:RKT)",
+              "url": "https://seekingalpha.com/article/4943275-rocket-companies-compressing-margins-and-high-multiples",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:46:33.000000Z",
+              "snippet": "Over the past few weeks, market volatility has converged around a single fear: persistently high long-term interest rates, as investors sell off bonds and worry...",
+              "entities": [
+                {
+                  "symbol": "RKT",
+                  "name": "Rocket Companies, Inc.",
+                  "industry": "Financial Services"
+                }
+              ]
+            },
+            {
+              "uuid": "81024e1f-ac0a-4c0b-b913-bcf705dd5d92",
+              "title": "Bessent sees oil as low as $40 post-Iran war, lower yields",
+              "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/bessent-sees-oil-as-low-as-40-post-iran-war-lower-yields/articleshow/133787900.cms",
+              "source": "economictimes.indiatimes.com",
+              "published_at": "2026-09-05T04:43:30.000000Z",
+              "snippet": "Live Events\n\n\n\nas a Reliable and Trusted News Source Addas a Reliable and Trusted News Source Add Now!\n\n(You can now subscribe to our\n\n(You can now subscribe to...",
+              "entities": [
+                {
+                  "symbol": "FMCC",
+                  "name": "Freddie Mac",
+                  "industry": "Financial Services"
+                },
+                {
+                  "symbol": "FMCKL",
+                  "name": "Freddie Mac",
+                  "industry": "Financial Services"
+                },
+                {
+                  "symbol": "FMCCI",
+                  "name": "Freddie Mac",
+                  "industry": "Financial Services"
+                }
+              ]
+            },
+            {
+              "uuid": "723f7ab2-8857-4ab0-8ce7-a04ec919f160",
+              "title": "FY28 Budget Work Starts Early",
+              "url": "https://www.rediff.com/business/report/fy28-budget-work-starts-early/20260905.htm",
+              "source": "rediff.com",
+              "published_at": "2026-09-05T03:35:31.000000Z",
+              "snippet": "The Centre has spent 28 per cent of its FY27 capital expenditure budget of Rs 12.21 trillion in the first three months against around 24.5 per cent during the c...",
+              "entities": [
+                {
+                  "symbol": "BANKBARODA.NS",
+                  "name": "Bank of Baroda",
+                  "industry": "Financial Services"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0015": {
+      "client_id": "CL-0015",
+      "sectors": [
+        {
+          "sector": "Information Technology",
+          "market_value_usd": 4455700.0,
+          "query": {
+            "industries": "Technology"
+          },
+          "articles": [
+            {
+              "uuid": "0209c876-9e66-4924-86f7-8bfeb834d7b8",
+              "title": "DOCU SWOT Analysis: Strong Financial Performance Amidst Competitive Challenges Revealed in 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069094/docu-swot-analysis-strong-financial-performance-amidst-competitive-challenges-revealed-in-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:02:46.000000Z",
+              "snippet": "On September 04, 2026, Docusign Inc DOCU released its 10-Q filing for the second quarter of fiscal 2026, showcasing a solid financial performance with significa...",
+              "entities": [
+                {
+                  "symbol": "DOCU",
+                  "name": "DocuSign, Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "DOCU.BA",
+                  "name": "DocuSign, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "DOCUD.BA",
+                  "name": "DOCUSIGN INC",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "de8c0b03-7530-487a-8c5a-8202f084ff66",
+              "title": "Pranav Constructions raises ₹84 crore from anchor investors; IPO to open on Sep 7",
+              "url": "https://www.thehindubusinessline.com/markets/pranav-constructions-raises-84-crore-from-anchor-investors-ipo-to-open-on-sep-7/article71430994.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-09-05T04:10:55.000000Z",
+              "snippet": "Real estate developer Pranav Constructions Ltd on Friday raised ₹84.24 crore from anchor investors, ahead of the opening of its initial public offering (IPO) ...",
+              "entities": [
+                {
+                  "symbol": "ITI.BO",
+                  "name": "ITI Limited",
+                  "industry": "Technology"
+                }
+              ]
+            },
+            {
+              "uuid": "f5cd0e21-b3fb-4263-9ff2-2d7cb6726bae",
+              "title": "IND vs PAK Women's Asia Cup 2026: Playing 11, match time IST, streaming",
+              "url": "https://www.business-standard.com/cricket/news/ind-vs-pak-women-s-asia-cup-2026-playing-11-match-time-ist-streaming-126090400936_1.html",
+              "source": "business-standard.com",
+              "published_at": "2026-09-05T04:03:24.000000Z",
+              "snippet": "Harmanpreet Kaur-led India will look to carry their dominant start into the biggest fixture of their Women's Asia Cup campaign when they face Pakistan in their ...",
+              "entities": [
+                {
+                  "symbol": "SONY",
+                  "name": "Sony Group Corporation",
+                  "industry": "Technology"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0016": {
+      "client_id": "CL-0016",
+      "sectors": [
+        {
+          "sector": "Health Care",
+          "market_value_usd": 3913329.56,
+          "query": {
+            "industries": "Healthcare"
+          },
+          "articles": [
+            {
+              "uuid": "ab803703-4f12-4c29-8920-957de191e334",
+              "title": "Axogen (AXGN) Director Joseph Tyndall Sells 3,500 Shares",
+              "url": "https://www.gurufocus.com/news/9069066/axogen-axgn-director-joseph-tyndall-sells-3500-shares",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T03:02:28.000000Z",
+              "snippet": "Joseph Tyndall, a director at Axogen Inc AXGN, sold 3,500 shares of the company's stock on September 2, 2026, according to a recent SEC Filing. Following the tr...",
+              "entities": [
+                {
+                  "symbol": "AXGN",
+                  "name": "AxoGen, Inc.",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "0HKD.L",
+                  "name": "AxoGen, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "0bcb09c0-3415-4fba-ad4a-d40dd21b917f",
+              "title": "Are DOW shares or COH shares better value in 2026?",
+              "url": "https://www.raskmedia.com.au/2026/09/05/are-dow-shares-or-coh-shares-better-value-in-2026-7/",
+              "source": "raskmedia.com.au",
+              "published_at": "2026-09-05T02:04:52.000000Z",
+              "snippet": "DOW share price in focus\n\nThe ASX:DOW ) share price is down around 20.2% since the start of 2025. Meanwhile, the ASX:COH ) share price is 53.0% away from its 52...",
+              "entities": [
+                {
+                  "symbol": "COH.AX",
+                  "name": "Cochlear Limited",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "DOW.AX",
+                  "name": "Downer EDI Limited",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "da62469d-1484-4dff-ad08-d0c9e39847f7",
+              "title": "Resonance Health Ltd (ASX:RHT) (FY 2026) Earnings Call Highlights: Revenue Surges 42% as Company Returns to Profitability",
+              "url": "https://www.gurufocus.com/news/9069046/resonance-health-ltd-asxrht-fy-2026-earnings-call-highlights-revenue-surges-42-as-company-returns-to-profitability",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:55.000000Z",
+              "snippet": "Release Date: August 28, 2026\n\nFor the complete transcript of the earnings call, please refer to the full earnings call transcript.\n\nPositive Points\n\nResonance ...",
+              "entities": [
+                {
+                  "symbol": "RHT.AX",
+                  "name": "Resonance Health Limited",
+                  "industry": "Healthcare"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Gold",
+          "market_value_usd": 384390.0,
+          "query": {
+            "search": "gold"
+          },
+          "articles": [
+            {
+              "uuid": "8e4e7d47-17ac-4733-a30e-af6092621948",
+              "title": "Gold Rate Today: Check gold prices in Coimbatore, Jaipur, Lucknow & more",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-coimbatore-nagpur-visakhapatnam-surat-jaipur-lucknow-chandigarh-gold-rates-other-cities-august-29-2026/article71403968.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:38:05.000000Z",
+              "snippet": "Gold prices declined across most other cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "e79ffd9c-ea58-471b-9b64-84d800da624f",
+              "title": "Gold Rate Today: Check 22K, 24K gold prices in Delhi, Mumbai & Chennai",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-delhi-mumbai-kolkata-chennai-bengaluru-hyderabad-pune-gold-rates-metro-cities-august-29-2026/article71403967.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:35:53.000000Z",
+              "snippet": "Gold prices declined across most metro cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "803d5bc2-0dc7-481c-bb43-4d68c8e21dd6",
+              "title": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska",
+              "url": "https://finance.yahoo.com/markets/commodities/articles/tnr-gold-launches-2026-exploration-132600566.html",
+              "source": "finance.yahoo.com",
+              "published_at": "2026-08-31T13:26:00.000000Z",
+              "snippet": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska Proactive uses images sourced from Shutterstock\n\nTNR Gold Corp (TSX-V:TNR, FRA:TNW,...",
+              "entities": [
+                {
+                  "symbol": "TRRXF",
+                  "name": "TNR Gold Corp.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "TNR.V",
+                  "name": "TNR Gold Corp.",
+                  "industry": "Basic Materials"
+                },
+                {
+                  "symbol": "NG.TO",
+                  "name": "NovaGold Resources Inc.",
+                  "industry": "Basic Materials"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0017": {
+      "client_id": "CL-0017",
+      "sectors": [
+        {
+          "sector": "Information Technology",
+          "market_value_usd": 3552600.0,
+          "query": {
+            "industries": "Technology"
+          },
+          "articles": [
+            {
+              "uuid": "0209c876-9e66-4924-86f7-8bfeb834d7b8",
+              "title": "DOCU SWOT Analysis: Strong Financial Performance Amidst Competitive Challenges Revealed in 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069094/docu-swot-analysis-strong-financial-performance-amidst-competitive-challenges-revealed-in-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:02:46.000000Z",
+              "snippet": "On September 04, 2026, Docusign Inc DOCU released its 10-Q filing for the second quarter of fiscal 2026, showcasing a solid financial performance with significa...",
+              "entities": [
+                {
+                  "symbol": "DOCU",
+                  "name": "DocuSign, Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "DOCU.BA",
+                  "name": "DocuSign, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "DOCUD.BA",
+                  "name": "DOCUSIGN INC",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "de8c0b03-7530-487a-8c5a-8202f084ff66",
+              "title": "Pranav Constructions raises ₹84 crore from anchor investors; IPO to open on Sep 7",
+              "url": "https://www.thehindubusinessline.com/markets/pranav-constructions-raises-84-crore-from-anchor-investors-ipo-to-open-on-sep-7/article71430994.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-09-05T04:10:55.000000Z",
+              "snippet": "Real estate developer Pranav Constructions Ltd on Friday raised ₹84.24 crore from anchor investors, ahead of the opening of its initial public offering (IPO) ...",
+              "entities": [
+                {
+                  "symbol": "ITI.BO",
+                  "name": "ITI Limited",
+                  "industry": "Technology"
+                }
+              ]
+            },
+            {
+              "uuid": "f5cd0e21-b3fb-4263-9ff2-2d7cb6726bae",
+              "title": "IND vs PAK Women's Asia Cup 2026: Playing 11, match time IST, streaming",
+              "url": "https://www.business-standard.com/cricket/news/ind-vs-pak-women-s-asia-cup-2026-playing-11-match-time-ist-streaming-126090400936_1.html",
+              "source": "business-standard.com",
+              "published_at": "2026-09-05T04:03:24.000000Z",
+              "snippet": "Harmanpreet Kaur-led India will look to carry their dominant start into the biggest fixture of their Women's Asia Cup campaign when they face Pakistan in their ...",
+              "entities": [
+                {
+                  "symbol": "SONY",
+                  "name": "Sony Group Corporation",
+                  "industry": "Technology"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Gold",
+          "market_value_usd": 2989700.0,
+          "query": {
+            "search": "gold"
+          },
+          "articles": [
+            {
+              "uuid": "8e4e7d47-17ac-4733-a30e-af6092621948",
+              "title": "Gold Rate Today: Check gold prices in Coimbatore, Jaipur, Lucknow & more",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-coimbatore-nagpur-visakhapatnam-surat-jaipur-lucknow-chandigarh-gold-rates-other-cities-august-29-2026/article71403968.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:38:05.000000Z",
+              "snippet": "Gold prices declined across most other cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "e79ffd9c-ea58-471b-9b64-84d800da624f",
+              "title": "Gold Rate Today: Check 22K, 24K gold prices in Delhi, Mumbai & Chennai",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-delhi-mumbai-kolkata-chennai-bengaluru-hyderabad-pune-gold-rates-metro-cities-august-29-2026/article71403967.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:35:53.000000Z",
+              "snippet": "Gold prices declined across most metro cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "803d5bc2-0dc7-481c-bb43-4d68c8e21dd6",
+              "title": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska",
+              "url": "https://finance.yahoo.com/markets/commodities/articles/tnr-gold-launches-2026-exploration-132600566.html",
+              "source": "finance.yahoo.com",
+              "published_at": "2026-08-31T13:26:00.000000Z",
+              "snippet": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska Proactive uses images sourced from Shutterstock\n\nTNR Gold Corp (TSX-V:TNR, FRA:TNW,...",
+              "entities": [
+                {
+                  "symbol": "TRRXF",
+                  "name": "TNR Gold Corp.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "TNR.V",
+                  "name": "TNR Gold Corp.",
+                  "industry": "Basic Materials"
+                },
+                {
+                  "symbol": "NG.TO",
+                  "name": "NovaGold Resources Inc.",
+                  "industry": "Basic Materials"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Health Care",
+          "market_value_usd": 1661000.0,
+          "query": {
+            "industries": "Healthcare"
+          },
+          "articles": [
+            {
+              "uuid": "ab803703-4f12-4c29-8920-957de191e334",
+              "title": "Axogen (AXGN) Director Joseph Tyndall Sells 3,500 Shares",
+              "url": "https://www.gurufocus.com/news/9069066/axogen-axgn-director-joseph-tyndall-sells-3500-shares",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T03:02:28.000000Z",
+              "snippet": "Joseph Tyndall, a director at Axogen Inc AXGN, sold 3,500 shares of the company's stock on September 2, 2026, according to a recent SEC Filing. Following the tr...",
+              "entities": [
+                {
+                  "symbol": "AXGN",
+                  "name": "AxoGen, Inc.",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "0HKD.L",
+                  "name": "AxoGen, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "0bcb09c0-3415-4fba-ad4a-d40dd21b917f",
+              "title": "Are DOW shares or COH shares better value in 2026?",
+              "url": "https://www.raskmedia.com.au/2026/09/05/are-dow-shares-or-coh-shares-better-value-in-2026-7/",
+              "source": "raskmedia.com.au",
+              "published_at": "2026-09-05T02:04:52.000000Z",
+              "snippet": "DOW share price in focus\n\nThe ASX:DOW ) share price is down around 20.2% since the start of 2025. Meanwhile, the ASX:COH ) share price is 53.0% away from its 52...",
+              "entities": [
+                {
+                  "symbol": "COH.AX",
+                  "name": "Cochlear Limited",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "DOW.AX",
+                  "name": "Downer EDI Limited",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "da62469d-1484-4dff-ad08-d0c9e39847f7",
+              "title": "Resonance Health Ltd (ASX:RHT) (FY 2026) Earnings Call Highlights: Revenue Surges 42% as Company Returns to Profitability",
+              "url": "https://www.gurufocus.com/news/9069046/resonance-health-ltd-asxrht-fy-2026-earnings-call-highlights-revenue-surges-42-as-company-returns-to-profitability",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:55.000000Z",
+              "snippet": "Release Date: August 28, 2026\n\nFor the complete transcript of the earnings call, please refer to the full earnings call transcript.\n\nPositive Points\n\nResonance ...",
+              "entities": [
+                {
+                  "symbol": "RHT.AX",
+                  "name": "Resonance Health Limited",
+                  "industry": "Healthcare"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0018": {
+      "client_id": "CL-0018",
+      "sectors": [
+        {
+          "sector": "Consumer Discretionary",
+          "market_value_usd": 3678292.8,
+          "query": {
+            "industries": "Consumer Cyclical"
+          },
+          "articles": [
+            {
+              "uuid": "8f84cbb9-58db-4a7f-9507-71cd7200c72f",
+              "title": "DDS SWOT Analysis: Strong Financial Performance Amidst Market Challenges Revealed in 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069096/dds-swot-analysis-strong-financial-performance-amidst-market-challenges-revealed-in-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:03:25.000000Z",
+              "snippet": "On September 04, 2026, Dillard's Inc DDS released its quarterly 10-Q filing, providing insights into its financial performance for the three and six months ende...",
+              "entities": [
+                {
+                  "symbol": "DDS",
+                  "name": "Dillard's, Inc.",
+                  "industry": "Consumer Cyclical"
+                }
+              ]
+            },
+            {
+              "uuid": "2836ce39-2fd4-479d-8ead-4d0bd0790be5",
+              "title": "BBY SWOT Analysis: Key Financial Insights from 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069092/bby-swot-analysis-key-financial-insights-from-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:02:08.000000Z",
+              "snippet": "On September 04, 2026, Best Buy Co Inc BBY released its 10-Q filing for the quarter ended August 1, 2026. The report highlights the company's ongoing efforts to...",
+              "entities": [
+                {
+                  "symbol": "BBY",
+                  "name": "Best Buy Co., Inc.",
+                  "industry": "Consumer Cyclical"
+                }
+              ]
+            },
+            {
+              "uuid": "551360e5-a3f2-42d9-8eb6-6d2333f32daa",
+              "title": "ANF SWOT Analysis: Key Insights from the 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069086/anf-swot-analysis-key-insights-from-the-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:00:41.000000Z",
+              "snippet": "On September 04, 2026, Abercrombie & Fitch Co ANF released its quarterly 10-Q filing, providing insights into its financial performance for the twenty-six weeks...",
+              "entities": [
+                {
+                  "symbol": "ANF",
+                  "name": "Abercrombie & Fitch Co.",
+                  "industry": "Consumer Cyclical"
+                },
+                {
+                  "symbol": "AFT.DE",
+                  "name": "Abercrombie & Fitch Co.",
+                  "industry": "Consumer Cyclical"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Gold",
+          "market_value_usd": 3172532.0,
+          "query": {
+            "search": "gold"
+          },
+          "articles": [
+            {
+              "uuid": "8e4e7d47-17ac-4733-a30e-af6092621948",
+              "title": "Gold Rate Today: Check gold prices in Coimbatore, Jaipur, Lucknow & more",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-coimbatore-nagpur-visakhapatnam-surat-jaipur-lucknow-chandigarh-gold-rates-other-cities-august-29-2026/article71403968.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:38:05.000000Z",
+              "snippet": "Gold prices declined across most other cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "e79ffd9c-ea58-471b-9b64-84d800da624f",
+              "title": "Gold Rate Today: Check 22K, 24K gold prices in Delhi, Mumbai & Chennai",
+              "url": "https://www.thehindubusinessline.com/gold-rate-today/gold-price-today-in-delhi-mumbai-kolkata-chennai-bengaluru-hyderabad-pune-gold-rates-metro-cities-august-29-2026/article71403967.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-08-29T08:35:53.000000Z",
+              "snippet": "Gold prices declined across most metro cities today compared to yesterday. Below is a detailed breakdown of gold prices in these cities.\n\nGold rates in India:\n\n...",
+              "entities": []
+            },
+            {
+              "uuid": "803d5bc2-0dc7-481c-bb43-4d68c8e21dd6",
+              "title": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska",
+              "url": "https://finance.yahoo.com/markets/commodities/articles/tnr-gold-launches-2026-exploration-132600566.html",
+              "source": "finance.yahoo.com",
+              "published_at": "2026-08-31T13:26:00.000000Z",
+              "snippet": "TNR Gold launches 2026 exploration program at Shotgun gold project in Alaska Proactive uses images sourced from Shutterstock\n\nTNR Gold Corp (TSX-V:TNR, FRA:TNW,...",
+              "entities": [
+                {
+                  "symbol": "TRRXF",
+                  "name": "TNR Gold Corp.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "TNR.V",
+                  "name": "TNR Gold Corp.",
+                  "industry": "Basic Materials"
+                },
+                {
+                  "symbol": "NG.TO",
+                  "name": "NovaGold Resources Inc.",
+                  "industry": "Basic Materials"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0019": {
+      "client_id": "CL-0019",
+      "sectors": [
+        {
+          "sector": "Industrials",
+          "market_value_usd": 6538256.34,
+          "query": {
+            "industries": "Industrials"
+          },
+          "articles": [
+            {
+              "uuid": "e130751c-770f-41a0-8507-dfcb74a884ca",
+              "title": "Nidec Corporation (NJDCY) Analyst/Investor Day Transcript",
+              "url": "https://seekingalpha.com/article/4943249-nidec-corporation-njdcy-analyst-investor-day-transcript",
+              "source": "seekingalpha.com",
+              "published_at": "2026-09-05T04:29:18.000000Z",
+              "snippet": "Presentation\n\nNow the press conference by the Investigation Committee will start with its own moderator. I will excuse myself. Thank you.\n\nUnknown Executive\n\nGo...",
+              "entities": [
+                {
+                  "symbol": "NNDNF",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "6594.T",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "NJDCY",
+                  "name": "Nidec Corporation",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "efae3a2c-615a-4de2-b9fe-2b5e15201864",
+              "title": "Smart Look At The Week Ahead: Apple, Oracle, ECB And US Treasuries",
+              "url": "https://thesmartinvestor.com.sg/smart-look-at-the-week-ahead-apple-oracle-ecb-and-us-treasuries/",
+              "source": "thesmartinvestor.com.sg",
+              "published_at": "2026-09-05T03:56:04.000000Z",
+              "snippet": "The US market will be closed for Labour Day on Monday. So, the rest of the world will have to fly solo at the start of the week.\n\nThe European Central Bank is e...",
+              "entities": [
+                {
+                  "symbol": "AAPL",
+                  "name": "Apple Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "ADBE",
+                  "name": "Adobe Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "ORCL",
+                  "name": "Oracle Corporation",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "KFY",
+                  "name": "Korn Ferry",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "0c25a05e-103b-435e-93a8-a02972fef24b",
+              "title": "Automatic Data Processing Inc (ADP) Executive VP Joseph Desilva Sells 631 Shares",
+              "url": "https://www.gurufocus.com/news/9069063/automatic-data-processing-inc-adp-executive-vp-joseph-desilva-sells-631-shares",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T03:01:12.000000Z",
+              "snippet": "Executive Vice President Joseph Desilva sold 631 shares of Automatic Data Processing Inc ADP on September 3, 2026, according to a recent SEC Filing. Following t...",
+              "entities": [
+                {
+                  "symbol": "ADP",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "Industrials"
+                },
+                {
+                  "symbol": "0HJI.L",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "ADPR34.SA",
+                  "name": "Automatic Data Processing, Inc.",
+                  "industry": "Industrials"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Energy",
+          "market_value_usd": 2878800.0,
+          "query": {
+            "industries": "Energy"
+          },
+          "articles": [
+            {
+              "uuid": "4505fb08-f774-42ea-9e7c-6dc7b9526e08",
+              "title": "Trump calls Venezuela oil deal 'greatest ever', but US firms raise concerns",
+              "url": "https://www.business-standard.com/world-news/trump-calls-venezuela-oil-deal-greatest-ever-but-us-firms-raise-concerns-126090500083_1.html",
+              "source": "business-standard.com",
+              "published_at": "2026-09-05T03:28:02.000000Z",
+              "snippet": "By Jennifer A. Dlouhy, Kevin Crowley and David Wethe\n\nPresident Donald Trump has boasted that his sweeping oil accord with Venezuela — effectively giving the ...",
+              "entities": [
+                {
+                  "symbol": "CVXD.BA",
+                  "name": "CHEVRON CORP",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "E.BA",
+                  "name": "ENI SPA",
+                  "industry": "Energy"
+                }
+              ]
+            },
+            {
+              "uuid": "adafebbc-f18e-40ac-add2-c9923b584626",
+              "title": "EnQuest PLC (ENQUF) (H1 2026) Earnings Call Highlights: Production Surges 9% and Malaysia Deal to Double Output",
+              "url": "https://www.gurufocus.com/news/9069045/enquest-plc-enquf-h1-2026-earnings-call-highlights-production-surges-9-and-malaysia-deal-to-double-output",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:51.000000Z",
+              "snippet": "Release Date: September 03, 2026\n\nFor the complete transcript of the earnings call, please refer to the full earnings call transcript.\n\nPositive Points\n\nProduct...",
+              "entities": [
+                {
+                  "symbol": "ENQUF",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                },
+                {
+                  "symbol": "ENQ.L",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                }
+              ]
+            },
+            {
+              "uuid": "16a091ba-1eeb-46a1-930e-6b13876e88c7",
+              "title": "Half Year 2026 EnQuest PLC Earnings Call Transcript",
+              "url": "https://www.gurufocus.com/news/9069020/half-year-2026-enquest-plc-earnings-call-transcript",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T00:50:57.000000Z",
+              "snippet": "Sep 03, 2026 / 10:00AM GMT\n\nOperator\n\n\n\nGood morning, and welcome to the EnQuest PLC's half year results investor presentation. (Operator Instructions) The comp...",
+              "entities": [
+                {
+                  "symbol": "ENQUF",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                },
+                {
+                  "symbol": "ENQ.L",
+                  "name": "EnQuest PLC",
+                  "industry": "Energy"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    },
+    "CL-0020": {
+      "client_id": "CL-0020",
+      "sectors": [
+        {
+          "sector": "Health Care",
+          "market_value_usd": 5596408.279999999,
+          "query": {
+            "industries": "Healthcare"
+          },
+          "articles": [
+            {
+              "uuid": "ab803703-4f12-4c29-8920-957de191e334",
+              "title": "Axogen (AXGN) Director Joseph Tyndall Sells 3,500 Shares",
+              "url": "https://www.gurufocus.com/news/9069066/axogen-axgn-director-joseph-tyndall-sells-3500-shares",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T03:02:28.000000Z",
+              "snippet": "Joseph Tyndall, a director at Axogen Inc AXGN, sold 3,500 shares of the company's stock on September 2, 2026, according to a recent SEC Filing. Following the tr...",
+              "entities": [
+                {
+                  "symbol": "AXGN",
+                  "name": "AxoGen, Inc.",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "0HKD.L",
+                  "name": "AxoGen, Inc.",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "0bcb09c0-3415-4fba-ad4a-d40dd21b917f",
+              "title": "Are DOW shares or COH shares better value in 2026?",
+              "url": "https://www.raskmedia.com.au/2026/09/05/are-dow-shares-or-coh-shares-better-value-in-2026-7/",
+              "source": "raskmedia.com.au",
+              "published_at": "2026-09-05T02:04:52.000000Z",
+              "snippet": "DOW share price in focus\n\nThe ASX:DOW ) share price is down around 20.2% since the start of 2025. Meanwhile, the ASX:COH ) share price is 53.0% away from its 52...",
+              "entities": [
+                {
+                  "symbol": "COH.AX",
+                  "name": "Cochlear Limited",
+                  "industry": "Healthcare"
+                },
+                {
+                  "symbol": "DOW.AX",
+                  "name": "Downer EDI Limited",
+                  "industry": "Industrials"
+                }
+              ]
+            },
+            {
+              "uuid": "da62469d-1484-4dff-ad08-d0c9e39847f7",
+              "title": "Resonance Health Ltd (ASX:RHT) (FY 2026) Earnings Call Highlights: Revenue Surges 42% as Company Returns to Profitability",
+              "url": "https://www.gurufocus.com/news/9069046/resonance-health-ltd-asxrht-fy-2026-earnings-call-highlights-revenue-surges-42-as-company-returns-to-profitability",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T01:00:55.000000Z",
+              "snippet": "Release Date: August 28, 2026\n\nFor the complete transcript of the earnings call, please refer to the full earnings call transcript.\n\nPositive Points\n\nResonance ...",
+              "entities": [
+                {
+                  "symbol": "RHT.AX",
+                  "name": "Resonance Health Limited",
+                  "industry": "Healthcare"
+                }
+              ]
+            }
+          ],
+          "error": null
+        },
+        {
+          "sector": "Information Technology",
+          "market_value_usd": 2664450.0,
+          "query": {
+            "industries": "Technology"
+          },
+          "articles": [
+            {
+              "uuid": "0209c876-9e66-4924-86f7-8bfeb834d7b8",
+              "title": "DOCU SWOT Analysis: Strong Financial Performance Amidst Competitive Challenges Revealed in 10-Q Filing",
+              "url": "https://www.gurufocus.com/news/9069094/docu-swot-analysis-strong-financial-performance-amidst-competitive-challenges-revealed-in-10q-filing",
+              "source": "gurufocus.com",
+              "published_at": "2026-09-05T05:02:46.000000Z",
+              "snippet": "On September 04, 2026, Docusign Inc DOCU released its 10-Q filing for the second quarter of fiscal 2026, showcasing a solid financial performance with significa...",
+              "entities": [
+                {
+                  "symbol": "DOCU",
+                  "name": "DocuSign, Inc.",
+                  "industry": "Technology"
+                },
+                {
+                  "symbol": "DOCU.BA",
+                  "name": "DocuSign, Inc.",
+                  "industry": "N/A"
+                },
+                {
+                  "symbol": "DOCUD.BA",
+                  "name": "DOCUSIGN INC",
+                  "industry": "N/A"
+                }
+              ]
+            },
+            {
+              "uuid": "de8c0b03-7530-487a-8c5a-8202f084ff66",
+              "title": "Pranav Constructions raises ₹84 crore from anchor investors; IPO to open on Sep 7",
+              "url": "https://www.thehindubusinessline.com/markets/pranav-constructions-raises-84-crore-from-anchor-investors-ipo-to-open-on-sep-7/article71430994.ece",
+              "source": "thehindubusinessline.com",
+              "published_at": "2026-09-05T04:10:55.000000Z",
+              "snippet": "Real estate developer Pranav Constructions Ltd on Friday raised ₹84.24 crore from anchor investors, ahead of the opening of its initial public offering (IPO) ...",
+              "entities": [
+                {
+                  "symbol": "ITI.BO",
+                  "name": "ITI Limited",
+                  "industry": "Technology"
+                }
+              ]
+            },
+            {
+              "uuid": "f5cd0e21-b3fb-4263-9ff2-2d7cb6726bae",
+              "title": "IND vs PAK Women's Asia Cup 2026: Playing 11, match time IST, streaming",
+              "url": "https://www.business-standard.com/cricket/news/ind-vs-pak-women-s-asia-cup-2026-playing-11-match-time-ist-streaming-126090400936_1.html",
+              "source": "business-standard.com",
+              "published_at": "2026-09-05T04:03:24.000000Z",
+              "snippet": "Harmanpreet Kaur-led India will look to carry their dominant start into the biggest fixture of their Women's Asia Cup campaign when they face Pakistan in their ...",
+              "entities": [
+                {
+                  "symbol": "SONY",
+                  "name": "Sony Group Corporation",
+                  "industry": "Technology"
+                }
+              ]
+            }
+          ],
+          "error": null
+        }
+      ],
+      "errors": []
+    }
+  }
+}
