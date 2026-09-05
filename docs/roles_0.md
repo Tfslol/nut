@@ -101,3 +101,14 @@ criteria's shorthand reference to three dimensions.
 - [x] Confirm no PII crosses the provider boundary (censored only).
 - [x] Commit on `role/0-alignment-engine`, then integrate to `main` and tick
       the remaining items. Leave PRD §5 untouched for Role 1.
+
+## User-requested extension — RM action advisor
+
+- [x] Add a separate Streamlit page that decomposes cached review
+      leads into what / when / why / how actions for the RM.
+- [x] Add cached live-news context weighted by the client's latest sector
+      exposure, without inferring sentiment, causation or a trade instruction.
+- [x] Keep the page deterministic on client selection so it does not add an
+      LLM or market API call to Streamlit reruns.
+- [x] Let the RM explicitly save a prefilled, owned and dated next step into
+      the existing local Action Record and audit trail.

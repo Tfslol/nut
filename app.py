@@ -4,12 +4,13 @@ import json
 import os
 import re
 from calendar import month_name, monthcalendar
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
 import streamlit as st
 
+from singhacks26.action_advisor import build_action_briefs, market_signals_for_client
 from singhacks26.ai_brief import ai_is_configured, draft_ai_brief
 from singhacks26.alignment import (
     PRESENTATION_CLIENTS,
@@ -1520,6 +1521,7 @@ with st.sidebar:
         [
             "Attention map",
             "Alignment & conflicts",
+            "RM action advisor",
             "Focus casebook",
             "Client deep dive",
             "Notes library",
@@ -1531,7 +1533,9 @@ with st.sidebar:
     )
     st.divider()
     st.markdown("**Data boundary**")
-    st.caption("Client data remains local. External market/news feeds are not connected.")
+    st.caption(
+        "Client data remains local. Only configured, censored sector queries are sent to the market/news feed."
+    )
 
 header_left, header_right = st.columns([0.86, 0.14])
 with header_left:
@@ -1808,6 +1812,209 @@ elif page == "Alignment & conflicts":
                     "headline": st.column_config.TextColumn("Review lead", width="large"),
                 },
             )
+
+elif page == "RM action advisor":
+    st.markdown(
+        '<div class="hero">From review lead to the next RM step.</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="muted">A concise, ordered action brief combining alignment conflicts, '
+        "portfolio exposure and cached live-news signals. Headlines are prompts to verify—not "
+        "performance claims or trade instructions.</div>",
+        unsafe_allow_html=True,
+    )
+
+    presentation_ids = [
+        client_id for client_id in PRESENTATION_CLIENTS if client_id in clients.client_id.tolist()
+    ]
+    advisor_client_options = presentation_ids + [
+        client_id for client_id in clients.client_id if client_id not in presentation_ids
+    ]
+    advisor_default = st.session_state.get(
+        "active_client",
+        presentation_ids[0] if presentation_ids else advisor_client_options[0],
+    )
+    if advisor_default not in advisor_client_options:
+        advisor_default = advisor_client_options[0]
+    selected_advisor_id = st.selectbox(
+        "Client",
+        advisor_client_options,
+        index=advisor_client_options.index(advisor_default),
+        format_func=lambda client_id: clients.loc[
+            clients.client_id == client_id, "client_name"
+        ].iloc[0],
+        key="action_advisor_client",
+    )
+    selected_advisor = clients.loc[clients.client_id == selected_advisor_id].iloc[0]
+    advisor_report = alignment_reports.get(selected_advisor_id)
+    advisor_signals = market_signals_for_client(
+        news_payload,
+        data["holdings"],
+        selected_advisor_id,
+    )
+    advisor_briefs = build_action_briefs(advisor_report, advisor_signals)
+
+    st.markdown(f"### {selected_advisor.client_name}")
+    fetched_at = pd.to_datetime(news_payload.get("fetched_utc"), utc=True, errors="coerce")
+    fetched_label = (
+        fetched_at.strftime("%d %b %Y, %H:%M UTC")
+        if not pd.isna(fetched_at)
+        else "not available"
+    )
+    st.caption(
+        f"Client ID {selected_advisor_id} · portfolio facts as of {AS_OF} · "
+        f"news fetched {fetched_label}"
+    )
+    summary = st.columns(4)
+    summary[0].metric("Next priority", advisor_briefs[0]["severity"] if advisor_briefs else "Monitor")
+    summary[1].metric("Open review leads", len(advisor_briefs))
+    summary[2].metric("Market signals", len(advisor_signals))
+    summary[3].metric(
+        "Alignment",
+        str((advisor_report or {}).get("overall_band", "Pending")).replace("_", " ").title(),
+    )
+
+    if news_error:
+        st.warning(
+            "The live-news refresh is currently unavailable. Any headlines below come from the "
+            f"last local cache. Feed status: {news_error}"
+        )
+
+    st.markdown("### Market signals to verify")
+    if advisor_signals:
+        signal_columns = st.columns(len(advisor_signals))
+        for column, signal in zip(signal_columns, advisor_signals, strict=False):
+            with column:
+                with st.container(border=True):
+                    st.caption(
+                        f"{signal['sector']} · {signal['sector_exposure_pct']:.1f}% of latest portfolio"
+                    )
+                    st.markdown(f"**{signal['title']}**")
+                    published_at = pd.to_datetime(
+                        signal.get("published_at"), utc=True, errors="coerce"
+                    )
+                    published_label = (
+                        published_at.strftime("%d %b %Y, %H:%M UTC")
+                        if not pd.isna(published_at)
+                        else "date unavailable"
+                    )
+                    st.caption(f"{signal['source']} · {published_label}")
+                    if signal.get("snippet"):
+                        st.write(sentence(signal["snippet"], limit=180))
+                    if signal.get("url"):
+                        st.link_button("Open source", signal["url"], width="stretch")
+    else:
+        st.info(
+            "No cached live-news signal is available for this client's held sectors. "
+            "Use the alignment evidence for timing and verify current markets separately."
+        )
+
+    st.markdown("### RM action sequence")
+    if not advisor_report:
+        st.info(
+            "No cached alignment report is available for this client yet. The action sequence "
+            "will populate when the background alignment analysis completes."
+        )
+    elif not advisor_briefs:
+        with st.container(border=True):
+            st.caption("MONITOR · No open conflict returned")
+            st.markdown("#### Keep the current fit under review")
+            what_box, when_box = st.columns(2)
+            with what_box.container(border=True):
+                st.markdown("**What to do**")
+                st.write("Confirm that objectives, risk appetite and liquidity needs remain unchanged.")
+            with when_box.container(border=True):
+                st.markdown("**When to do it**")
+                st.write("At the next routine review, or earlier if a client or market signal changes.")
+            why_box, how_box = st.columns(2)
+            with why_box.container(border=True):
+                st.markdown("**Why do it**")
+                st.write(
+                    "The cached alignment report returned no conflict. That supports monitoring; "
+                    "it does not remove the need for periodic suitability review."
+                )
+            with how_box.container(border=True):
+                st.markdown("**How to do it**")
+                st.markdown(
+                    "1. Reconfirm client circumstances.\n"
+                    "2. Review the latest holdings and mandate.\n"
+                    "3. Check whether the market signals above affect the conversation.\n"
+                    "4. Record the RM conclusion."
+                )
+    else:
+        for brief in advisor_briefs:
+            with st.container(border=True):
+                category = brief["category"].replace("_", " ").title()
+                st.caption(f"STEP {brief['position']} · {brief['severity'].upper()} · {category}")
+                st.markdown(f"#### {brief['headline']}")
+                what_box, when_box = st.columns([0.58, 0.42])
+                with what_box.container(border=True):
+                    st.markdown("**What to do**")
+                    st.write(brief["what"])
+                with when_box.container(border=True):
+                    st.markdown("**When to do it**")
+                    st.write(brief["when"])
+
+                why_box, how_box = st.columns([0.45, 0.55])
+                with why_box.container(border=True):
+                    st.markdown("**Why do it**")
+                    st.write(brief["why"])
+                    if brief["market_note"]:
+                        st.info(brief["market_note"])
+                with how_box.container(border=True):
+                    st.markdown("**How to do it**")
+                    for step_number, step in enumerate(brief["how"], start=1):
+                        st.markdown(f"{step_number}. {step}")
+
+                with st.expander("Evidence and market sources"):
+                    if brief["evidence_ids"]:
+                        st.caption("Local evidence: " + " · ".join(brief["evidence_ids"]))
+                    if brief["market_signals"]:
+                        st.caption(
+                            "Market evidence: "
+                            + " · ".join(signal["evidence_id"] for signal in brief["market_signals"])
+                        )
+
+                due_days = {"Urgent": 0, "High": 5, "Medium": 14, "Low": 30}
+                suggested_due = datetime.now().date() + timedelta(
+                    days=due_days.get(brief["severity"], 30)
+                )
+                with st.expander("Add this step to the Action Record"):
+                    with st.form(
+                        key=f"advisor_task_{selected_advisor_id}_{brief['conflict_id']}"
+                    ):
+                        task_title = st.text_input("Task", value=brief["what"])
+                        task_owner = st.text_input("Owner", value="Priscilla Ong")
+                        task_due = st.date_input("Due date", value=suggested_due)
+                        task_submitted = st.form_submit_button(
+                            "Create accountable next step",
+                            type="primary",
+                        )
+                    if task_submitted:
+                        if not task_title.strip() or not task_owner.strip():
+                            st.warning("Add both a task and an owner before saving.")
+                        else:
+                            evidence_ref = " · ".join(
+                                brief["evidence_ids"]
+                                + [signal["evidence_id"] for signal in brief["market_signals"]]
+                            )
+                            WORKFLOW.add_task(
+                                client_id=selected_advisor_id,
+                                title=task_title,
+                                owner=task_owner,
+                                due_date=task_due.isoformat(),
+                                task_type="Follow-up task",
+                                evidence_ref=evidence_ref or f"alignment:{brief['conflict_id']}",
+                            )
+                            st.success(
+                                "Next step saved locally to the Action Record with an audit event."
+                            )
+
+    st.warning(
+        "RM review aid only. Validate source evidence, suitability and current market facts before "
+        "speaking with the client or taking action."
+    )
 
 elif page == "Focus casebook":
     st.markdown(
