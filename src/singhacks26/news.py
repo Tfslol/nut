@@ -354,9 +354,7 @@ def most_affected(
     latest = holdings["snapshot_date"].max()
     rows: list[dict] = []
     for client_id, entry in payload.get("clients", {}).items():
-        client_positions = holdings[
-            (holdings["client_id"] == client_id) & (holdings["snapshot_date"] == latest)
-        ]
+        client_positions = holdings[(holdings["client_id"] == client_id) & (holdings["snapshot_date"] == latest)]
         total = float(client_positions["market_value_usd"].sum())
         if total <= 0:
             continue
@@ -392,6 +390,4 @@ def most_affected(
     columns = ["client_id", "exposure_weighted_score", "exposed_sectors", "driving_headlines"]
     if not rows:
         return pd.DataFrame(columns=columns)
-    return pd.DataFrame(rows, columns=columns).sort_values(
-        "exposure_weighted_score", ascending=False
-    )
+    return pd.DataFrame(rows, columns=columns).sort_values("exposure_weighted_score", ascending=False)

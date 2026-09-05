@@ -57,9 +57,7 @@ def build_recommendation_fact_packet(
     client = data["clients"].loc[data["clients"].client_id == client_id].iloc[0]
     holdings = data["holdings"]
     latest = holdings["snapshot_date"].max()
-    positions = holdings[
-        (holdings["client_id"] == client_id) & (holdings["snapshot_date"] == latest)
-    ]
+    positions = holdings[(holdings["client_id"] == client_id) & (holdings["snapshot_date"] == latest)]
 
     allocation = positions.groupby("asset_class")["market_value_usd"].sum().round(2).to_dict()
     sector_exposure = positions.groupby("sector")["market_value_usd"].sum().round(2).to_dict()
@@ -105,19 +103,14 @@ def validate_recommendation_draft(draft: RecommendationDraft, fact_packet: dict)
     unsupported_numbers = candidate_numbers - allowed_numbers
     if unsupported_numbers:
         raise RuntimeError(
-            f"Recommendation draft introduced unsupported numeric claims: "
-            f"{sorted(unsupported_numbers)}"
+            f"Recommendation draft introduced unsupported numeric claims: " f"{sorted(unsupported_numbers)}"
         )
     for pattern in PROHIBITED_PATTERNS:
         if pattern.search(candidate):
-            raise RuntimeError(
-                f"Recommendation draft failed the prohibited-language guardrail: {pattern.pattern}"
-            )
+            raise RuntimeError(f"Recommendation draft failed the prohibited-language guardrail: {pattern.pattern}")
 
 
-def validate_recommendation_evidence(
-    draft: RecommendationDraft, allowed_evidence_ids: list[str]
-) -> None:
+def validate_recommendation_evidence(draft: RecommendationDraft, allowed_evidence_ids: list[str]) -> None:
     """Reject evidence IDs outside the fact-packet allow-list."""
     unknown = set(draft.evidence_ids) - set(allowed_evidence_ids)
     if unknown:
@@ -135,9 +128,7 @@ def generate_recommendation(fact_packet: dict) -> tuple[RecommendationDraft, str
     reasoning_effort = os.getenv("OPENAI_REASONING_EFFORT", DEFAULT_REASONING_EFFORT)
     if reasoning_effort not in SUPPORTED_REASONING_EFFORTS:
         supported = ", ".join(sorted(SUPPORTED_REASONING_EFFORTS))
-        raise RuntimeError(
-            f"Unsupported OPENAI_REASONING_EFFORT={reasoning_effort!r}. Use one of: {supported}."
-        )
+        raise RuntimeError(f"Unsupported OPENAI_REASONING_EFFORT={reasoning_effort!r}. Use one of: {supported}.")
 
     client = OpenAI(api_key=api_key)
     response = client.responses.parse(

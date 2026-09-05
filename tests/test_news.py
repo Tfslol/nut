@@ -143,9 +143,7 @@ def test_refresh_news_force_fetches_and_normalises(monkeypatch, tmp_path):
         ]
 
     monkeypatch.setattr(news, "fetch_news", fake_fetch)
-    result = news.refresh_news(
-        {"clients": clients, "holdings": holdings}, cache=cache, force=True, sleep_seconds=0
-    )
+    result = news.refresh_news({"clients": clients, "holdings": holdings}, cache=cache, force=True, sleep_seconds=0)
     sector = result["clients"]["CL-A"]["sectors"][0]
     assert sector["sector"] == "Energy"
     assert len(sector["articles"]) == 1  # de-duplicated by uuid
@@ -205,8 +203,6 @@ def test_most_affected_skips_clients_without_articles():
             },
         ]
     )
-    cache = {
-        "clients": {"CL-A": {"client_id": "CL-A", "sectors": [{"sector": "Cash", "articles": []}]}}
-    }
+    cache = {"clients": {"CL-A": {"client_id": "CL-A", "sectors": [{"sector": "Cash", "articles": []}]}}}
     ranking = most_affected(cache, holdings, as_of=datetime(2026, 8, 26, tzinfo=UTC))
     assert ranking.empty

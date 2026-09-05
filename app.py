@@ -237,10 +237,7 @@ OPTION_CONTROLS = {
 }
 RELATIONSHIP_CANVAS = {
     "CL-0012": {
-        "voice": (
-            "“I do not want to sell anything at a loss. I would rather wait for the bonds "
-            "to come back.”"
-        ),
+        "voice": ("“I do not want to sell anything at a loss. I would rather wait for the bonds " "to come back.”"),
         "voice_source": "RM note N-016 · Call · 2026-07-16",
         "human_read": (
             "RM hypothesis: the loss may feel like evidence that the ‘safe’ part of his wealth "
@@ -456,9 +453,7 @@ def build_event_impacts(_data):
                         "relevance": min(100, 40 + 15 * len(overlap) + 8 * rank),
                     }
                 )
-    return pd.DataFrame(rows).sort_values(
-        ["severity_rank", "relevance", "event_date"], ascending=[False, False, False]
-    )
+    return pd.DataFrame(rows).sort_values(["severity_rank", "relevance", "event_date"], ascending=[False, False, False])
 
 
 def rm_calendar_items(_data, workflow, event_impacts):
@@ -501,9 +496,7 @@ def rm_calendar_items(_data, workflow, event_impacts):
                 "source": task.get("evidence_ref", "Local action record"),
             }
         )
-    mapped_events = event_impacts.groupby(
-        ["event_date", "description", "severity"], as_index=False
-    ).agg(
+    mapped_events = event_impacts.groupby(["event_date", "description", "severity"], as_index=False).agg(
         affected_clients=("client_id", "nunique"),
         client_names=("client", lambda values: list(dict.fromkeys(values))[:4]),
     )
@@ -530,9 +523,7 @@ def render_month_calendar(items, year, month):
         .dt.day.dropna()
         .astype(int)
     )
-    headers = "".join(
-        f"<div class='cal-head'>{day}</div>" for day in ["M", "T", "W", "T", "F", "S", "S"]
-    )
+    headers = "".join(f"<div class='cal-head'>{day}</div>" for day in ["M", "T", "W", "T", "F", "S", "S"])
     cells = []
     for week in monthcalendar(year, month):
         for day in week:
@@ -541,9 +532,7 @@ def render_month_calendar(items, year, month):
             else:
                 marker = "<span class='cal-dot'></span>" if day in days_with_items else ""
                 cells.append(f"<div class='cal-day'>{day}{marker}</div>")
-    st.markdown(
-        f"<div class='calendar-grid'>{headers}{''.join(cells)}</div>", unsafe_allow_html=True
-    )
+    st.markdown(f"<div class='calendar-grid'>{headers}{''.join(cells)}</div>", unsafe_allow_html=True)
 
 
 def vault_notes(client_id):
@@ -555,10 +544,7 @@ def vault_notes(client_id):
         path.read_text(encoding="utf-8"),
         flags=re.DOTALL,
     )
-    return [
-        {"date": date, "category": category, "note": body.strip()}
-        for date, category, body in entries
-    ]
+    return [{"date": date, "category": category, "note": body.strip()} for date, category, body in entries]
 
 
 def save_vault_note(client_id, client_name, category, note):
@@ -616,9 +602,7 @@ def call_brief(client_id):
         if not relevant.empty
         else "No directly mapped controlled event has been identified."
     )
-    event_ref = (
-        f"event_log.csv {relevant.iloc[0].event_date}" if not relevant.empty else "no mapped event"
-    )
+    event_ref = f"event_log.csv {relevant.iloc[0].event_date}" if not relevant.empty else "no mapped event"
     need_text = (
         f" A recorded future need is {sentence(cash_needs.iloc[0].description).lower()}."
         if not cash_needs.empty
@@ -629,8 +613,7 @@ def call_brief(client_id):
     return {
         "why": f"Review {client.client_name}'s latest context before the next contact.",
         "context": (
-            f"{client.life_stage}; {client.risk_profile} risk profile. "
-            f"The stated objective is: {client.objectives}"
+            f"{client.life_stage}; {client.risk_profile} risk profile. " f"The stated objective is: {client.objectives}"
         ),
         "tension": f"Latest recorded RM context: {note_text}{need_text}",
         "changed": event_text,
@@ -720,9 +703,7 @@ def ai_fact_packet(brief):
 
 def render_ai_draft(client_id, brief):
     st.markdown("#### AI-prepared conversation draft")
-    st.caption(
-        "AI rewrites only the redacted fact packet above. It cannot access files, tools or live data."
-    )
+    st.caption("AI rewrites only the redacted fact packet above. It cannot access files, tools or live data.")
     if not ai_is_configured():
         st.info("Add OPENAI_API_KEY to a local .env file to enable AI drafting.")
         return
@@ -752,9 +733,7 @@ def render_ai_draft(client_id, brief):
     for uncertainty in draft["uncertainties"]:
         st.markdown(f"- {uncertainty}")
     st.caption(f"Evidence used: {' · '.join(draft['evidence_ids'])}")
-    st.warning(
-        "AI draft—not approved. Priscilla remains responsible for the conversation and advice."
-    )
+    st.warning("AI draft—not approved. Priscilla remains responsible for the conversation and advice.")
 
 
 def ensure_news(data):
@@ -800,9 +779,7 @@ def render_live_news(payload, ranking, error):
     for _, row in ranking.iterrows():
         name = clients.loc[clients.client_id == row.client_id, "client_name"].iloc[0]
         with st.container(border=True):
-            st.markdown(
-                f"**{name}** · exposure-weighted score {row.exposure_weighted_score:.3f}"
-            )
+            st.markdown(f"**{name}** · exposure-weighted score {row.exposure_weighted_score:.3f}")
             st.caption("Exposed sectors: " + ", ".join(row.exposed_sectors))
             for headline in row.driving_headlines:
                 st.markdown(f"- {headline}")
@@ -903,9 +880,7 @@ def render_call_brief(client_id):
 def case_facts(client_id):
     """Calculate review facts for a focus case from source rows."""
     latest_date = data["holdings"].snapshot_date.max()
-    positions = (
-        data["holdings"].query("client_id == @client_id and snapshot_date == @latest_date").copy()
-    )
+    positions = data["holdings"].query("client_id == @client_id and snapshot_date == @latest_date").copy()
     portfolio = data["portfolios"].loc[data["portfolios"].client_id == client_id].iloc[0]
     total = positions.market_value_base.sum()
     allocation = positions.groupby("asset_class").market_value_base.sum().div(total).mul(100)
@@ -936,13 +911,10 @@ def case_facts(client_id):
         facility_row = facility.iloc[0]
         trigger = float(facility_row.margin_call_ltv_pct) / 100
         withdrawable_lending_value = max(
-            float(facility_row["lending_value_2026-08-26"])
-            - float(facility_row["drawn_2026-08-26"]) / trigger,
+            float(facility_row["lending_value_2026-08-26"]) - float(facility_row["drawn_2026-08-26"]) / trigger,
             0,
         )
-        balance_change = float(facility_row["drawn_2026-03-31"]) - float(
-            facility_row["drawn_2026-02-27"]
-        )
+        balance_change = float(facility_row["drawn_2026-03-31"]) - float(facility_row["drawn_2026-02-27"])
         recorded_drawdowns = (
             data["transactions"]
             .loc[
@@ -1010,9 +982,7 @@ def case_json_payload(client, insight, facts):
     """Build a portable, auditable contract without duplicating source datasets."""
     need = facts["need"]
     facility = facts["facility"]
-    watchpoint_label, watchpoint_value, watchpoint_caveat = decision_watchpoint(
-        client.client_id, facts
-    )
+    watchpoint_label, watchpoint_value, watchpoint_caveat = decision_watchpoint(client.client_id, facts)
     mandate_exceptions = facts["mandate"].loc[facts["mandate"].Status == "Review"]
     structured_evidence = [
         {
@@ -1106,32 +1076,34 @@ def case_json_payload(client, insight, facts):
             "portfolio_currency": facts["currency"],
             "daily_liquidity": round(facts["liquid"], 2),
             "cash": round(facts["cash"], 2),
-            "planned_cash_need": None
-            if need is None
-            else {
-                "need_id": need.need_id,
-                "description": need.description,
-                "currency": need.currency,
-                "amount": float(need.amount),
-                "due_from": str(need.due_from),
-                "due_to": str(need.due_to),
-                "certainty": need.certainty,
-            },
-            "credit_facility": None
-            if facility is None
-            else {
-                "facility_id": facility.facility_id,
-                "currency": facility.facility_ccy,
-                "drawn": float(facility["drawn_2026-08-26"]),
-                "ltv_pct": float(facility["ltv_pct_2026-08-26"]),
-                "margin_call_ltv_pct": float(facility.margin_call_ltv_pct),
-                "withdrawable_lending_value_before_trigger": round(
-                    facts["facility_controls"]["withdrawable_lending_value"], 2
-                ),
-                "unexplained_drawn_balance_change": round(
-                    facts["facility_controls"]["unexplained_change"], 2
-                ),
-            },
+            "planned_cash_need": (
+                None
+                if need is None
+                else {
+                    "need_id": need.need_id,
+                    "description": need.description,
+                    "currency": need.currency,
+                    "amount": float(need.amount),
+                    "due_from": str(need.due_from),
+                    "due_to": str(need.due_to),
+                    "certainty": need.certainty,
+                }
+            ),
+            "credit_facility": (
+                None
+                if facility is None
+                else {
+                    "facility_id": facility.facility_id,
+                    "currency": facility.facility_ccy,
+                    "drawn": float(facility["drawn_2026-08-26"]),
+                    "ltv_pct": float(facility["ltv_pct_2026-08-26"]),
+                    "margin_call_ltv_pct": float(facility.margin_call_ltv_pct),
+                    "withdrawable_lending_value_before_trigger": round(
+                        facts["facility_controls"]["withdrawable_lending_value"], 2
+                    ),
+                    "unexplained_drawn_balance_change": round(facts["facility_controls"]["unexplained_change"], 2),
+                }
+            ),
             "mandate_exceptions": mandate_exceptions.to_dict(orient="records"),
             "position_limit_exceptions": facts["concentration"].to_dict(orient="records"),
             "unrealised_gains": round(facts["gains"], 2),
@@ -1158,9 +1130,7 @@ def case_json_payload(client, insight, facts):
                 ],
                 "status": "rm_review_required",
             }
-            for index, (label, rationale, tradeoff) in enumerate(
-                CASEWORK_OPTIONS[client.client_id], start=1
-            )
+            for index, (label, rationale, tradeoff) in enumerate(CASEWORK_OPTIONS[client.client_id], start=1)
         ],
         "evidence": {
             "source_trail": insight["evidence"],
@@ -1239,8 +1209,7 @@ def render_choice_framing(client_id, facts):
     else:
         project_amount = 60_000_000.0
         protected = (
-            st.slider("Project amount to protect from the pledged portfolio (HKD m)", 0, 60, 60, 5)
-            * 1_000_000.0
+            st.slider("Project amount to protect from the pledged portfolio (HKD m)", 0, 60, 60, 5) * 1_000_000.0
         )
         upstream_available = float(facts["facility_controls"]["withdrawable_lending_value"])
         alternate_funding = max(protected - upstream_available, 0)
@@ -1334,14 +1303,10 @@ def notes_bubble(default_client_id):
             st.markdown(f"**{entry['date']} · {entry['category']}**")
             st.write(entry["note"])
     with add_tab:
-        category = st.selectbox(
-            "Category", ["Meeting preparation", "Client outlook", "Follow-up", "Risk observation"]
-        )
+        category = st.selectbox("Category", ["Meeting preparation", "Client outlook", "Follow-up", "Risk observation"])
         note = st.text_area("Note", height=160, placeholder="Stored locally in the Obsidian vault…")
         if st.button("Save locally", type="primary", width="stretch"):
-            name = (
-                data["clients"].loc[data["clients"].client_id == selected_id, "client_name"].iloc[0]
-            )
+            name = data["clients"].loc[data["clients"].client_id == selected_id, "client_name"].iloc[0]
             if save_vault_note(selected_id, name, category, note):
                 st.success("Saved to the local Obsidian vault.")
                 st.rerun()
@@ -1392,9 +1357,7 @@ with st.sidebar:
 
 header_left, header_right = st.columns([0.86, 0.14])
 with header_left:
-    st.markdown(
-        '<div class="eyebrow">Asia desk · Singapore & Hong Kong</div>', unsafe_allow_html=True
-    )
+    st.markdown('<div class="eyebrow">Asia desk · Singapore & Hong Kong</div>', unsafe_allow_html=True)
 with header_right:
     if st.button("✦ Notes", width="stretch"):
         notes_bubble(default_client)
@@ -1431,9 +1394,7 @@ if page == "Attention map":
     for column, (_, event) in zip(st.columns(3), latest_events.iterrows(), strict=False):
         with column:
             with st.container(border=True):
-                st.caption(
-                    f"{severity_badge(event.severity)} {event.severity} · {event.event_date}"
-                )
+                st.caption(f"{severity_badge(event.severity)} {event.severity} · {event.event_date}")
                 st.markdown(f"**{event.description}**")
                 st.caption(f"Transmission: {event.transmission}")
                 st.write(f"**{event.affected_clients} affected clients**")
@@ -1480,9 +1441,7 @@ if page == "Attention map":
             label_visibility="collapsed",
         )
         selected_year, selected_month_number = map(int, selected_month.split("-"))
-        month_items = calendar_history.loc[
-            pd.to_datetime(calendar_history.date).dt.strftime("%Y-%m") == selected_month
-        ]
+        month_items = calendar_history.loc[pd.to_datetime(calendar_history.date).dt.strftime("%Y-%m") == selected_month]
         render_month_calendar(month_items, selected_year, selected_month_number)
         for date_value, day_items in month_items.groupby("date", sort=True):
             labels = " · ".join(f"{row.client}: {row.title}" for _, row in day_items.iterrows())
@@ -1494,9 +1453,7 @@ if page == "Attention map":
         )
 
         st.markdown("### Client problems requiring attention")
-        st.caption(
-            "Block 2 supplies severity; Aurelia orders the RM’s attention using client context."
-        )
+        st.caption("Block 2 supplies severity; Aurelia orders the RM’s attention using client context.")
         ranked = attention.merge(clients[["client_id", "client_name"]], on="client_id", how="left")
         ranked["why"] = ranked.reasons.apply(lambda reasons: " · ".join(reasons[:2]))
         for _, problem in ranked.head(5).iterrows():
@@ -1626,9 +1583,7 @@ elif page == "Focus casebook":
                 int((facts["mandate"].Status == "Review").sum()),
             )
             metrics[3].metric("Snapshot", facts["date"])
-        st.info(
-            f"Decision watchpoint — **{watchpoint_label}: {watchpoint_value}**. {watchpoint_caveat}"
-        )
+        st.info(f"Decision watchpoint — **{watchpoint_label}: {watchpoint_value}**. {watchpoint_caveat}")
         st.markdown("### Mandate alignment")
         st.dataframe(facts["mandate"], hide_index=True, width="stretch")
         left, right = st.columns(2)
@@ -1672,16 +1627,13 @@ elif page == "Focus casebook":
                 f"losses: **{facts['currency']} {facts['losses']:,.0f}**"
             )
             st.caption(
-                f"Tax domicile: {facts['tax_domicile']}. This is a specialist-review flag, "
-                "not a tax conclusion."
+                f"Tax domicile: {facts['tax_domicile']}. This is a specialist-review flag, " "not a tax conclusion."
             )
         st.markdown("### Household liquidity tiers")
         liquidity = liquidity_profile(data["holdings"], selected_id, facts["date"])
         st.dataframe(liquidity, hide_index=True, width="stretch")
         st.markdown("### Wrapper look-through")
-        lookthrough = lookthrough_exposure(
-            data["holdings"], data["instruments"], selected_id, facts["date"]
-        )
+        lookthrough = lookthrough_exposure(data["holdings"], data["instruments"], selected_id, facts["date"])
         wrappers = lookthrough.loc[
             lookthrough.economic_reference != lookthrough.instrument_name,
             [
@@ -1806,8 +1758,7 @@ elif page == "Focus casebook":
                 and all(latest_decision.get("gates", {}).values())
             )
             unresolved_data = bool(
-                selected_id == "CL-0014"
-                and abs(facts["facility_controls"]["unexplained_change"]) > 1
+                selected_id == "CL-0014" and abs(facts["facility_controls"]["unexplained_change"]) > 1
             )
             checks = pd.DataFrame(
                 [
@@ -1864,19 +1815,12 @@ elif page == "Focus casebook":
                         evidence_version=AS_OF,
                         reason=version_reason,
                     )
-                    st.success(
-                        f"Saved call-plan version {version['version']} with its source date."
-                    )
-            versions = [
-                item
-                for item in WORKFLOW.read()["call_plan_versions"]
-                if item["client_id"] == selected_id
-            ]
+                    st.success(f"Saved call-plan version {version['version']} with its source date.")
+            versions = [item for item in WORKFLOW.read()["call_plan_versions"] if item["client_id"] == selected_id]
             if versions:
                 st.caption(
                     " · ".join(
-                        f"v{item['version']} {item['timestamp']} — {item['reason']}"
-                        for item in reversed(versions)
+                        f"v{item['version']} {item['timestamp']} — {item['reason']}" for item in reversed(versions)
                     )
                 )
 
@@ -1904,18 +1848,14 @@ elif page == "Focus casebook":
                     evidence_ref=insight["evidence"],
                 )
                 st.success("Next step recorded locally with an audit event.")
-        client_tasks = [
-            task for task in WORKFLOW.read()["tasks"] if task["client_id"] == selected_id
-        ]
+        client_tasks = [task for task in WORKFLOW.read()["tasks"] if task["client_id"] == selected_id]
         if client_tasks:
             st.dataframe(client_tasks, hide_index=True, width="stretch")
         else:
             st.caption("No accountable next steps recorded for this client yet.")
         st.divider()
         st.markdown("### After the conversation")
-        st.caption(
-            "Record what the client actually said separately from Priscilla’s interpretation."
-        )
+        st.caption("Record what the client actually said separately from Priscilla’s interpretation.")
         disposition = st.selectbox(
             "What changed?",
             [
@@ -1946,9 +1886,7 @@ elif page == "Focus casebook":
             if not client_statement.strip() or not rm_interpretation.strip():
                 st.warning("Record both the client’s words and Priscilla’s interpretation.")
             else:
-                requested_documents = [
-                    item.strip() for item in documents.split(",") if item.strip()
-                ]
+                requested_documents = [item.strip() for item in documents.split(",") if item.strip()]
                 WORKFLOW.record_conversation_outcome(
                     client_id=selected_id,
                     disposition=disposition,
@@ -1960,17 +1898,10 @@ elif page == "Focus casebook":
                     selected_id,
                     client.client_name,
                     "Conversation outcome",
-                    f"Client said: {client_statement.strip()}\n\n"
-                    f"RM interpretation: {rm_interpretation.strip()}",
+                    f"Client said: {client_statement.strip()}\n\n" f"RM interpretation: {rm_interpretation.strip()}",
                 )
-                st.success(
-                    "Reflection saved locally with client words kept distinct from RM interpretation."
-                )
-        outcomes = [
-            item
-            for item in WORKFLOW.read()["conversation_outcomes"]
-            if item["client_id"] == selected_id
-        ]
+                st.success("Reflection saved locally with client words kept distinct from RM interpretation.")
+        outcomes = [item for item in WORKFLOW.read()["conversation_outcomes"] if item["client_id"] == selected_id]
         if outcomes:
             st.caption(f"{len(outcomes)} conversation reflection(s) recorded for this client.")
 
@@ -1989,9 +1920,7 @@ elif page == "Focus casebook":
         st.json(case_payload, expanded=2)
 
 elif page == "Upstream context":
-    st.markdown(
-        '<div class="hero">What changed—and who needs to know?</div>', unsafe_allow_html=True
-    )
+    st.markdown('<div class="hero">What changed—and who needs to know?</div>', unsafe_allow_html=True)
     st.markdown(
         '<div class="muted">Every signal is linked to a client exposure, objective or RM note.</div>',
         unsafe_allow_html=True,
@@ -2001,16 +1930,12 @@ elif page == "Upstream context":
     st.markdown("### Exposure-linked intelligence")
     filter_left, filter_right = st.columns([0.35, 0.65])
     with filter_left:
-        severity_filter = st.multiselect(
-            "Severity", ["Severe", "High", "Medium", "Low"], default=["Severe", "High"]
-        )
+        severity_filter = st.multiselect("Severity", ["Severe", "High", "Medium", "Low"], default=["Severe", "High"])
     with filter_right:
         theme_filter = st.multiselect("Theme", sorted(THEMES))
     filtered = impacts[impacts.severity.isin(severity_filter)] if severity_filter else impacts
     if theme_filter:
-        filtered = filtered[
-            filtered.themes.apply(lambda values: bool(set(values) & set(theme_filter)))
-        ]
+        filtered = filtered[filtered.themes.apply(lambda values: bool(set(values) & set(theme_filter)))]
     for event_date, group in filtered.groupby("event_date", sort=False):
         event = group.iloc[0]
         affected = group.client_id.nunique()
@@ -2043,15 +1968,11 @@ elif page == "Action record":
         unsafe_allow_html=True,
     )
     workflow = WORKFLOW.read()
-    task_tab, reflection_tab, audit_tab = st.tabs(
-        ["Open work", "Conversation reflections", "Decision audit"]
-    )
+    task_tab, reflection_tab, audit_tab = st.tabs(["Open work", "Conversation reflections", "Decision audit"])
     with task_tab:
         if workflow["tasks"]:
             tasks = pd.DataFrame(workflow["tasks"])
-            client_filter = st.multiselect(
-                "Clients", sorted(tasks.client_id.unique()), key="workflow_client_filter"
-            )
+            client_filter = st.multiselect("Clients", sorted(tasks.client_id.unique()), key="workflow_client_filter")
             if client_filter:
                 tasks = tasks.loc[tasks.client_id.isin(client_filter)]
             st.dataframe(tasks, hide_index=True, width="stretch")
@@ -2062,12 +1983,8 @@ elif page == "Action record":
                     tasks.task_id.tolist(),
                     format_func=lambda value: tasks.loc[tasks.task_id == value, "title"].iloc[0],
                 )
-                task_status = st.selectbox(
-                    "New status", ["open", "in_progress", "complete", "cancelled"]
-                )
-                task_rationale = st.text_input(
-                    "Update rationale", placeholder="What changed or was completed?"
-                )
+                task_status = st.selectbox("New status", ["open", "in_progress", "complete", "cancelled"])
+                task_rationale = st.text_input("Update rationale", placeholder="What changed or was completed?")
                 if st.button("Record task update"):
                     if not task_rationale.strip():
                         st.warning("Add a rationale for the status change.")
@@ -2082,13 +1999,9 @@ elif page == "Action record":
             st.info("No tasks yet. Create one from a case’s Next steps tab.")
     with reflection_tab:
         if workflow["conversation_outcomes"]:
-            reflections = pd.DataFrame(workflow["conversation_outcomes"]).sort_values(
-                "recorded_at", ascending=False
-            )
+            reflections = pd.DataFrame(workflow["conversation_outcomes"]).sort_values("recorded_at", ascending=False)
             st.dataframe(reflections, hide_index=True, width="stretch")
-            st.caption(
-                "Client statements and RM interpretations remain separate fields throughout."
-            )
+            st.caption("Client statements and RM interpretations remain separate fields throughout.")
         else:
             st.info("No post-conversation reflections have been recorded yet.")
     with audit_tab:
@@ -2111,9 +2024,7 @@ elif page == "Client deep dive":
     selected_id = st.selectbox(
         "Client",
         clients.client_id.tolist(),
-        format_func=lambda client_id: clients.loc[
-            clients.client_id == client_id, "client_name"
-        ].iloc[0],
+        format_func=lambda client_id: clients.loc[clients.client_id == client_id, "client_name"].iloc[0],
     )
     st.session_state.active_client = selected_id
     client = clients.loc[clients.client_id == selected_id].iloc[0]
@@ -2130,9 +2041,7 @@ elif page == "Client deep dive":
         ["Portfolio exposure", "Snapshot history", "Events & outlook", "Conversation brief"]
     )
     latest_date = data["holdings"].snapshot_date.max()
-    positions = data["holdings"].query(
-        "client_id == @selected_id and snapshot_date == @latest_date"
-    )
+    positions = data["holdings"].query("client_id == @selected_id and snapshot_date == @latest_date")
     with holdings_tab:
         left, right = st.columns(2)
         with left:
@@ -2184,12 +2093,8 @@ elif page == "Client deep dive":
         bridge[2].metric("FX effect", f"USD {attribution['fx_effect_usd'] / 1e6:,.2f}m")
         bridge[3].metric("Position flows", f"USD {attribution['flow_effect_usd'] / 1e6:,.2f}m")
         contributions = pd.DataFrame(attribution["contributions"])
-        contributions["market_effect_usd"] = (
-            contributions.price_effect_usd + contributions.fx_effect_usd
-        )
-        movers = contributions.reindex(
-            contributions.market_effect_usd.abs().sort_values(ascending=False).index
-        ).head(8)
+        contributions["market_effect_usd"] = contributions.price_effect_usd + contributions.fx_effect_usd
+        movers = contributions.reindex(contributions.market_effect_usd.abs().sort_values(ascending=False).index).head(8)
         st.dataframe(
             movers[
                 [
@@ -2233,9 +2138,7 @@ elif page == "Client deep dive":
 
 elif page == "Notes library":
     st.markdown('<div class="hero">Notes, without the noise.</div>', unsafe_allow_html=True)
-    query = st.text_input(
-        "Search all source notes", placeholder="Try: retirement, gold, liquidity, technology…"
-    )
+    query = st.text_input("Search all source notes", placeholder="Try: retirement, gold, liquidity, technology…")
     matches = []
     for note in data["rm_notes"]:
         name = clients.loc[clients.client_id == note["client_id"], "client_name"].iloc[0]
@@ -2275,8 +2178,7 @@ else:
     else:
         st.success("No configured integrity check raised an issue.")
     st.caption(
-        "Issues remain visible and block affected claims; the application does not silently "
-        "repair source records."
+        "Issues remain visible and block affected claims; the application does not silently " "repair source records."
     )
     st.markdown("### Calculation conventions")
     st.markdown(
