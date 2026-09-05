@@ -117,3 +117,5 @@ criteria's shorthand reference to three dimensions.
 - [x] Add a bounded allocation scenario beneath the existing action briefs:
       current-versus-hypothetical asset-class chart, exposure-linked controlled
       market cards, explicit RM inputs, assumptions and comparison persistence.
+- [x] Rename Attention map to Home and add persistent top navigation for Home,
+      Alignment & conflicts, Upstream context and Command Center beside Notes.

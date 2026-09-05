@@ -1518,12 +1518,16 @@ else:
     attention = attention.copy()
     attention["alignment_reason"] = ""
 default_client = st.session_state.get("active_client", clients.client_id.iloc[0])
-if st.session_state.get("navigation_page") == "RM action advisor":
-    st.session_state["navigation_page"] = "Command Center"
+legacy_page_names = {
+    "Attention map": "Home",
+    "RM action advisor": "Command Center",
+}
+if st.session_state.get("navigation_page") in legacy_page_names:
+    st.session_state["navigation_page"] = legacy_page_names[st.session_state["navigation_page"]]
 
 
-def open_command_center():
-    st.session_state["navigation_page"] = "Command Center"
+def navigate_to(page_name):
+    st.session_state["navigation_page"] = page_name
 
 with st.sidebar:
     st.markdown("### ◈ AURELIA")
@@ -1531,7 +1535,7 @@ with st.sidebar:
     page = st.radio(
         "Navigation",
         [
-            "Attention map",
+            "Home",
             "Alignment & conflicts",
             "Command Center",
             "Focus casebook",
@@ -1550,23 +1554,33 @@ with st.sidebar:
         "Client data remains local. Only configured, censored sector queries are sent to the market/news feed."
     )
 
-header_left, header_right = st.columns([0.7, 0.3])
+header_left, header_right = st.columns([0.28, 0.72])
 with header_left:
     st.markdown('<div class="eyebrow">Asia desk · Singapore & Hong Kong</div>', unsafe_allow_html=True)
 with header_right:
-    command_button, notes_button = st.columns([0.62, 0.38])
-    with command_button:
-        st.button(
-            "Command Center",
-            width="stretch",
-            type="primary" if page == "Command Center" else "secondary",
-            on_click=open_command_center,
-        )
+    home_button, alignment_button, upstream_button, command_button, notes_button = st.columns(
+        [0.12, 0.25, 0.19, 0.25, 0.13]
+    )
+    for button_column, button_label, target_page in [
+        (home_button, "Home", "Home"),
+        (alignment_button, "Alignment & conflicts", "Alignment & conflicts"),
+        (upstream_button, "Upstream context", "Upstream context"),
+        (command_button, "Command Center", "Command Center"),
+    ]:
+        with button_column:
+            st.button(
+                button_label,
+                width="stretch",
+                type="primary" if page == target_page else "secondary",
+                on_click=navigate_to,
+                args=(target_page,),
+                key=f"top_navigation_{target_page}",
+            )
     with notes_button:
         if st.button("✦ Notes", width="stretch"):
             notes_bubble(default_client)
 
-if page == "Attention map":
+if page == "Home":
     st.markdown(
         '<div class="hero">Where should Priscilla focus her attention today?</div>',
         unsafe_allow_html=True,
