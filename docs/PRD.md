@@ -77,7 +77,7 @@ challenge and the existing workbench architecture allow.
 
 Existing modules:
 
-- `app.py` — Streamlit orchestrator (pages: Attention map, Focus casebook,
+- `app.py` — Streamlit orchestrator (pages: Home, Focus casebook,
   Client deep dive, Notes library, Market/Upstream context, Action record,
   Methods & governance). Holds UI copy and page wiring only.
 - `src/singhacks26/intelligence.py` — deterministic analytics / compatibility
@@ -270,7 +270,7 @@ Rules:
   severity + evidence) **and** a compact alignment/conflict panel inside the
   existing Client deep dive page (header metrics row / dedicated tab).
 - Surfaced conflicts should also feed the RM's prioritised attention: add the
-  client's worst conflict to the "Attention map" problem list where applicable.
+  client's worst conflict to the "Home" problem list where applicable.
 - **News** (Feature B): extend the Market/Upstream context page with a "Live
   news" panel showing fetch time, the most-affected ranked list, per-client
   headlines; keep the controlled event surface separate.
