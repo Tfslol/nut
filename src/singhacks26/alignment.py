@@ -125,20 +125,12 @@ def _themes(text: str) -> list[str]:
     return [theme for theme, words in THEME_LEXICON.items() if any(word in clean for word in words)]
 
 
-def _event_rows(
-    data: dict[str, Any], client: pd.Series, positions: pd.DataFrame
-) -> list[dict[str, Any]]:
+def _event_rows(data: dict[str, Any], client: pd.Series, positions: pd.DataFrame) -> list[dict[str, Any]]:
     event_log = data.get("event_log", pd.DataFrame())
     if event_log.empty:
         return []
     position_text = " ".join(
-        positions[
-            [
-                column
-                for column in ["asset_class", "sub_asset_class", "sector", "region"]
-                if column in positions
-            ]
-        ]
+        positions[[column for column in ["asset_class", "sub_asset_class", "sector", "region"] if column in positions]]
         .fillna("")
         .astype(str)
         .agg(" ".join, axis=1)
@@ -160,9 +152,7 @@ def _event_rows(
     )
     matched: list[dict[str, Any]] = []
     for _, event in event_log.iterrows():
-        event_themes = set(
-            _themes(f"{event.get('primary_transmission', '')} {event.get('description', '')}")
-        )
+        event_themes = set(_themes(f"{event.get('primary_transmission', '')} {event.get('description', '')}"))
         overlap = sorted(client_themes & event_themes)
         if not overlap:
             continue
@@ -242,9 +232,7 @@ def _theme_exposure(positions: pd.DataFrame, total: float) -> list[dict[str, Any
     return sorted(results, key=lambda row: row["market_value_usd"], reverse=True)
 
 
-def build_alignment_fact_packet(
-    data: dict[str, Any], client_id: str, vault_text: str | None = None
-) -> dict[str, Any]:
+def build_alignment_fact_packet(data: dict[str, Any], client_id: str, vault_text: str | None = None) -> dict[str, Any]:
     """Build the local, synthetic fact packet used by alignment analysis.
 
     No client name, actual age, raw RM note collection, or other identity field
@@ -253,14 +241,8 @@ def build_alignment_fact_packet(
     """
     client = _client_row(data, client_id)
     holdings = data["holdings"]
-    latest = (
-        AS_OF
-        if AS_OF in set(holdings.snapshot_date.astype(str))
-        else str(holdings.snapshot_date.max())
-    )
-    positions = holdings.loc[
-        (holdings.client_id == client_id) & (holdings.snapshot_date.astype(str) == latest)
-    ].copy()
+    latest = AS_OF if AS_OF in set(holdings.snapshot_date.astype(str)) else str(holdings.snapshot_date.max())
+    positions = holdings.loc[(holdings.client_id == client_id) & (holdings.snapshot_date.astype(str) == latest)].copy()
     if positions.empty:
         raise ValueError(f"No holdings found for {client_id} at {latest}.")
     portfolios = data["portfolios"].loc[data["portfolios"].client_id == client_id].copy()
@@ -298,9 +280,7 @@ def build_alignment_fact_packet(
         how="left",
         suffixes=("", "_instrument"),
     )
-    max_single_by_mandate = (
-        mandate_rules.groupby("mandate_code").max_single_position_pct.max().to_dict()
-    )
+    max_single_by_mandate = mandate_rules.groupby("mandate_code").max_single_position_pct.max().to_dict()
     concentration_rows = []
     exclusions = []
     for _, row in position_details.iterrows():
@@ -321,10 +301,7 @@ def build_alignment_fact_packet(
                     "evidence_ids": ["holdings.csv:2026-08-26", "mandates.csv"],
                 }
             )
-        if (
-            str(row.get("sustainability_excluded", "")) == "Y"
-            and str(portfolio.service_model.iloc[0]) != "Custody"
-        ):
+        if str(row.get("sustainability_excluded", "")) == "Y" and str(portfolio.service_model.iloc[0]) != "Custody":
             exclusions.append(
                 {
                     "portfolio_id": row.portfolio_id,
@@ -351,11 +328,7 @@ def build_alignment_fact_packet(
         )
 
     def grouped_exposure(column: str) -> list[dict[str, Any]]:
-        grouped = (
-            positions.groupby(column, dropna=False)
-            .market_value_usd.sum()
-            .sort_values(ascending=False)
-        )
+        grouped = positions.groupby(column, dropna=False).market_value_usd.sum().sort_values(ascending=False)
         return [
             {
                 column: str(key) if pd.notna(key) else "Unknown",
@@ -367,9 +340,7 @@ def build_alignment_fact_packet(
         ]
 
     liquidity = []
-    liquidity_values = (
-        positions.groupby("liquidity_tier").market_value_usd.sum().sort_values(ascending=False)
-    )
+    liquidity_values = positions.groupby("liquidity_tier").market_value_usd.sum().sort_values(ascending=False)
     for tier, value in liquidity_values.items():
         liquidity.append(
             {
@@ -379,9 +350,7 @@ def build_alignment_fact_packet(
                 "evidence_id": "holdings.csv:2026-08-26",
             }
         )
-    daily_liquid_usd = float(
-        positions.loc[positions.liquidity_tier == "Daily", "market_value_usd"].sum()
-    )
+    daily_liquid_usd = float(positions.loc[positions.liquidity_tier == "Daily", "market_value_usd"].sum())
 
     needs = data.get("planned_cash_needs", pd.DataFrame()).loc[
         data.get("planned_cash_needs", pd.DataFrame()).client_id == client_id
@@ -441,9 +410,7 @@ def build_alignment_fact_packet(
         row["evidence_id"] = f"commitments.csv:{row['commitment_id']}"
 
     events = _event_rows(data, client, positions)
-    allowed_evidence_ids = _evidence_ids(
-        client_id, portfolios, needs, facilities, commitments, events, vault_text
-    )
+    allowed_evidence_ids = _evidence_ids(client_id, portfolios, needs, facilities, commitments, events, vault_text)
 
     packet = {
         "synthetic_data": True,
@@ -475,10 +442,7 @@ def build_alignment_fact_packet(
                     "evidence_id": "holdings.csv:2026-08-26",
                 }
                 for asset_class, value in (
-                    positions.groupby("asset_class")
-                    .market_value_usd.sum()
-                    .sort_values(ascending=False)
-                    .items()
+                    positions.groupby("asset_class").market_value_usd.sum().sort_values(ascending=False).items()
                 )
             ],
             "sector_exposure": grouped_exposure("sector"),
@@ -547,14 +511,10 @@ def _validate_numbers_and_language(report: AlignmentReport, fact_packet: dict[st
     candidate = report.model_dump_json()
     unsupported = _unsupported_number_tokens(source, candidate)
     if unsupported:
-        raise RuntimeError(
-            f"AI report introduced unsupported numeric claims: {sorted(unsupported)}"
-        )
+        raise RuntimeError(f"AI report introduced unsupported numeric claims: {sorted(unsupported)}")
     for pattern in PROHIBITED_PATTERNS:
         if pattern.search(candidate):
-            raise RuntimeError(
-                f"AI report failed the prohibited-language guardrail: {pattern.pattern}"
-            )
+            raise RuntimeError(f"AI report failed the prohibited-language guardrail: {pattern.pattern}")
 
 
 def validate_alignment_report(report: AlignmentReport, fact_packet: dict[str, Any]) -> None:
@@ -568,9 +528,7 @@ def validate_alignment_report(report: AlignmentReport, fact_packet: dict[str, An
         if conflict.category == "event":
             matched = set(conflict.evidence_ids) & event_evidence
             if not matched:
-                raise RuntimeError(
-                    "Event-consistency conflicts must cite at least one matched event_log.csv row."
-                )
+                raise RuntimeError("Event-consistency conflicts must cite at least one matched event_log.csv row.")
         if unknown:
             raise RuntimeError(f"AI returned unsupported evidence IDs: {sorted(unknown)}")
     _validate_numbers_and_language(report, fact_packet)
@@ -588,9 +546,7 @@ def analyze_alignment(
     reasoning_effort = os.getenv("OPENAI_REASONING_EFFORT", DEFAULT_REASONING_EFFORT)
     if reasoning_effort not in SUPPORTED_REASONING_EFFORTS:
         supported = ", ".join(sorted(SUPPORTED_REASONING_EFFORTS))
-        raise RuntimeError(
-            f"Unsupported OPENAI_REASONING_EFFORT={reasoning_effort!r}. Use one of: {supported}."
-        )
+        raise RuntimeError(f"Unsupported OPENAI_REASONING_EFFORT={reasoning_effort!r}. Use one of: {supported}.")
     packet = build_alignment_fact_packet(data, client_id, vault_text)
     instructions = (
         "You are preparing a private-bank relationship manager's alignment review. "
@@ -697,9 +653,7 @@ class AlignmentStore:
         generated_at: str | None = None,
     ) -> dict[str, Any]:
         payload = self.load()
-        report_dict = (
-            report.model_dump(mode="json") if isinstance(report, AlignmentReport) else report
-        )
+        report_dict = report.model_dump(mode="json") if isinstance(report, AlignmentReport) else report
         record = {
             "client_id": client_id,
             "status": "ok",
@@ -742,9 +696,7 @@ class AlignmentStore:
             payload["reports"][client_id] = record
             self.path.parent.mkdir(parents=True, exist_ok=True)
             temporary = self.path.with_suffix(".tmp")
-            temporary.write_text(
-                json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8"
-            )
+            temporary.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
             temporary.replace(self.path)
 
     def save(self, **kwargs: Any) -> dict[str, Any]:
@@ -876,9 +828,7 @@ def conflict_inbox(reports: Any) -> pd.DataFrame:
             report = item["report"]
         else:
             report = item
-        report_dict = (
-            report.model_dump(mode="json") if isinstance(report, AlignmentReport) else report
-        )
+        report_dict = report.model_dump(mode="json") if isinstance(report, AlignmentReport) else report
         if not isinstance(report_dict, dict):
             continue
         for conflict in report_dict.get("conflicts", []):
