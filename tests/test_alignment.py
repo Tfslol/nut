@@ -97,6 +97,37 @@ def test_event_conflict_must_use_matched_controlled_event(data):
         validate_alignment_report(report, packet)
 
 
+def test_numeric_guardrail_accepts_percent_formatting_but_rejects_new_value(data):
+    packet = build_alignment_fact_packet(data, "CL-0002", censored_note("CL-0002"))
+    ltv = packet["credit_facilities"][0]["ltv_pct"]
+    report = AlignmentReport(
+        client_id="CL-0002",
+        as_of="2026-08-26",
+        overall_band="review",
+        dimensions=AlignmentDimensions(
+            risk_profile_alignment="review",
+            mandate_alignment="aligned",
+            objectives_life_event_alignment="review",
+            event_consistency="aligned",
+        ),
+        conflicts=[
+            Conflict(
+                conflict_id="CL-0002-C-1",
+                category="risk_profile",
+                severity="High",
+                headline="Collateral review",
+                detail=f"The recorded collateral reading is {ltv:.2f}%.",
+                evidence_ids=["credit_facilities.csv:CF-0001"],
+                discussion_topic="Confirm the bridge plan.",
+            )
+        ],
+    )
+    validate_alignment_report(report, packet)
+    report.conflicts[0].detail = f"The recorded collateral reading is {ltv + 0.01:.2f}%."
+    with pytest.raises(RuntimeError, match="unsupported numeric claims"):
+        validate_alignment_report(report, packet)
+
+
 def test_alignment_store_refreshes_on_note_or_source_change(tmp_path):
     store = AlignmentStore(tmp_path / "alignment_state.json")
     report = AlignmentReport(
@@ -123,6 +154,15 @@ def test_alignment_store_refreshes_on_note_or_source_change(tmp_path):
     assert store.needs_refresh("CL-0004", "note-a", "source-a")
     assert store.needs_refresh("CL-0003", "note-a", "source-a", force=True)
     assert store.list_reports()[0]["report"]["client_id"] == "CL-0003"
+    error = store.save_error(
+        client_id="CL-0004",
+        error="CL-0004: validation failed",
+        model="test-model",
+        vault_hash=vault_note_hash("note-a"),
+        source_hash="source-a",
+    )
+    assert error["status"] == "error"
+    assert not store.needs_refresh("CL-0004", "note-a", "source-a")
 
 
 def test_conflict_inbox_ranks_severity_and_preserves_evidence():
