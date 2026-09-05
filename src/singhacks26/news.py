@@ -37,6 +37,10 @@ USER_AGENT = "singhacks26-wealth-intel/0.1 (hackathon)"
 CACHE_PATH = VAULT / "news_cache.json"
 TTL_SECONDS = 60 * 60  # one hour
 
+# Focus book for the demo: a small, deliberately varied client set
+# (diverse vs concentrated, aligned vs misaligned).
+FOCUS_CLIENTS: tuple[str, ...] = ("CL-0003", "CL-0010", "CL-0013", "CL-0017")
+
 # data/ `sector` label -> Marketaux query. None => not a real industry, skip it.
 # Marketaux industry names come from /v1/entity/industry/list.
 SECTOR_QUERY: dict[str, tuple[str, str] | None] = {
@@ -244,15 +248,17 @@ def refresh_news(
     *,
     cache: NewsCache | None = None,
     force: bool = False,
+    client_ids: list[str] | None = None,
     sleep_seconds: float = 1.0,
     days: int = 7,
     limit: int = 5,
     language: str = "en",
 ) -> dict:
-    """Loop all clients, fetch per-sector Marketaux news and persist the cache.
+    """Loop clients, fetch per-sector Marketaux news and persist the cache.
 
-    Returns the full cache payload. A plain call within the cache TTL returns the
-    stored payload without re-hitting the API; ``force=True`` refetches.
+    ``client_ids`` restricts the loop (default: every client in the data). Returns
+    the full cache payload. A plain call within the cache TTL returns the stored
+    payload without re-hitting the API; ``force=True`` refetches.
     ``MARKETAUX_API_KEY`` missing raises a feature-level ``RuntimeError``.
     """
     cache = cache or NewsCache()
@@ -261,7 +267,11 @@ def refresh_news(
 
     key = marketaux_api_key()
     holdings = data["holdings"]
-    client_ids = sorted(data["clients"]["client_id"].unique().tolist())
+    selected = (
+        list(client_ids)
+        if client_ids is not None
+        else sorted(data["clients"]["client_id"].unique().tolist())
+    )
     published_after = (datetime.now(UTC) - timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%S")
 
     payload = {
@@ -270,7 +280,7 @@ def refresh_news(
         "days": days,
         "clients": {},
     }
-    for client_id in client_ids:
+    for client_id in selected:
         sectors: list[dict] = []
         errors: list[str] = []
         for query in queries_for(held_sectors(holdings, client_id)):

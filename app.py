@@ -24,7 +24,7 @@ from singhacks26.intelligence import (
     integrity_report,
     portfolio_mandate_review,
 )
-from singhacks26.news import NewsCache, most_affected, refresh_news
+from singhacks26.news import FOCUS_CLIENTS, NewsCache, most_affected, refresh_news
 from singhacks26.recommendation import build_recommendation_fact_packet, generate_recommendation
 from singhacks26.workbench import (
     WorkbenchStore,
@@ -844,7 +844,7 @@ def ensure_news(data):
     """Refresh cached Marketaux news once per TTL; return (payload, ranking, error)."""
     cache = NewsCache(VAULT / "news_cache.json")
     try:
-        payload = refresh_news(data, cache=cache)
+        payload = refresh_news(data, cache=cache, client_ids=FOCUS_CLIENTS)
     except RuntimeError as exc:
         stale = cache.load()
         return stale, most_affected(stale, data["holdings"]), str(exc)
@@ -873,8 +873,8 @@ def render_live_news(payload, ranking, error):
     if fetched:
         st.caption(f"Fetched: {fetched}")
     if st.button("Refresh news", key="refresh_news_button"):
-        with st.spinner("Fetching live Marketaux news across all clients…"):
-            refresh_news(data, cache=NEWS_CACHE, force=True)
+        with st.spinner("Fetching live Marketaux news for the focus clients…"):
+            refresh_news(data, cache=NEWS_CACHE, force=True, client_ids=FOCUS_CLIENTS)
         st.rerun()
     if ranking.empty:
         st.info("No live news matched any client's held sectors in the current feed.")
