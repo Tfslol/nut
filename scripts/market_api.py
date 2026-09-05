@@ -24,120 +24,21 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import time
-import urllib.error
-import urllib.parse
-import urllib.request
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "data"
-ENV_FILE = ROOT / ".env"
-NEWS_URL = "https://api.marketaux.com/v1/news/all"
-DEFAULT_CLIENT = "CL-0001"
-USER_AGENT = "singhacks26-wealth-intel/0.1 (hackathon)"
-
-# data/ `sector` label -> Marketaux query. None => not a real industry, skip it.
-# Marketaux industry names come from /v1/entity/industry/list.
-SECTOR_QUERY: dict[str, tuple[str, str] | None] = {
-    "Energy": ("industries", "Energy"),
-    "Information Technology": ("industries", "Technology"),
-    "Industrials": ("industries", "Industrials"),
-    "Health Care": ("industries", "Healthcare"),
-    "Real Estate": ("industries", "Real Estate"),
-    "Utilities": ("industries", "Utilities"),
-    "Consumer Discretionary": ("industries", "Consumer Cyclical"),
-    "Consumer Staples": ("industries", "Consumer Defensive"),
-    "Financials": ("industries", "Financial Services"),
-    "Basic Materials": ("industries", "Basic Materials"),
-    "Communication Services": ("industries", "Communication Services"),
-    # Internal / synthetic labels and themes that are not Marketaux industries.
-    "Gold": ("search", "gold"),
-    "Diversified": None,
-    "Corporate": None,
-    "Cash": None,
-    "Macro": None,
-    "Multi": None,
-    "Sovereign": None,
-    "Equity Long Short": None,
-    "Infrastructure": None,
-    "Financial": ("industries", "Financial"),
-    "Services": ("industries", "Services"),
-}
-
-
-def load_dotenv(path: Path = ENV_FILE) -> None:
-    """Load ``KEY=VALUE`` lines from ``.env`` into os.environ (never overwrites).
-
-    Exists only so the script can run without the key exported in the shell; the
-    key value itself is only referenced via ``os.environ`` below.
-    """
-    if not path.exists():
-        return
-    for raw in path.read_text(encoding="utf-8").splitlines():
-        line = raw.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, _, value = line.partition("=")
-        key, value = key.strip(), value.strip().strip('"').strip("'")
-        if key and key not in os.environ:
-            os.environ[key] = value
-
-
-def api_key() -> str:
-    load_dotenv()
-    key = os.environ.get("MARKETAUX_API_KEY", "").strip()
-    if not key:
-        raise SystemExit(
-            "MARKETAUX_API_KEY is not set. Add it to the repo-root .env file " "(MARKETAUX_API_KEY=...) and re-run."
-        )
-    return key
-
-
-def held_sectors(client_id: str) -> dict[str, float]:
-    """Latest-snapshot sector exposure (USD) for a client, from holdings.csv."""
-    hold = pd.read_csv(DATA / "holdings.csv")
-    client = hold[hold["client_id"] == client_id]
-    if client.empty:
-        raise SystemExit(f"No holdings found for {client_id} in data/holdings.csv")
-    latest = client[client["snapshot_date"] == client["snapshot_date"].max()]
-    grouped = latest.groupby("sector")["market_value_usd"].sum()
-    return grouped.sort_values(ascending=False).to_dict()
-
-
-def queries_for(sector_exposure: dict[str, float]) -> list[dict]:
-    """Translate held sectors into Marketaux query descriptors."""
-    queries: list[dict] = []
-    for sector, usd in sector_exposure.items():
-        mapping = SECTOR_QUERY.get(sector)
-        if mapping is None:
-            continue
-        kind, value = mapping
-        queries.append(
-            {
-                "sector": sector,
-                "market_value_usd": usd,
-                "kind": kind,
-                "value": value,
-            }
-        )
-    return queries
-
-
-def fetch_news(key: str, params: dict) -> list[dict]:
-    url = NEWS_URL + "?" + urllib.parse.urlencode(params)
-    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=30) as response:
-        payload = json.loads(response.read().decode("utf-8"))
-    if isinstance(payload, dict) and "error" in payload:
-        code = payload["error"].get("code", "unknown")
-        message = payload["error"].get("message", "")
-        raise RuntimeError(f"Marketaux API error {code}: {message}")
-    return payload.get("data", []) if isinstance(payload, dict) else []
+from singhacks26.news import (
+    DATA,
+    DEFAULT_CLIENT,
+    fetch_news,
+    held_sectors,
+    marketaux_api_key,
+    normalise_articles,
+    queries_for,
+)
 
 
 def main() -> None:
@@ -150,8 +51,13 @@ def main() -> None:
     parser.add_argument("--no-sleep", action="store_true", help="disable rate-limit sleep")
     args = parser.parse_args()
 
-    key = api_key()
-    exposure = held_sectors(args.client_id)
+    try:
+        key = marketaux_api_key()
+        holdings = pd.read_csv(DATA / "holdings.csv")
+        exposure = held_sectors(holdings, args.client_id)
+    except RuntimeError as exc:
+        raise SystemExit(str(exc)) from exc
+
     queries = queries_for(exposure)
     if not queries:
         raise SystemExit("No queryable (industry) sectors found for this client.")
@@ -176,31 +82,10 @@ def main() -> None:
         params[query["kind"]] = query["value"]
         try:
             articles = fetch_news(key, params)
-        except urllib.error.HTTPError as exc:
-            print(f"  {query['sector']}: HTTP {exc.code}")
-            continue
-        except RuntimeError as exc:
+        except Exception as exc:  # network / API failures print per-sector and continue
             print(f"  {query['sector']}: {exc}")
             continue
-        entries = [
-            {
-                "uuid": a.get("uuid"),
-                "title": a.get("title"),
-                "url": a.get("url"),
-                "source": a.get("source"),
-                "published_at": a.get("published_at"),
-                "snippet": (a.get("snippet") or "")[:300],
-                "entities": [
-                    {
-                        "symbol": e.get("symbol"),
-                        "name": e.get("name"),
-                        "industry": e.get("industry"),
-                    }
-                    for e in (a.get("entities") or [])
-                ],
-            }
-            for a in articles
-        ]
+        entries = normalise_articles(articles, limit=args.limit)
         results["sectors"].append(
             {
                 "sector": query["sector"],

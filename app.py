@@ -17,6 +17,8 @@ from singhacks26.intelligence import (
     integrity_report,
     portfolio_mandate_review,
 )
+from singhacks26.news import NewsCache, most_affected, refresh_news
+from singhacks26.recommendation import build_recommendation_fact_packet, generate_recommendation
 from singhacks26.workbench import (
     WorkbenchStore,
     liquidity_profile,
@@ -29,6 +31,7 @@ ROOT = Path(__file__).parent
 DATA = ROOT / "data"
 VAULT = ROOT / "obsidian_vault"
 WORKFLOW = WorkbenchStore(VAULT / "workbench_state.json")
+NEWS_CACHE = NewsCache(VAULT / "news_cache.json")
 SEVERITY = {"Severe": 4, "High": 3, "Medium": 2, "Low": 1}
 THEMES = {
     "gold": ["gold", "precious metals", "inflation hedge"],
@@ -754,6 +757,120 @@ def render_ai_draft(client_id, brief):
     )
 
 
+def ensure_news(data):
+    """Refresh cached Marketaux news once per TTL; return (payload, ranking, error)."""
+    cache = NewsCache(VAULT / "news_cache.json")
+    try:
+        payload = refresh_news(data, cache=cache)
+    except RuntimeError as exc:
+        stale = cache.load()
+        return stale, most_affected(stale, data["holdings"]), str(exc)
+    return payload, most_affected(payload, data["holdings"]), None
+
+
+def alignment_report_for(client_id):
+    """Return an AlignmentReport dict for a client (stub until Role 0 lands)."""
+    # TODO(Role 1): replace with Role 0's AlignmentStore once it is on main.
+    from ralph.stub_alignment import stub_alignment_report
+
+    return stub_alignment_report(client_id)
+
+
+def render_live_news(payload, ranking, error):
+    """Live Marketaux news panel, kept distinct from the controlled event surface."""
+    st.markdown("### Live news")
+    st.caption(
+        "Live Marketaux feed as of the fetch time below. This is a separate, dated feed "
+        "and is not the controlled `event_log.csv` surface."
+    )
+    if error:
+        st.error(f"Live news unavailable: {error}")
+        return
+    fetched = payload.get("fetched_utc")
+    if fetched:
+        st.caption(f"Fetched: {fetched}")
+    if st.button("Refresh news", key="refresh_news_button"):
+        with st.spinner("Fetching live Marketaux news across all clients…"):
+            refresh_news(data, cache=NEWS_CACHE, force=True)
+        st.rerun()
+    if ranking.empty:
+        st.info("No live news matched any client's held sectors in the current feed.")
+        return
+    st.markdown("**Most affected clients right now**")
+    for _, row in ranking.iterrows():
+        name = clients.loc[clients.client_id == row.client_id, "client_name"].iloc[0]
+        with st.container(border=True):
+            st.markdown(
+                f"**{name}** · exposure-weighted score {row.exposure_weighted_score:.3f}"
+            )
+            st.caption("Exposed sectors: " + ", ".join(row.exposed_sectors))
+            for headline in row.driving_headlines:
+                st.markdown(f"- {headline}")
+
+
+def render_recommendation(client_id):
+    """RM-initiated, guardrailed recommendation draft with a reviewed-note save path."""
+    st.markdown("#### Get recommendation")
+    st.caption(
+        "RM-initiated. Passes the censored static note, alignment report, surfaced "
+        "conflicts and latest cached news to the AI for a guardrailed draft. "
+        "Not approved until Priscilla reviews it."
+    )
+    if not ai_is_configured():
+        st.info("Add OPENAI_API_KEY to a local .env file to enable recommendation drafting.")
+        return
+    if st.button("Get recommendation", key=f"recommend_{client_id}", type="primary"):
+        try:
+            with st.spinner("Preparing a recommendation draft from verified facts…"):
+                note_path = VAULT / "Clients" / f"{client_id}.md"
+                vault_text = note_path.read_text(encoding="utf-8") if note_path.exists() else ""
+                news_items = NEWS_CACHE.articles_for(news_payload, client_id) if news_payload else []
+                packet = build_recommendation_fact_packet(
+                    data, client_id, vault_text, alignment_report_for(client_id), news_items
+                )
+                draft, model = generate_recommendation(packet)
+            st.session_state[f"recommendation_{client_id}"] = {
+                "draft": draft.model_dump(),
+                "model": model,
+            }
+        except Exception as exc:  # API failures should not break the rest of the deep dive.
+            st.error(f"Recommendation drafting is unavailable: {exc}")
+    saved = st.session_state.get(f"recommendation_{client_id}")
+    if not saved:
+        return
+    draft = saved["draft"]
+    client = clients.loc[clients.client_id == client_id].iloc[0]
+    st.success(f"Drafted with {saved['model']} · Not approved")
+    st.markdown(f"**Summary:** {draft['summary']}")
+    st.markdown("**Alignment and conflicts to discuss**")
+    for item in draft["alignment_and_conflicts_to_discuss"]:
+        st.markdown(f"- {item}")
+    if draft["news_drivers"]:
+        st.markdown("**News drivers**")
+        for item in draft["news_drivers"]:
+            st.markdown(f"- {item}")
+    st.markdown("**Topics for Priscilla to review**")
+    for item in draft["rm_recommendation_topics"]:
+        st.markdown(f"- {item}")
+    st.markdown("**Questions to ask**")
+    for item in draft["questions_to_ask"]:
+        st.markdown(f"- {item}")
+    st.markdown("**Risks and uncertainties**")
+    for item in draft["risks_and_uncertainties"]:
+        st.markdown(f"- {item}")
+    st.caption(f"Evidence used: {' · '.join(draft['evidence_ids'])}")
+    st.warning(f"{draft['guardrail_note']}. Priscilla remains responsible for the advice.")
+    with st.expander("Save reviewed recommendation"):
+        reviewed = st.text_area(
+            "Reviewed note",
+            value=f"Summary: {draft['summary']}\n\nTopics: {'; '.join(draft['rm_recommendation_topics'])}",
+            key=f"reviewed_recommendation_{client_id}",
+        )
+        if st.button("Save reviewed note", key=f"save_recommendation_{client_id}"):
+            if save_vault_note(client_id, client.client_name, "Recommendation review", reviewed):
+                st.success("Reviewed recommendation saved to the local Obsidian vault.")
+
+
 def render_call_brief(client_id):
     brief = call_brief(client_id)
     st.markdown(f"### {brief['why']}")
@@ -1250,6 +1367,7 @@ data = load_data()
 clients = data["clients"]
 impacts = build_event_impacts(data)
 attention = attention_queue(data)
+news_payload, news_ranking, news_error = ensure_news(data)
 default_client = st.session_state.get("active_client", clients.client_id.iloc[0])
 
 with st.sidebar:
@@ -1870,7 +1988,7 @@ elif page == "Focus casebook":
         )
         st.json(case_payload, expanded=2)
 
-elif page == "Market context":
+elif page == "Upstream context":
     st.markdown(
         '<div class="hero">What changed—and who needs to know?</div>', unsafe_allow_html=True
     )
@@ -1912,6 +2030,8 @@ elif page == "Market context":
                 width="stretch",
             )
             st.caption("Skill: event-to-exposure mapping · RM review required")
+
+    render_live_news(news_payload, news_ranking, news_error)
 
 elif page == "Action record":
     st.markdown(
@@ -2109,6 +2229,7 @@ elif page == "Client deep dive":
             file_name=f"{selected_id}-call-brief.md",
             mime="text/markdown",
         )
+        render_recommendation(selected_id)
 
 elif page == "Notes library":
     st.markdown('<div class="hero">Notes, without the noise.</div>', unsafe_allow_html=True)
