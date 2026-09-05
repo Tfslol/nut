@@ -34,8 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 VAULT = ROOT / "obsidian_vault" / "Clients"
 
-SNAPSHOT_COLS = ["aum_2025-12-31", "aum_2026-02-27", "aum_2026-03-31",
-                 "aum_2026-06-30", "aum_2026-08-26"]
+SNAPSHOT_COLS = ["aum_2025-12-31", "aum_2026-02-27", "aum_2026-03-31", "aum_2026-06-30", "aum_2026-08-26"]
 
 THEME_LEXICON = {
     "energy": ["energy", "oil", "lng", "shipping", "transport", "gulf", "coal", "gas", "bunker"],
@@ -48,10 +47,36 @@ THEME_LEXICON = {
 # Generic/descriptive words that can appear in entity names or objective text but do
 # not, on their own, identify a person. Never redacted so prose/entity text is not garbled.
 COMMON_WORDS = {
-    "family", "office", "enterprises", "enterprise", "group", "holdings", "holding",
-    "foundation", "industries", "company", "companies", "limited", "ltd", "energy",
-    "international", "capital", "partners", "association", "and", "of", "the",
-    "global", "asia", "south", "east", "north", "west", "trading", "venture", "fund",
+    "family",
+    "office",
+    "enterprises",
+    "enterprise",
+    "group",
+    "holdings",
+    "holding",
+    "foundation",
+    "industries",
+    "company",
+    "companies",
+    "limited",
+    "ltd",
+    "energy",
+    "international",
+    "capital",
+    "partners",
+    "association",
+    "and",
+    "of",
+    "the",
+    "global",
+    "asia",
+    "south",
+    "east",
+    "north",
+    "west",
+    "trading",
+    "venture",
+    "fund",
 }
 
 # Blank interpretation brief appended to every note. When the note is handed to a
@@ -134,16 +159,24 @@ def redact_identity(text: str, name: str, age: float | None = None) -> str:
         out = re.sub(rf"\b{re.escape(tok)}\b", "[redacted]", out, flags=re.IGNORECASE)
     if age is not None and not pd.isna(age):
         a = int(age)
-        out = re.sub(rf"(?i)\b(?:is|was|age(?:d)?\s+of|now|turning)\s+{a}\b",
-                     "[redacted age]", out)
+        out = re.sub(rf"(?i)\b(?:is|was|age(?:d)?\s+of|now|turning)\s+{a}\b", "[redacted age]", out)
         out = re.sub(rf"(?i)\b{a}(?=\s+(?:years?\s+)?old\b)", "[redacted age]", out)
     return out
 
 
 def load(data_dir: Path) -> dict[str, pd.DataFrame]:
-    names = ["clients_censored", "portfolios", "holdings", "instruments",
-             "mandates", "transactions", "credit_facilities", "commitments",
-             "planned_cash_needs", "event_log"]
+    names = [
+        "clients_censored",
+        "portfolios",
+        "holdings",
+        "instruments",
+        "mandates",
+        "transactions",
+        "credit_facilities",
+        "commitments",
+        "planned_cash_needs",
+        "event_log",
+    ]
     tables = {n: pd.read_csv(data_dir / f"{n}.csv") for n in names}
     tables["rm_notes"] = json.loads((data_dir / "rm_notes.json").read_text(encoding="utf-8"))
     return tables
@@ -159,8 +192,7 @@ def fmt(v) -> str:
     return str(v)
 
 
-def latest_position_lines(hold: pd.DataFrame, pf_order: list[str],
-                          pf_name_map: dict[str, str]) -> list[str]:
+def latest_position_lines(hold: pd.DataFrame, pf_order: list[str], pf_name_map: dict[str, str]) -> list[str]:
     """Human lines for the client's latest-snapshot positions by portfolio."""
     latest = hold[hold.snapshot_date == hold.snapshot_date.max()]
     lines: list[str] = []
@@ -170,16 +202,16 @@ def latest_position_lines(hold: pd.DataFrame, pf_order: list[str],
             continue
         lines.append(f"- **{pid} — {pf_name_map[pid]}**")
         for _, r in block.iterrows():
-            line = (f"  - {r['instrument_name']} — {r['weight_pct']:.1f}% · "
-                    f"{r['liquidity_tier']}")
+            line = f"  - {r['instrument_name']} — {r['weight_pct']:.1f}% · " f"{r['liquidity_tier']}"
             if pd.notna(r.get("underlying_reference")) and str(r["underlying_reference"]).strip():
                 line += f"  \u2192 underlying: {r['underlying_reference']}"
             lines.append(line)
     return lines
 
 
-def build_note(tables: dict[str, pd.DataFrame], client_id: str, data_dir: Path,
-               identity: tuple[str, float | None] | None = None) -> str:
+def build_note(
+    tables: dict[str, pd.DataFrame], client_id: str, data_dir: Path, identity: tuple[str, float | None] | None = None
+) -> str:
     prof = tables["clients_censored"]
     prow = prof[prof.client_id == client_id]
     if prow.empty:
@@ -195,9 +227,7 @@ def build_note(tables: dict[str, pd.DataFrame], client_id: str, data_dir: Path,
     # enrich holdings with instrument look-through where available
     instr = tables["instruments"]
     if not hold.empty and "instrument_id" in hold:
-        hold = hold.merge(
-            instr[["instrument_id", "underlying_reference"]], on="instrument_id", how="left"
-        )
+        hold = hold.merge(instr[["instrument_id", "underlying_reference"]], on="instrument_id", how="left")
 
     cash = tables["planned_cash_needs"]
     cash_rows = cash[cash.client_id == client_id]
@@ -211,8 +241,7 @@ def build_note(tables: dict[str, pd.DataFrame], client_id: str, data_dir: Path,
 
     # allocation by asset class at latest snapshot (aggregated across portfolios)
     latest = hold[hold.snapshot_date == hold.snapshot_date.max()]
-    alloc = (latest.groupby("asset_class", as_index=False).market_value_usd.sum()
-             if not latest.empty else pd.DataFrame())
+    alloc = latest.groupby("asset_class", as_index=False).market_value_usd.sum() if not latest.empty else pd.DataFrame()
 
     # relevant events: theme overlap between event text and the client's exposure text
     exposure = " ".join(latest["instrument_name"].fillna("").astype(str)) + " " + p.objectives
@@ -245,8 +274,10 @@ def build_note(tables: dict[str, pd.DataFrame], client_id: str, data_dir: Path,
 
     md.append("## Profile (censored)")
     md.append(f"- **AUM:** USD {aum_usd} · **Base ccy:** {p.base_currency} · {p.wealth_band}")
-    md.append(f"- **Risk:** {p.risk_profile} (score {p.risk_tolerance_score}/10) · "
-              f"horizon {p.investment_horizon_years:.0f}y · liquidity {p.liquidity_needs}")
+    md.append(
+        f"- **Risk:** {p.risk_profile} (score {p.risk_tolerance_score}/10) · "
+        f"horizon {p.investment_horizon_years:.0f}y · liquidity {p.liquidity_needs}"
+    )
     md.append(f"- **Life stage:** {p.life_stage}")
     md.append(f"- **Source of wealth:** {p.source_of_wealth}")
     md.append(f"- **Tax domicile:** {p.tax_domicile} · residence {p.country_of_residence}")
@@ -270,8 +301,7 @@ def build_note(tables: dict[str, pd.DataFrame], client_id: str, data_dir: Path,
         sub = mb[mb.mandate_code == code]
         if not sub.empty:
             notes_txt = sub.mandate_notes.dropna().unique()
-            md.append(f"- **{code} — {sub.mandate_name.iloc[0]}**"
-                      + (f": {notes_txt[0]}" if len(notes_txt) else ""))
+            md.append(f"- **{code} — {sub.mandate_name.iloc[0]}**" + (f": {notes_txt[0]}" if len(notes_txt) else ""))
     md.append("")
 
     if not latest.empty:
@@ -289,56 +319,63 @@ def build_note(tables: dict[str, pd.DataFrame], client_id: str, data_dir: Path,
         md.append("### Look-through: structured-product underlyings")
         for _, r in sp.iterrows():
             if pd.notna(r.get("underlying_reference")):
-                md.append(f"- {r.instrument_name} → `{r.underlying_reference}` "
-                          f"(weight {r.weight_pct:.1f}%)")
+                md.append(f"- {r.instrument_name} → `{r.underlying_reference}` " f"(weight {r.weight_pct:.1f}%)")
         md.append("")
 
     if len(cash_rows):
         md.append("## Planned cash needs")
         for _, r in cash_rows.iterrows():
-            md.append(f"- **{r.description}** — {fmt(r.amount)} {r.currency} · "
-                      f"{r.due_from}→{r.due_to} · {r.recurrence} · {r.certainty}")
+            md.append(
+                f"- **{r.description}** — {fmt(r.amount)} {r.currency} · "
+                f"{r.due_from}→{r.due_to} · {r.recurrence} · {r.certainty}"
+            )
         md.append("")
 
     if len(comm_rows):
         md.append("## Private-market commitments")
         for _, r in comm_rows.iterrows():
-            md.append(f"- {r.fund_name}: uncalled {fmt(r.uncalled)} {r.currency} "
-                      f"({r.expected_call_window})")
+            md.append(f"- {r.fund_name}: uncalled {fmt(r.uncalled)} {r.currency} " f"({r.expected_call_window})")
         md.append("")
 
     if len(fac_rows):
         md.append("## Credit facilities")
         for _, r in fac_rows.iterrows():
-            md.append(f"- **{r.facility_id}** {r.facility_type} ({r.facility_ccy}) — "
-                      f"limit {fmt(r.credit_limit)}, margin-call LTV {r.margin_call_ltv_pct:.0f}%")
+            md.append(
+                f"- **{r.facility_id}** {r.facility_type} ({r.facility_ccy}) — "
+                f"limit {fmt(r.credit_limit)}, margin-call LTV {r.margin_call_ltv_pct:.0f}%"
+            )
         md.append("")
 
     if len(tx_rows):
         md.append("## Transaction activity (censored)")
         md.append("### By type · count / net amount")
-        summary = tx_rows.groupby(["transaction_type", "currency"], as_index=False).agg(
-            n_txn=("amount", "size"), net_amt=("amount", "sum")
-        ).sort_values(["transaction_type", "currency"])
-        for _, r in summary.iterrows():
-            md.append(f"- {r.transaction_type} ({r.currency}): "
-                      f"{int(r.n_txn)} × net {fmt(r.net_amt)}")
-        # client-directed / non-routine events worth surfacing (not routine dividends/fees)
-        notable = set([
-            "Structured Product Subscription", "Facility Drawdown", "Capital Call",
-            "Withdrawal", "Redemption Request", "Buy", "Transfer In",
-        ])
-        sel = tx_rows[tx_rows.transaction_type.isin(notable)].sort_values(
-            "trade_date", ascending=False
+        summary = (
+            tx_rows.groupby(["transaction_type", "currency"], as_index=False)
+            .agg(n_txn=("amount", "size"), net_amt=("amount", "sum"))
+            .sort_values(["transaction_type", "currency"])
         )
+        for _, r in summary.iterrows():
+            md.append(f"- {r.transaction_type} ({r.currency}): " f"{int(r.n_txn)} × net {fmt(r.net_amt)}")
+        # client-directed / non-routine events worth surfacing (not routine dividends/fees)
+        notable = set(
+            [
+                "Structured Product Subscription",
+                "Facility Drawdown",
+                "Capital Call",
+                "Withdrawal",
+                "Redemption Request",
+                "Buy",
+                "Transfer In",
+            ]
+        )
+        sel = tx_rows[tx_rows.transaction_type.isin(notable)].sort_values("trade_date", ascending=False)
         if len(sel):
             md.append("### Non-routine / client-directed activity")
             for _, r in sel.iterrows():
                 inst = r.instrument_name if pd.notna(r.instrument_name) else r.portfolio_id
                 n = r.narrative if pd.notna(r.narrative) else ""
                 amt = f"{fmt(r.amount)} {r.currency}" if pd.notna(r.amount) else ""
-                md.append(f"- *{r.trade_date}* **{r.transaction_type}** — {inst} · {amt}"
-                          + (f" — {n}" if n else ""))
+                md.append(f"- *{r.trade_date}* **{r.transaction_type}** — {inst} · {amt}" + (f" — {n}" if n else ""))
         md.append("")
 
     if notes:
@@ -356,8 +393,10 @@ def build_note(tables: dict[str, pd.DataFrame], client_id: str, data_dir: Path,
         md.append("")
 
     md.append("---")
-    md.append("*Generated from structured data. Update source files, then rerun: "
-              f"`python scripts/generate_client_notes.py {client_id}`.*")
+    md.append(
+        "*Generated from structured data. Update source files, then rerun: "
+        f"`python scripts/generate_client_notes.py {client_id}`.*"
+    )
     md.append("")
     md.append(INTERPRETATION_TEMPLATE.rstrip())
     return "\n".join(md)
@@ -365,8 +404,9 @@ def build_note(tables: dict[str, pd.DataFrame], client_id: str, data_dir: Path,
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("client_id", nargs="?", default=None,
-                        help="Client to write (default: all clients in clients_censored.csv)")
+    parser.add_argument(
+        "client_id", nargs="?", default=None, help="Client to write (default: all clients in clients_censored.csv)"
+    )
     args = parser.parse_args()
 
     tables = load(DATA)
