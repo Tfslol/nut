@@ -206,3 +206,20 @@ def test_most_affected_skips_clients_without_articles():
     cache = {"clients": {"CL-A": {"client_id": "CL-A", "sectors": [{"sector": "Cash", "articles": []}]}}}
     ranking = most_affected(cache, holdings, as_of=datetime(2026, 8, 26, tzinfo=UTC))
     assert ranking.empty
+
+
+def test_news_cache_is_separate_from_controlled_event_log(tmp_path):
+    """Live news must never be persisted over the authoritative event_log.csv."""
+    event_log_path = news.DATA / "event_log.csv"
+    assert event_log_path.exists()
+
+    assert news.CACHE_PATH.name == "news_cache.json"
+    assert "obsidian_vault" in str(news.CACHE_PATH)
+    assert news.CACHE_PATH.resolve() != event_log_path.resolve()
+
+    cache = NewsCache(tmp_path / "news_cache.json")
+    before = event_log_path.read_bytes()
+    cache.save({"schema_version": "news-cache/1.0", "fetched_utc": "2026-09-05T00:00:00+00:00", "clients": {}})
+    assert cache.load()["schema_version"] == "news-cache/1.0"
+    assert event_log_path.read_bytes() == before  # event_log.csv is untouched
+    assert cache.path != event_log_path

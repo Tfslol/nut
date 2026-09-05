@@ -9,6 +9,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 
 from singhacks26.action_advisor import build_action_briefs, market_signals_for_client
 from singhacks26.ai_brief import ai_is_configured, draft_ai_brief
@@ -21,6 +22,7 @@ from singhacks26.alignment import (
     source_data_hash,
     vault_note_hash,
 )
+from singhacks26.evidence import mermaid_graph, resolve_sources, sources_frame
 from singhacks26.intelligence import (
     AS_OF,
     attention_queue,
@@ -630,11 +632,7 @@ def load_alignment_reports(_data):
                     )
         if record and record.get("report"):
             reports[client_id] = record["report"]
-        elif (
-            record
-            and record.get("error")
-            and not ALIGNMENT.needs_refresh(client_id, note, source_hash)
-        ):
+        elif record and record.get("error") and not ALIGNMENT.needs_refresh(client_id, note, source_hash):
             errors.append(record["error"])
 
     if configured:
@@ -653,11 +651,7 @@ def load_alignment_reports(_data):
         record = ALIGNMENT.get(client_id)
         if record and record.get("report"):
             reports[client_id] = record["report"]
-        elif (
-            record
-            and record.get("error")
-            and not ALIGNMENT.needs_refresh(client_id, notes[client_id], source_hash)
-        ):
+        elif record and record.get("error") and not ALIGNMENT.needs_refresh(client_id, notes[client_id], source_hash):
             errors.append(record["error"])
     if not configured and not reports:
         errors.append("OPENAI_API_KEY is not configured for alignment analysis.")
@@ -730,6 +724,62 @@ def render_alignment_summary(client_id, compact=False):
         st.markdown("**Uncertainties to check**")
         for uncertainty in report["uncertainties"]:
             st.markdown(f"- {uncertainty}")
+
+
+def _render_mermaid(code: str, height: int = 360) -> None:
+    """Render a mermaid diagram in an isolated iframe (client-side mermaid.js)."""
+    html = (
+        "<html><head><style>"
+        "body{margin:0;background:#0b1d23;color:#dfecea;font-family:Inter,Arial,sans-serif}"
+        "svg{max-width:100%!important;height:auto}</style></head><body>"
+        f'<pre class="mermaid">{code}</pre>'
+        '<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>'
+        "<script>mermaid.initialize({startOnLoad:true,theme:'dark',securityLevel:'loose'});</script>"
+        "</body></html>"
+    )
+    components.html(html, height=height, scrolling=True)
+
+
+def client_evidence_targets(report: dict) -> list[dict]:
+    """Turn a cached alignment report's conflicts into mermaid targets."""
+    targets = []
+    for conflict in report.get("conflicts", []):
+        headline = conflict.get("headline", "Review lead")
+        if len(headline) > 80:
+            headline = headline[:79].rstrip() + "…"
+        targets.append(
+            {
+                "label": f"{conflict.get('severity', '')} · {conflict.get('category', '')}: {headline}",
+                "evidence_ids": conflict.get("evidence_ids", []),
+            }
+        )
+    return targets
+
+
+def render_evidence_trail(
+    client_id: str,
+    targets: list[dict],
+    *,
+    news_payload=None,
+) -> None:
+    """Resolve evidence IDs to CSV line numbers and render a mermaid trail."""
+    evidence_ids = [evidence_id for target in targets for evidence_id in target.get("evidence_ids", [])]
+    if not evidence_ids:
+        return
+    sources = resolve_sources(data, client_id, evidence_ids, vault_dir=VAULT, news_payload=news_payload)
+    st.caption(
+        "Line numbers are physical rows in data/*.csv (header = line 1). Note evidence "
+        "cites the line of the section in the censored Obsidian page instead."
+    )
+    graph = mermaid_graph(sources, targets)
+    if graph:
+        _render_mermaid(graph)
+    with st.expander("View evidence rows"):
+        frame = sources_frame(sources)
+        if frame.empty:
+            st.caption("No resolvable evidence rows.")
+        else:
+            st.dataframe(frame, hide_index=True, width="stretch")
 
 
 def sentence(text, limit=220):
@@ -916,11 +966,9 @@ def ensure_news(data):
 
 
 def alignment_report_for(client_id):
-    """Return an AlignmentReport dict for a client (stub until Role 0 lands)."""
-    # TODO(Role 1): replace with Role 0's AlignmentStore once it is on main.
-    from ralph.stub_alignment import stub_alignment_report
-
-    return stub_alignment_report(client_id)
+    """Return the cached AlignmentReport dict for a client, or None."""
+    record = alignment_reports.get(client_id)
+    return record if isinstance(record, dict) else None
 
 
 def render_live_news(payload, ranking, error):
@@ -964,15 +1012,20 @@ def render_recommendation(client_id):
     if not ai_is_configured():
         st.info("Add OPENAI_API_KEY to a local .env file to enable recommendation drafting.")
         return
+    report = alignment_report_for(client_id)
+    if not report:
+        st.info(
+            "No cached alignment report for this client. Generate one on the Alignment & "
+            "conflicts page first, then request a recommendation."
+        )
+        return
     if st.button("Get recommendation", key=f"recommend_{client_id}", type="primary"):
         try:
             with st.spinner("Preparing a recommendation draft from verified facts…"):
                 note_path = VAULT / "Clients" / f"{client_id}.md"
                 vault_text = note_path.read_text(encoding="utf-8") if note_path.exists() else ""
                 news_items = NEWS_CACHE.articles_for(news_payload, client_id) if news_payload else []
-                packet = build_recommendation_fact_packet(
-                    data, client_id, vault_text, alignment_report_for(client_id), news_items
-                )
+                packet = build_recommendation_fact_packet(data, client_id, vault_text, report, news_items)
                 draft, model = generate_recommendation(packet)
             st.session_state[f"recommendation_{client_id}"] = {
                 "draft": draft.model_dump(),
@@ -1005,6 +1058,17 @@ def render_recommendation(client_id):
         st.markdown(f"- {item}")
     st.caption(f"Evidence used: {' · '.join(draft['evidence_ids'])}")
     st.warning(f"{draft['guardrail_note']}. Priscilla remains responsible for the advice.")
+    st.markdown("### Evidence trail")
+    render_evidence_trail(
+        client_id,
+        [
+            {
+                "label": "Recommendation draft (for RM review)",
+                "evidence_ids": draft["evidence_ids"],
+            }
+        ],
+        news_payload=news_payload,
+    )
     with st.expander("Save reviewed recommendation"):
         reviewed = st.text_area(
             "Reviewed note",
@@ -1551,7 +1615,9 @@ with st.sidebar:
     st.divider()
     st.markdown("**Data boundary**")
     st.caption(
-        "Client data remains local. Only configured, censored sector queries are sent to the market/news feed."
+        "Client data stays local. Live Marketaux news is fetched on load for the focus book; "
+        "only configured, censored sector queries are sent to the feed, and the controlled "
+        "event_log.csv dataset is never modified."
     )
 
 header_left, header_right = st.columns([0.28, 0.72])
@@ -1736,14 +1802,10 @@ elif page == "Alignment & conflicts":
             "No alignment reports are cached yet. Configure OPENAI_API_KEY to generate the "
             "feature; the rest of the workbench remains available."
         )
-    presentation_ids = [
-        client_id for client_id in PRESENTATION_CLIENTS if client_id in clients.client_id.tolist()
-    ]
+    presentation_ids = [client_id for client_id in PRESENTATION_CLIENTS if client_id in clients.client_id.tolist()]
     other_ids = [client_id for client_id in clients.client_id if client_id not in presentation_ids]
     alignment_client_options = presentation_ids + other_ids
-    presentation_names = clients.loc[
-        clients.client_id.isin(presentation_ids), "client_name"
-    ].tolist()
+    presentation_names = clients.loc[clients.client_id.isin(presentation_ids), "client_name"].tolist()
     st.caption(
         "Presentation preload: "
         + ", ".join(presentation_names)
@@ -1759,9 +1821,7 @@ elif page == "Alignment & conflicts":
         "Client",
         alignment_client_options,
         index=alignment_client_options.index(default_client),
-        format_func=lambda client_id: clients.loc[
-            clients.client_id == client_id, "client_name"
-        ].iloc[0],
+        format_func=lambda client_id: clients.loc[clients.client_id == client_id, "client_name"].iloc[0],
         key="alignment_client",
     )
     selected_alignment = clients.loc[clients.client_id == selected_alignment_id].iloc[0]
@@ -1838,6 +1898,12 @@ elif page == "Alignment & conflicts":
             "Review lead only · Evidence IDs identify the local source rows · "
             "RM judgement and suitability review remain required."
         )
+        if alignment_reports[selected_alignment_id].get("conflicts"):
+            st.markdown("### Evidence trail")
+            render_evidence_trail(
+                selected_alignment_id,
+                client_evidence_targets(alignment_reports[selected_alignment_id]),
+            )
     if not alignment_inbox.empty:
         with st.expander("Book-wide conflict inbox"):
             st.dataframe(
@@ -2896,6 +2962,13 @@ elif page == "Client deep dive":
             "or an approved recommendation."
         )
         render_alignment_summary(selected_id, compact=True)
+        report = alignment_reports.get(selected_id)
+        if report and report.get("conflicts"):
+            with st.expander("Evidence trail (CSV lines)"):
+                render_evidence_trail(
+                    selected_id,
+                    client_evidence_targets(report),
+                )
     with conversation_tab:
         markdown = render_call_brief(selected_id)
         st.download_button(
