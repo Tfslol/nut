@@ -79,6 +79,7 @@ COMMON_WORDS = {
     "fund",
 }
 
+
 def identity_map(data_dir: Path) -> dict[str, tuple[str, float | None]]:
     """client_id -> (display name, age); read ONLY to redact identities out of free text.
 
