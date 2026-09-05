@@ -209,6 +209,26 @@ def latest_position_lines(hold: pd.DataFrame, pf_order: list[str], pf_name_map: 
     return lines
 
 
+def top_exposure_lines(frame: pd.DataFrame, by_col: str,
+                       value_col: str = "market_value_usd", limit: int = 5) -> list[str]:
+    """Top-N exposure lines grouped by a categorical column at the latest snapshot.
+
+    Aggregates market value across the client's portfolios (so a sector held in two
+    portfolios is combined), shows USD plus share of the client's latest total.
+    """
+    if frame.empty or by_col not in frame.columns:
+        return []
+    clean = frame.dropna(subset=[by_col])
+    total = clean[value_col].sum()
+    grouped = clean.groupby(by_col, as_index=False)[value_col].sum()
+    top = grouped.sort_values(value_col, ascending=False).head(limit)
+    lines: list[str] = []
+    for _, r in top.iterrows():
+        share = f" ({r[value_col] / total * 100:.1f}%)" if total else ""
+        lines.append(f"- {r[by_col]}: USD {fmt(r[value_col])}{share}")
+    return lines
+
+
 def build_note(
     tables: dict[str, pd.DataFrame], client_id: str, data_dir: Path, identity: tuple[str, float | None] | None = None
 ) -> str:
@@ -320,6 +340,17 @@ def build_note(
         for _, r in sp.iterrows():
             if pd.notna(r.get("underlying_reference")):
                 md.append(f"- {r.instrument_name} → `{r.underlying_reference}` " f"(weight {r.weight_pct:.1f}%)")
+        md.append("")
+
+    if not latest.empty:
+        md.append("## Exposure by sector (top 5, latest)")
+        md.extend(top_exposure_lines(latest, "sector"))
+        md.append("")
+        md.append("## Exposure by industry (top 5, latest, sub-asset class)")
+        md.extend(top_exposure_lines(latest, "sub_asset_class"))
+        md.append("")
+        md.append("## Exposure by region (top 5, latest)")
+        md.extend(top_exposure_lines(latest, "region"))
         md.append("")
 
     if len(cash_rows):
